@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+<_locDefinition xmlns="urn:locstudio">
+    <_locDefault _loc="locNone" />
+    <_locTag _loc="locData">Title</_locTag>
+    <_locTag _loc="locData">Description</_locTag>
+    <_locTag _loc="locData">Author</_locTag>
+    <_locTag _loc="locData">ToolTip</_locTag>
+</_locDefinition>
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>Create Login and User</Title>
+			<Shortcut></Shortcut>
+			<Description>Creates a login and user.</Description>
+			<Author>James Lutsey</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Declarations>
+                <Literal>
+                	<ID>LoginName</ID>
+                	<ToolTip>Name of the login/user</ToolTip>
+                    <Default>NA\login.name</Default>
+                </Literal>
+                <Literal>
+                    <ID>DatabaseName</ID>
+                    <ToolTip>Name of the database</ToolTip>
+                    <Default>UserDatabase</Default>
+                </Literal>
+                <Literal>
+                    <ID>TicketNumber</ID>
+                    <ToolTip>ServiceNow Ticket Number</ToolTip>
+                    <Default>TicketNubmer</Default>
+                </Literal>
+			</Declarations>
+			<Code Language="SQL"><![CDATA[
+use master;
+if not exists(select 1 from sys.server_principals where name = N'$LoginName$')
+    create login [$LoginName$] from windows /*$TicketNumber$*/;
+
+use $DatabaseName$;
+if not exists(select 1 from sys.database_principals where name = N'$LoginName$')
+    create user [$LoginName$] for login [$LoginName$] /*$TicketNumber$*/;
+
+]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>

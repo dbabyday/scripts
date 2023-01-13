@@ -1,0 +1,5 @@
+Get-EventLog system | Where-Object {$_.TimeGenerated -gt (Get-Date).AddDays(-30) -and $_.EventID -eq 1074}
+Get-EventLog system | Where-Object {$_.Index -eq xxxxxx -or $_.Index -eq xxxxxx} | Format-List
+
+Get-EventLog system -ComputerName co-db-xxx | Where-Object {$_.TimeGenerated -gt (Get-Date).AddDays(-30) -and $_.EventID -eq 1074}
+Get-EventLog system -ComputerName co-db-xxx | Where-Object {$_.Index -eq xxxxxx -or $_.Index -eq xxxxxx} | Format-List

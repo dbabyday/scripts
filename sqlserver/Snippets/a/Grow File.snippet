@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+<_locDefinition xmlns="urn:locstudio">
+    <_locDefault _loc="locNone" />
+    <_locTag _loc="locData">Title</_locTag>
+    <_locTag _loc="locData">Description</_locTag>
+    <_locTag _loc="locData">Author</_locTag>
+    <_locTag _loc="locData">ToolTip</_locTag>
+</_locDefinition>
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>Grow File</Title>
+			<Shortcut></Shortcut>
+			<Description>Creates a temp table.</Description>
+			<Author>James Lutsey</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Declarations>
+                <Literal>
+                	<ID>DatabaseName</ID>
+                	<ToolTip>Name of the database</ToolTip>
+                    <Default>tempdb</Default>
+                </Literal>
+                <Literal>
+                    <ID>FileName</ID>
+                    <ToolTip>Name of file</ToolTip>
+                    <Default>tempdev</Default>
+                </Literal>
+                <Literal>
+                    <ID>Size</ID>
+                    <ToolTip>Size (MB) to set the file</ToolTip>
+                    <Default>2048</Default>
+                </Literal>
+                <Literal>
+                    <ID>Growth</ID>
+                    <ToolTip>Filegrowth setting in MB</ToolTip>
+                    <Default>512</Default>
+                </Literal>
+                <Literal>
+                	<ID>MaxSize</ID>
+                	<ToolTip>Maxsize setting</ToolTip>
+                	<Default>UNLIMITED</Default>
+                </Literal>
+			</Declarations>
+			<Code Language="SQL"><![CDATA[
+ALTER DATABASE [$DatabaseName$] MODIFY FILE ( NAME = N'$FileName$', SIZE = $Size$MB, FILEGROWTH = $Growth$MB, MAXSIZE = $MaxSize$ );
+]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>

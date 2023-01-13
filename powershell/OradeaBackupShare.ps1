@@ -1,0 +1,3 @@
+Get-ChildItem -Path \\ora-prod-nas01\sql_backups$\ -Recurse | Where-Object { 
+                                                                  ( $_.LastWriteTime -lt [datetime]('2018-08-13') ) -and ( $_.Name -match '_FULL_' ) -and ( ($_.Name).Substring(($_.Name).Length - 4,4) -eq '.bak' )
+                                                              } | Sort-Object FullName | Select-Object FullName, LastWriteTime

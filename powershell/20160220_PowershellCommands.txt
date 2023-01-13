@@ -1,0 +1,13 @@
+========================================================================================
+Use the following to restart the servers
+========================================================================================
+Restart-Computer -ComputerName (Get-Content C:\PSFiles\20160220_Servers.txt) -Force
+Restart-Computer -ComputerName NEEN-DB-008 -Force
+
+
+========================================================================================
+Wait a few minutes for server(s) to reboot then use the following to  
+check if they did reboot.
+========================================================================================
+C:\PSFiles\GetServerUpTime.ps1 -inputfile C:\PSFiles\20160220_Servers.txt
+C:\PSFiles\GetServerUpTime.ps1 NEEN-DB-008

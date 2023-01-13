@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<_locDefinition xmlns="urn:locstudio">
+	    <_locDefault _loc="locNone" />
+	    <_locTag _loc="locData">Title</_locTag>
+	    <_locTag _loc="locData">Description</_locTag>
+	    <_locTag _loc="locData">Author</_locTag>
+	    <_locTag _loc="locData">ToolTip</_locTag>
+	</_locDefinition>
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>Copy Only Backup</Title>
+                <Shortcut></Shortcut>
+			<Description>Code Snippet for getting a list of table names.</Description>
+			<Author>James Lutsey</Author>
+			<SnippetTypes>
+                <SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Declarations>
+                <Literal>
+                	<ID>DatabaseName</ID>
+                	<ToolTip>Name of the database</ToolTip>
+                    <Default>CentralAdmin</Default>
+                </Literal>
+                <Literal>
+                	<ID>DirectoryName</ID>
+                	<ToolTip>Name of the directory</ToolTip>
+                    <Default>\\na\databackup\Neen_SQL_Backups\</Default>
+                </Literal>
+            </Declarations>
+			<Code Language="SQL"><![CDATA[
+DECLARE @db        NVARCHAR(128) = N'$DatabaseName$',  -- select name from sys.databases order by name;
+        @directory NVARCHAR(256) = N'$DirectoryName$', -- \\na\databackup\Dev_SQL_Backups\
+        @file      NVARCHAR(300),                                        -- \\na\databackup\Guad_SQL_Backups\
+        @msg       NVARCHAR(500);
+
+SET @file = @directory + 
+            CONVERT(NVARCHAR(128),SERVERPROPERTY('ServerName')) + 
+            N'\' + @db +
+            N'\FULL_COPY_ONLY\' +
+            CONVERT(NVARCHAR(128),SERVERPROPERTY('ServerName')) + 
+            N'_' + @db +
+            N'_FULL_COPY_ONLY_' +
+            REPLACE(REPLACE(REPLACE(CONVERT(VARCHAR(20),GETDATE(),120),N'-',N''),N' ',N'_'),N':',N'') +
+            N'.bak';
+
+SET @msg = CONVERT(NCHAR(19),GETDATE(),120) + N' | Backing up database [' + @db + N'] to:' + NCHAR(0x000D) + NCHAR(0x000A) + @file + NCHAR(0x000D) + NCHAR(0x000A) + NCHAR(0x000D) + NCHAR(0x000A);
+RAISERROR(@msg,0,1) WITH NOWAIT;
+
+BACKUP DATABASE @db
+TO     DISK = @file
+WITH   COPY_ONLY,
+       CHECKSUM,
+       STATS = 5;
+
+SET @msg =  NCHAR(0x000D) + NCHAR(0x000A) + CONVERT(NCHAR(19),GETDATE(),120) + N' | Verifying the backup' + NCHAR(0x000D) + NCHAR(0x000A) + NCHAR(0x000D) + NCHAR(0x000A);
+RAISERROR(@msg,0,1) WITH NOWAIT;
+
+RESTORE VERIFYONLY FROM DISK = @file;
+
+/* 
+
+-- get the @Directory value used by the ola jobs
+SELECT     SUBSTRING(   [s].[command],
+                        CHARINDEX('@Directory = N''',[s].[command]) + 15,
+                        CHARINDEX(''', @BackupType = ',[s].[command]) - CHARINDEX('@Directory = N''',[s].[command]) - 15   )
+FROM       [msdb].[dbo].[sysjobs]      AS [j]
+INNER JOIN [msdb].[dbo].[sysjobsteps]  AS [s] ON [j].[job_id] = [s].[job_id]
+WHERE      [j].[name] = N'DBA - Backup USER_DATABASES - FULL'
+           AND [s].[step_name] = N'Backup USER_DATABASES - FULL';
+
+*/
+]]>
+            </Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>

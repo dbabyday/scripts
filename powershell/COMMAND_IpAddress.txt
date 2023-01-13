@@ -1,0 +1,1 @@
+Test-Connection co-db-003.na.plexus.com -Count 1 | Select-Object IPV4Address

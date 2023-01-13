@@ -1,0 +1,8 @@
+set pages 100
+
+COMPUTE SUM OF TOTAL_MESSAGES_APPLIED ON REPORT
+BREAK ON REPORT
+column TOTAL_MESSAGES_APPLIED format 999,999,999,999,999,999
+
+select server_id,STATE ,TOTAL_MESSAGES_APPLIED from v$gg_apply_server order by server_id
+/

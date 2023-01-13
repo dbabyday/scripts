@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<_locDefinition xmlns="urn:locstudio">
+	    <_locDefault _loc="locNone" />
+	    <_locTag _loc="locData">Title</_locTag>
+	    <_locTag _loc="locData">Description</_locTag>
+	    <_locTag _loc="locData">Author</_locTag>
+	    <_locTag _loc="locData">ToolTip</_locTag>
+	</_locDefinition>
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>Database Sizes</Title>
+                <Shortcut></Shortcut>
+			<Description>Code Snippet for checking database sizes.</Description>
+			<Author>James Lutsey</Author>
+			<SnippetTypes>
+                <SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Declarations></Declarations>
+			<Code Language="SQL"><![CDATA[
+SELECT   DB_NAME(database_id) AS DatabaseName
+       , type_desc
+       , CAST(ROUND(SUM(size) / 128.0 / 1024,1) AS DECIMAL(12,1)) AS Size_GB
+FROM     sys.master_files
+GROUP BY database_id
+       , type_desc
+ORDER BY DB_NAME(database_id)
+       , type_desc DESC;
+]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>

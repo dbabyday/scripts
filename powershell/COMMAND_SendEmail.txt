@@ -1,0 +1,34 @@
+$PSEmailServer = "intranet-smtp.plexus.com"
+$to            = "james.lutsey@plexus.com"
+$from          = "james.lutsey@plexus.com"
+$subject       = "Test Subject"
+$body          = "Test Body"
+
+Send-MailMessage -To $to -From $from -Subject $subject -Body $body -BodyAsHtml
+
+
+-----------------------------------------------------------------------------------------------
+
+
+# older versions
+
+$emailSmtpServer = "intranet-smtp.plexus.com"
+$to              = "james.lutsey@plexus.com"
+$from            = "$env:computername <$env:computername@plexus.com>"
+$subject         = "PS Version"
+
+$ver             = $Host.Version
+$body            = "$env:computername - $ver"
+
+$emailMessage            = New-Object System.Net.Mail.MailMessage
+$emailMessage.From       = $from
+$emailMessage.To.Add($to)
+$emailMessage.Subject    = $subject 
+$emailMessage.IsBodyHtml = $false
+$emailMessage.Priority   = "Normal"
+$emailMessage.Body       = $body 
+ 
+$SMTPClient = New-Object System.Net.Mail.SmtpClient( $emailSmtpServer )
+ 
+$SMTPClient.Send( $emailMessage )
+

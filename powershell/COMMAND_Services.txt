@@ -1,0 +1,82 @@
+
+# All Services
+Get-WmiObject Win32_Service -ComputerName $cn  | 
+select-object State,DisplayName,Name,StartMode,StartName,__Server | 
+Sort-Object DisplayName | 
+Format-Table -AutoSize
+
+
+# SQL Server Services
+Get-WmiObject Win32_Service -ComputerName co-db-779 -Filter "name Like '%SQL%' " | 
+select-object State,DisplayName,Name,StartMode,StartName,__Server | 
+Sort-Object DisplayName | 
+Format-Table -AutoSize
+
+
+# CommVault Services
+Get-WmiObject Win32_Service -ComputerName $cn -Filter "DisplayName Like '%McAfee-DBS-Sensor%'" | 
+select-object State,DisplayName,Name,StartMode,StartName,__Server | 
+Sort-Object DisplayName | 
+Format-Table -AutoSize
+
+
+Set-Service -ComputerName "co-db-964" -Name "SQLBrowser" -Status Stopped -PassThru
+Set-Service -ComputerName "co-db-964" -Name "SQLBrowser" -Status Running -PassThru
+
+
+
+
+
+
+Set-Service -ComputerName $cn -Name "SQLWriter" -Status Stopped -PassThru
+Set-Service -ComputerName $cn -Name 'SQLAgent$SQLSERVER32' -Status Stopped -PassThru
+Set-Service -ComputerName $cn -Name "MSSQLSERVER" -Status Stopped -PassThru
+
+
+
+# Big Fix
+Get-WmiObject Win32_Service -ComputerName $cn  | Where-Object Name -eq "MSOLAP$TABULAR"
+
+
+# SQL Server Services
+$cn='dcc-sql-dv-019'
+Get-WmiObject Win32_Service -ComputerName $cn -Filter "name Like '%Poly%'" | 
+select-object State,DisplayName,Name,StartMode,StartName,__Server | 
+Sort-Object DisplayName | 
+Format-Table -AutoSize
+
+
+SQLPBDMS
+SQLPBENGINE
+
+
+Get-WmiObject Win32_Service -ComputerName dcc-sql-dv-019 | Where-Object Name -eq 'SQLPBDMS'
+
+Set-Service -ComputerName dcc-sql-dv-019 -Name 'SQLPBDMS' -Status Stopped -PassThru
+Set-Service -ComputerName dcc-sql-dv-019 -Name 'SQLPBENGINE' -Status Stopped -PassThru
+
+Set-Service -ComputerName dcc-sql-dv-019 -Name 'SQLPBENGINE' -Status Running -PassThru
+Set-Service -ComputerName dcc-sql-dv-019 -Name 'SQLPBDMS' -Status Running -PassThru
+
+
+Get-WmiObject Win32_Service -ComputerName $cn | Where-Object Name -eq 'MSOLAP$TDPROCESSING'
+Set-Service -ComputerName $cn -Name 'MSOLAP$TDPROCESSING' -Status Stopped -PassThru
+Set-Service -ComputerName $cn -Name 'MSOLAP$TDPROCESSING' -Status Running -PassThru
+
+Get-WmiObject Win32_Service -ComputerName dcc-sql-dv-019 | Where-Object Name -match 'SQLPB'
+
+
+
+$cn="co-db-079"
+$service_name="PowerBIReportServer"
+
+# view
+Get-WmiObject Win32_Service -ComputerName $cn | Where-Object Name -eq $service_name
+
+# stop
+Set-Service -ComputerName $cn -Name $service_name -Status Stopped -PassThru
+Get-WmiObject Win32_Service -ComputerName $cn | Where-Object Name -eq $service_name
+
+# start
+Set-Service -ComputerName $cn -Name $service_name -Status Running -PassThru
+Get-WmiObject Win32_Service -ComputerName $cn | Where-Object Name -eq $service_name

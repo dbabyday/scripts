@@ -1,0 +1,9 @@
+# Check if UAC is enabled
+Get-ItemProperty -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\ -Name EnableLUA
+
+
+# check on multiple computers
+$computers = Get-Content .\Servers_AmerEmea.txt
+$session = New-PSSession -ComputerName $computers
+Invoke-Command -Session $session -ScriptBlock {Get-ItemProperty -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\ -Name EnableLUA | Select-Object PSComputerName,EnableLUA}
+

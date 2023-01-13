@@ -1,0 +1,29 @@
+
+<#
+	Logoff a user remotely
+	Manually
+#>
+
+
+
+# get the users that are logged on
+quser /server:<server_name>
+
+# logoff user with the session id
+logoff <session_id> /server:<server_name>
+
+
+
+
+<#
+	Logoff a user remotely
+	Dynamically
+#>
+
+$server   = 'MyServer'
+$username = $env:USERNAME
+
+$session = ((quser /server:$server | ? { $_ -match $username }) -split ' +')[2]
+
+logoff $session /server:$server
+

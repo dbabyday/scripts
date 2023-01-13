@@ -1,0 +1,69 @@
+New-Item -Path "\\neen-db-009\j$\" -Name "CTASK041380" -ItemType "directory"
+
+Move-Item -Path "\\co-db-042\C$\xfr\TestMove.txt" -Destination "\\co-db-042\E$\xfr\James"
+
+Copy-Item -Path "\\co-db-042\C$\Users\james.lutsey.admin\Documents\Scripts\DailyMonitoring" -Destination "C:\Scripts\DailyMonitoring_CoDb042_20170308" -recurse
+
+Copy-Item -Path "\\neen-dsk-011\it$\GlobalDocumentation\Infrastructure\Naming_Conventions\Plexus_IT_Naming_Conventions.docx" -Destination "C:\Documentation\Plexus_IT_Naming_Conventions.docx" -recurse
+
+# Robocopy (robust file copy)
+# https://www.computerhope.com/robocopy.htm
+robocopy <source> <destination> /e
+robocopy <source> <destination> <file> /mov
+
+
+# Delete directory (the -Recurse flag may cause errors, so we put it in a loop and tell it to continue on error)
+$p = 'C:\JamesScripts\DailyMonitoring_CoDb042_20170308'
+While (Test-Path -Path $p) { Remove-Item -Path $p -Force -Recurse -ErrorAction SilentlyContinue }
+
+C:\JamesTools\SpaceSniffer\SpaceSniffer.exe scan '\\co-db-779.na.plexus.com\c$\'
+
+
+#-----------------------------------------------------
+#--// Compress & Extract Zip Archive              //--
+#-----------------------------------------------------
+
+
+# https://blog.netwrix.com/2018/11/06/using-powershell-to-create-zip-archives-and-unzip-files/
+Compress-Archive -Path C:\Invoices -DestinationPath C:\Archives\Invoices
+Compress-Archive -LiteralPath C:\ Invoices\File1.txt, C:\Invoices\File2.txt -DestinationPath C:\Archives\Invoices -Force
+Compress-Archive -Path C:\Invoices\* -Update -DestinationPath C:\Archives\Invoices
+Expand-Archive -LiteralPath C:\Archives\Invoices.Zip -DestinationPath C:\InvoicesUnzipped
+
+
+Add-Type -Assembly "system.io.compression.filesystem"
+
+$source = "C:\PoSh\TestZip"
+$destination = "C:\PoSh\test.zip"
+[io.compression.zipfile]::CreateFromDirectory($source, $destination)
+
+$source = "C:\PoSh\test.zip"
+$destination = "C:\PoSh\TestZip1"
+[io.compression.zipfile]::ExtractToDirectory($source, $destination)
+
+
+
+#-----------------------------------------------------
+#--// Get-ChildItem Size Conversion               //--
+#-----------------------------------------------------
+
+$p = 'C:\Scripts\Tickets'
+
+# KB
+Get-ChildItem -Path $p | 
+    select Mode, LastWriteTime, Length, Name | 
+    Sort-Object LastWriteTime | 
+    Format-Table Mode, LastWriteTime, @{Name="size_KB";Expression={"{0:N0}" -f (($_.Length)/1KB)};align="right"}, Name
+
+# MB
+Get-ChildItem -Path $p | 
+    select Mode, LastWriteTime, Length, Name | 
+    Sort-Object LastWriteTime | 
+    Format-Table Mode, LastWriteTime, @{Name="size_MB";Expression={"{0:N0}" -f (($_.Length)/1MB)};align="right"}, Name
+
+# GB
+Get-ChildItem -Path $p | 
+    select Mode, LastWriteTime, Length, Name | 
+    Sort-Object LastWriteTime | 
+    Format-Table Mode, LastWriteTime, @{Name="size_GB";Expression={"{0:N1}" -f (($_.Length)/1GB)};align="right"}, Name
+

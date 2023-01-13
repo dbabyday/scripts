@@ -1,0 +1,1 @@
+Set-Location -Path '\\neen-dsk-011\it$\database\users\James\'

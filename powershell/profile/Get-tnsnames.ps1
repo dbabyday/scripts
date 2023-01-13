@@ -1,0 +1,1 @@
+Get-ChildItem -Path C:\oracle\ -Recurse tnsnames.ora | Where-Object {!($_.FullName -match "sample")} | ForEach-Object { subl $_.FullName }

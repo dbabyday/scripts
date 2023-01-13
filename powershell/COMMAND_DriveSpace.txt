@@ -1,0 +1,84 @@
+get-wmiobject -computername co-db-010, co-db-017, co-db-038 Win32_volume |select SystemName,Name,Capacity,Freespace
+
+
+
+#----------------------------------------------------
+#--// get info for a drive                       //--
+#----------------------------------------------------
+
+Get-WmiObject win32_volume -ComputerName $cn | select Name | Sort-Object Name
+
+# get the info for a drive
+$f = Get-WmiObject win32_volume -ComputerName "co-db-952" | Where-Object {$_.Name -eq "F:\"}
+
+$f.Capacity / 1GB
+
+$f.Freespace / 1GB
+
+
+
+
+#----------------------------------------------------
+#--// get info for all drives                    //--
+#----------------------------------------------------
+
+$cn = ""
+
+Get-WmiObject win32_volume -ComputerName $cn | 
+    Where-Object  { $_.Name -NotLike "\\?\Volume*" } | 
+    Select-Object PSComputerName,Name,Freespace,Capacity | 
+    Sort-Object   Name | 
+    Format-Table  -AutoSize PSComputerName,
+                            Name,
+                            @{Name="free_GB"; Expression={"{0:N1}" -f (($_.Freespace)/1GB)};              align="right"},
+                            @{Name="size_GB"; Expression={"{0:N1}" -f (($_.Capacity)/1GB)};               align="right"},
+                            @{Name="pct_free";Expression={"{0:N0}" -f (($_.Freespace)/($_.Capacity)*100)};align="right"}
+
+
+
+
+
+######################################################################################################
+
+$computer = $cn
+$orderBy  = "name"    # name freespace_gb capacity_gb percent_free
+
+$volumesArray = @()
+
+Get-WmiObject win32_volume -ComputerName $computer | foreach {
+	$name = $_.Name
+	$free = $_.Freespace
+	$size = $_.Capacity
+
+	if ($size -ne $Null) { $pctFree = $free / $size * 100 }
+	else { $pctFree = 0 }
+
+	$free    = ($free / 1GB)
+	$size    = ($size / 1GB)
+
+	$free    = [double]$free
+	$size    = [double]$size
+	$pctFree = [double]$pctFree
+
+	$v = New-Object -TypeName PSObject
+	$v | Add-Member -Name "server"    -MemberType Noteproperty -Value $cn
+	$v | Add-Member -Name "name"      -MemberType Noteproperty -Value $name
+	$v | Add-Member -Name "free_GB"   -MemberType Noteproperty -Value $free
+	$v | Add-Member -Name "size_GB"   -MemberType Noteproperty -Value $size
+	$v | Add-Member -Name "pct_free"  -MemberType Noteproperty -Value $pctFree
+
+	if ($name -NotLike "\\?\Volume*" ) { $volumesArray += $v }
+}
+
+$volumesArray | Sort-Object $orderBy | Format-Table server, name, @{Name="free_GB";Expression={"{0:N1}" -f $_.free_GB};align="right"}, @{Name="size_GB";Expression={"{0:N1}" -f $_.size_GB};align="right"}, @{Name="pct_free";Expression={"{0:N0}" -f $_.pct_free};align="right"}
+
+
+
+
+#----------------------------------------------------
+#--// RUN SPACESNIFFER FROM CMD LINE             //--
+#----------------------------------------------------
+
+C:\SpaceSniffer\SpaceSniffer.exe scan \\neen-db-008.na.plexus.com\c$
+
+

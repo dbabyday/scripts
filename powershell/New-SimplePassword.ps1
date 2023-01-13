@@ -1,0 +1,1 @@
+ sqlcmd -S gcc-sql-pd-001 -i C:\Users\james.lutsey.admin\Documents\WindowsPowerShell\PasswordSimple.sql

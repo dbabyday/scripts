@@ -1,0 +1,1 @@
+Get-ChildItem | Where-Object { $_.Mode -eq "d-----" } | Sort-Object Name

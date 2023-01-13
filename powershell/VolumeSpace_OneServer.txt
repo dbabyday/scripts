@@ -1,0 +1,45 @@
+
+
+
+
+
+
+
+
+
+# enter the computer name here
+$cn = ""
+
+$volumes = Get-WmiObject -ComputerName $cn -ErrorACtion Stop win32_volume | Where-object { ($_.DriveType -ne 5) -and ($_.Name.StartsWith("D:\") -eq $false) -and ($_.Name.StartsWith("\\?\") -eq $false)}
+
+$volumesArray = @()
+
+foreach ($volume in $volumes)
+{     
+    $name     = $volume.Name
+    $free     = [math]::round($volume.FreeSpace / 1073741824,3)
+    $capacity = [math]::round($volume.Capacity / 1073741824,3)
+    $pctFree  = [math]::round($volume.FreeSpace / $volume.Capacity * 100,1)
+
+    $volumeDetails = New-Object -TypeName PSObject
+    $volumeDetails | Add-Member -Name 'Server'        -MemberType Noteproperty -Value $cn
+    $volumeDetails | Add-Member -Name 'Volume_Name'   -MemberType Noteproperty -Value $name
+    $volumeDetails | Add-Member -Name 'Free_GB'       -MemberType Noteproperty -Value $free
+    $volumeDetails | Add-Member -Name 'Capacity_GB'   -MemberType Noteproperty -Value $capacity
+    $volumeDetails | Add-Member -Name 'Percent_Free'  -MemberType Noteproperty -Value $pctFree
+
+    $volumesArray += $volumeDetails
+}
+
+$volumesArray | Sort Volume_Name | Format-Table -AutoSize
+
+
+
+
+
+
+
+
+
+
+

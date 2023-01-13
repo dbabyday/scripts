@@ -1,0 +1,154 @@
+
+SYSDATE             INSTANCE_NAME    INSTANCE_STATUS STARTUP_TIME        SHUTDOWN_PENDING DATABASE_STATUS   OPEN_MODE
+------------------- ---------------- --------------- ------------------- ---------------- ----------------- --------------------
+2022-12-20 17:13:10 jdepd03          OPEN            2022-11-19 18:26:41 NO               ACTIVE            READ WRITE
+
+1 row selected.
+
+
+SYSDATE             INSTANCE_NAME    INSTANCE_STATUS STARTUP_TIME        SHUTDOWN_PENDING DATABASE_STATUS   OPEN_MODE
+------------------- ---------------- --------------- ------------------- ---------------- ----------------- --------------------
+2022-12-20 17:14:11 jdepd03          OPEN            2022-11-19 18:26:41 NO               ACTIVE            READ WRITE
+
+1 row selected.
+
+
+SYSDATE             INSTANCE_NAME    INSTANCE_STATUS STARTUP_TIME        SHUTDOWN_PENDING DATABASE_STATUS   OPEN_MODE
+------------------- ---------------- --------------- ------------------- ---------------- ----------------- --------------------
+2022-12-20 17:15:19 jdepd03          OPEN            2022-11-19 18:26:41 NO               ACTIVE            READ WRITE
+
+1 row selected.
+
+
+SYSDATE             INSTANCE_NAME    INSTANCE_STATUS STARTUP_TIME        SHUTDOWN_PENDING DATABASE_STATUS   OPEN_MODE
+------------------- ---------------- --------------- ------------------- ---------------- ----------------- --------------------
+2022-12-20 17:16:21 jdepd03          OPEN            2022-11-19 18:26:41 NO               ACTIVE            READ WRITE
+
+1 row selected.
+
+
+SYSDATE             INSTANCE_NAME    INSTANCE_STATUS STARTUP_TIME        SHUTDOWN_PENDING DATABASE_STATUS   OPEN_MODE
+------------------- ---------------- --------------- ------------------- ---------------- ----------------- --------------------
+2022-12-20 17:17:23 jdepd03          OPEN            2022-11-19 18:26:41 NO               ACTIVE            READ WRITE
+
+1 row selected.
+
+
+SYSDATE             INSTANCE_NAME    INSTANCE_STATUS STARTUP_TIME        SHUTDOWN_PENDING DATABASE_STATUS   OPEN_MODE
+------------------- ---------------- --------------- ------------------- ---------------- ----------------- --------------------
+2022-12-20 17:18:24 jdepd03          OPEN            2022-11-19 18:26:41 NO               ACTIVE            READ WRITE
+
+1 row selected.
+
+
+SYSDATE             INSTANCE_NAME    INSTANCE_STATUS STARTUP_TIME        SHUTDOWN_PENDING DATABASE_STATUS   OPEN_MODE
+------------------- ---------------- --------------- ------------------- ---------------- ----------------- --------------------
+2022-12-20 17:19:26 jdepd03          OPEN            2022-11-19 18:26:41 NO               ACTIVE            READ WRITE
+
+1 row selected.
+
+
+SYSDATE             INSTANCE_NAME    INSTANCE_STATUS STARTUP_TIME        SHUTDOWN_PENDING DATABASE_STATUS   OPEN_MODE
+------------------- ---------------- --------------- ------------------- ---------------- ----------------- --------------------
+2022-12-20 17:20:28 jdepd03          OPEN            2022-11-19 18:26:41 NO               ACTIVE            READ WRITE
+
+1 row selected.
+
+
+SYSDATE             INSTANCE_NAME    INSTANCE_STATUS STARTUP_TIME        SHUTDOWN_PENDING DATABASE_STATUS   OPEN_MODE
+------------------- ---------------- --------------- ------------------- ---------------- ----------------- --------------------
+2022-12-20 17:21:30 jdepd03          OPEN            2022-11-19 18:26:41 NO               ACTIVE            READ WRITE
+
+1 row selected.
+
+
+SYSDATE             INSTANCE_NAME    INSTANCE_STATUS STARTUP_TIME        SHUTDOWN_PENDING DATABASE_STATUS   OPEN_MODE
+------------------- ---------------- --------------- ------------------- ---------------- ----------------- --------------------
+2022-12-20 17:22:32 jdepd03          OPEN            2022-11-19 18:26:41 NO               ACTIVE            READ WRITE
+
+1 row selected.
+
+
+SYSDATE             INSTANCE_NAME    INSTANCE_STATUS STARTUP_TIME        SHUTDOWN_PENDING DATABASE_STATUS   OPEN_MODE
+------------------- ---------------- --------------- ------------------- ---------------- ----------------- --------------------
+2022-12-20 17:23:34 jdepd03          OPEN            2022-11-19 18:26:41 NO               ACTIVE            READ WRITE
+
+1 row selected.
+
+
+SYSDATE             INSTANCE_NAME    INSTANCE_STATUS STARTUP_TIME        SHUTDOWN_PENDING DATABASE_STATUS   OPEN_MODE
+------------------- ---------------- --------------- ------------------- ---------------- ----------------- --------------------
+2022-12-20 17:24:36 jdepd03          OPEN            2022-11-19 18:26:41 NO               ACTIVE            READ WRITE
+
+1 row selected.
+
+
+SYSDATE             INSTANCE_NAME    INSTANCE_STATUS STARTUP_TIME        SHUTDOWN_PENDING DATABASE_STATUS   OPEN_MODE
+------------------- ---------------- --------------- ------------------- ---------------- ----------------- --------------------
+2022-12-20 17:25:38 jdepd03          OPEN            2022-11-19 18:26:41 NO               ACTIVE            READ WRITE
+
+1 row selected.
+
+
+SYSDATE             INSTANCE_NAME    INSTANCE_STATUS STARTUP_TIME        SHUTDOWN_PENDING DATABASE_STATUS   OPEN_MODE
+------------------- ---------------- --------------- ------------------- ---------------- ----------------- --------------------
+2022-12-20 17:26:40 jdepd03          OPEN            2022-11-19 18:26:41 NO               ACTIVE            READ WRITE
+
+1 row selected.
+
+
+SYSDATE             INSTANCE_NAME    INSTANCE_STATUS STARTUP_TIME        SHUTDOWN_PENDING DATABASE_STATUS   OPEN_MODE
+------------------- ---------------- --------------- ------------------- ---------------- ----------------- --------------------
+2022-12-20 17:27:42 jdepd03          OPEN            2022-11-19 18:26:41 NO               ACTIVE            READ WRITE
+
+1 row selected.
+
+
+SYSDATE             INSTANCE_NAME    INSTANCE_STATUS STARTUP_TIME        SHUTDOWN_PENDING DATABASE_STATUS   OPEN_MODE
+------------------- ---------------- --------------- ------------------- ---------------- ----------------- --------------------
+2022-12-20 17:28:44 jdepd03          OPEN            2022-11-19 18:26:41 NO               ACTIVE            READ WRITE
+
+1 row selected.
+
+
+SYSDATE             INSTANCE_NAME    INSTANCE_STATUS STARTUP_TIME        SHUTDOWN_PENDING DATABASE_STATUS   OPEN_MODE
+------------------- ---------------- --------------- ------------------- ---------------- ----------------- --------------------
+2022-12-20 17:29:45 jdepd03          OPEN            2022-11-19 18:26:41 NO               ACTIVE            READ WRITE
+
+1 row selected.
+
+
+SYSDATE             INSTANCE_NAME    INSTANCE_STATUS STARTUP_TIME        SHUTDOWN_PENDING DATABASE_STATUS   OPEN_MODE
+------------------- ---------------- --------------- ------------------- ---------------- ----------------- --------------------
+2022-12-20 17:30:47 jdepd03          OPEN            2022-11-19 18:26:41 NO               ACTIVE            READ WRITE
+
+1 row selected.
+
+
+SYSDATE             INSTANCE_NAME    INSTANCE_STATUS STARTUP_TIME        SHUTDOWN_PENDING DATABASE_STATUS   OPEN_MODE
+------------------- ---------------- --------------- ------------------- ---------------- ----------------- --------------------
+2022-12-20 17:31:49 jdepd03          OPEN            2022-11-19 18:26:41 NO               ACTIVE            READ WRITE
+
+1 row selected.
+
+
+SYSDATE             INSTANCE_NAME    INSTANCE_STATUS STARTUP_TIME        SHUTDOWN_PENDING DATABASE_STATUS   OPEN_MODE
+------------------- ---------------- --------------- ------------------- ---------------- ----------------- --------------------
+2022-12-20 17:32:51 jdepd03          OPEN            2022-11-19 18:26:41 NO               ACTIVE            READ WRITE
+
+1 row selected.
+
+
+SYSDATE             INSTANCE_NAME    INSTANCE_STATUS STARTUP_TIME        SHUTDOWN_PENDING DATABASE_STATUS   OPEN_MODE
+------------------- ---------------- --------------- ------------------- ---------------- ----------------- --------------------
+2022-12-20 17:33:53 jdepd03          OPEN            2022-11-19 18:26:41 NO               ACTIVE            READ WRITE
+
+1 row selected.
+
+
+SYSDATE             INSTANCE_NAME    INSTANCE_STATUS STARTUP_TIME        SHUTDOWN_PENDING DATABASE_STATUS   OPEN_MODE
+------------------- ---------------- --------------- ------------------- ---------------- ----------------- --------------------
+2022-12-20 17:34:55 jdepd03          OPEN            2022-11-19 18:26:41 NO               ACTIVE            READ WRITE
+
+1 row selected.
+

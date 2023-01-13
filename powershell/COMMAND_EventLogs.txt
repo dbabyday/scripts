@@ -1,0 +1,83 @@
+$cn = "gcc-sql-pd-002.na.plexus.com"
+$start = Get-Date -Date "2018-07-31 18:00:00"
+$end = Get-Date #-Date "2018-08-01 00:00:00"
+$log = "system"  # system, application, security
+
+# get all criticals, errors, and warnings in time frame
+Get-WinEvent -ComputerName $cn -FilterHashtable @{LogName=$log; StartTime=$start; EndTime=$end} | Where-Object { $_.LevelDisplayName -ne 'Information'} | Sort-Object TimeCreated -Descending | Format-Table MachineName, TimeCreated, LevelDisplayName, Id, Message -AutoSize
+
+
+Get-WinEvent -ComputerName $cn -FilterHashtable @{LogName='system'; ID=6005; StartTime=$start; EndTime=$end} | Format-Table MachineName, TimeCreated, Id, Message
+Get-WinEvent -ComputerName $cn -FilterHashtable @{LogName='system'; ID=6006; StartTime=$start; EndTime=$end} | Format-Table MachineName, TimeCreated, Id, Message
+Get-WinEvent -ComputerName $cn -FilterHashtable @{LogName='system'; ID=6008; StartTime=$start; EndTime=$end} | Format-Table MachineName, TimeCreated, Id, Message
+Get-WinEvent -ComputerName $cn -FilterHashtable @{LogName='system'; ID=6009; StartTime=$start; EndTime=$end} | Format-Table MachineName, TimeCreated, Id, Message
+Get-WinEvent -ComputerName $cn -FilterHashtable @{LogName='system'; ID=1074; StartTime=$start; EndTime=$end} | Format-Table MachineName, TimeCreated, Id, Message
+Get-WinEvent -ComputerName $cn -FilterHashtable @{LogName='system'; ID=1076; StartTime=$start; EndTime=$end} | Format-Table MachineName, TimeCreated, Id, Message
+
+Get-EventLog -ComputerName $cn -LogName System -After $after -Before $before | Where-Object {$_.EventID -eq "6005"} | Sort-Object TimeGenerated
+Get-EventLog -ComputerName $cn -LogName System -After $after -Before $before | Where-Object {$_.EventID -eq "6006"} | Sort-Object TimeGenerated
+Get-EventLog -ComputerName $cn -LogName System -After $after -Before $before | Where-Object {$_.EventID -eq "6008"} | Sort-Object TimeGenerated
+Get-EventLog -ComputerName $cn -LogName System -After $after -Before $before | Where-Object {$_.EventID -eq "6009"} | Sort-Object TimeGenerated
+Get-EventLog -ComputerName $cn -LogName System -After $after -Before $before | Where-Object {$_.EventID -eq "1074"} | Sort-Object TimeGenerated
+Get-EventLog -ComputerName $cn -LogName System -After $after -Before $before | Where-Object {$_.EventID -eq "1076"} | Sort-Object TimeGenerated
+
+
+
+
+# Computer Shutdown/Restart
+# ---------------------------------------------------
+# 6005 - The event log service was started
+# 6006 - The event log service was stopped
+# 6008 - The previous -LogName System shutdown was unexpected
+# 6009 - Indicates the Windows product name, version, build number, service pack number, and operating -LogName System type detected at boot time.
+# 1074 - Indicates that an application or a user initiated a restart or shutdown
+# 1076 - Records when the first user with shutdown privileges logs on to the computer after an unexpected restart or shutdown and supplies a reason for the occurrence.
+
+
+# Service Stop
+# ---------------------------------------------------
+# 7036 — Basic Service Operations (stop services is one of the events for this number)
+
+$cn = "gcc-sql-pd-002.na.plexus.com"
+$start = Get-Date -Date "2018-07-27 07:00:00"
+$end = Get-Date #-Date "2018-07-06 00:00:00"
+$log = "system"
+
+# SQL
+Get-WinEvent -ComputerName $cn -FilterHashtable @{LogName='system'; ID=7036; StartTime=$start; EndTime=$end} | Where-Object { $_.Message -match 'SQL' } | Format-Table MachineName, TimeCreated, Id, Message
+
+# All
+Get-WinEvent -ComputerName $cn -FilterHashtable @{LogName='system'; ID=7036; StartTime=$start; EndTime=$end} | Where-Object { $_.Message -match "CommVault" } | Sort-Object TimeCreated | Format-Table MachineName, TimeCreated, Id, Message
+#Get-EventLog -ComputerName $cn -LogName System -After $after -Before $before | Where-Object { ($_.EventID -eq "7036") } | Select-Object * | Sort-Object TimeGenerated
+
+
+Get-EventLog -ComputerName $cn -LogName System -After $after -Before $before | Where-Object {$_.EventID -eq "6005"} | Sort-Object TimeGenerated
+Get-EventLog -ComputerName $cn -LogName System -After $after -Before $before | Where-Object {$_.EventID -eq "6006"} | Sort-Object TimeGenerated
+Get-EventLog -ComputerName $cn -LogName System -After $after -Before $before | Where-Object {$_.EventID -eq "1074"} | Sort-Object TimeGenerated
+
+
+
+# Checks for all the shutdown/restart id's listed above, and SQL service operation
+# -------------------------------------------------------------------------------------------
+$cn = "co-db-039.na.plexus.com"
+$after = Get-Date -Date "2017-11-25 00:00:00"
+$before = Get-Date
+
+Get-EventLog -ComputerName $cn -LogName System -After $after -Before $before | Where-Object { (($_.EventID -eq "7036") -and ($_.Message -match "SQL")) -or ($_.EventID -eq "6005") -or ($_.EventID -eq "6006") -or ($_.EventID -eq "6008") -or ($_.EventID -eq "6009") -or ($_.EventID -eq "1074") -or ($_.EventID -eq "1076") } | Sort-Object TimeGenerated
+
+
+
+
+# -------------------------------------------------------------------------------------------
+# 7036 (SQL), 6005, 6006, 1074
+# -------------------------------------------------------------------------------------------
+
+$cn = "neen-db-011.na.plexus.com"
+$after = Get-Date -Date "2018-02-17 00:00:00"
+$before = Get-Date
+
+Get-EventLog -ComputerName $cn -LogName System -After $after -Before $before | 
+         Where-Object { (($_.EventID -eq "7036") -and ($_.Message -match "SQL")) -or ($_.EventID -eq "6005") -or ($_.EventID -eq "6006") -or ($_.EventID -eq "1074") } | 
+         Select-Object TimeGenerated, EventID, MachineName, EntryType, Source, Message | 
+         Sort-Object TimeGenerated 
+

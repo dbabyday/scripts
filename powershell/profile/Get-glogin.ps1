@@ -1,0 +1,1 @@
+Get-ChildItem -Path C:\oracle\ -Recurse glogin.sql | ForEach-Object { subl $_.FullName }

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<_locDefinition xmlns="urn:locstudio">
+	    <_locDefault _loc="locNone" />
+	    <_locTag _loc="locData">Title</_locTag>
+	    <_locTag _loc="locData">Description</_locTag>
+	    <_locTag _loc="locData">Author</_locTag>
+	    <_locTag _loc="locData">ToolTip</_locTag>
+	</_locDefinition>
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>Check Databases</Title>
+                <Shortcut></Shortcut>
+			<Description>Code Snippet for checking basic databases info.</Description>
+			<Author>James Lutsey</Author>
+			<SnippetTypes>
+                <SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Declarations></Declarations>
+			<Code Language="SQL"><![CDATA[
+SELECT   name
+       , compatibility_level
+       , CASE 
+             WHEN state = 0 THEN LOWER(state_desc)
+             ELSE UPPER(state_desc)
+         END AS state_desc
+       , CASE
+             WHEN user_access = 0 THEN LOWER(user_access_desc)
+             ELSE UPPER(user_access_desc)
+         END AS user_access_desc
+       , CASE
+             WHEN name IN (N'master', N'msdb', N'tempdb') AND recovery_model =  3 THEN LOWER(recovery_model_desc)
+             WHEN name IN (N'master', N'msdb', N'tempdb') AND recovery_model <> 3 THEN UPPER(recovery_model_desc)
+             WHEN name = N'model' THEN LOWER(recovery_model_desc)
+             WHEN name NOT IN (N'master', N'model', N'msdb', N'tempdb') AND recovery_model = (SELECT TOP(1) recovery_model FROM sys.databases WHERE name = N'model') THEN LOWER(recovery_model_desc)
+             ELSE UPPER(recovery_model_desc)
+         END AS recovery_model_desc
+       , is_auto_close_on
+       , is_auto_shrink_on
+       , CASE 
+            WHEN database_id <= 4 THEN 'system'
+            ELSE 'user'
+         END AS type
+       , SUSER_SNAME(owner_sid) AS database_owner
+       , DB_NAME(source_database_id) AS snapshot_source_db
+FROM     sys.databases
+--WHERE    name NOT IN (N'master',N'model',N'msdb',N'tempdb',N'CentralAdmin',N'PDU')
+ORDER BY type,
+         name;
+]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>

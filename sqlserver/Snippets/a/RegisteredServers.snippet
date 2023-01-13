@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<_locDefinition xmlns="urn:locstudio">
+	    <_locDefault _loc="locNone" />
+	    <_locTag _loc="locData">Title</_locTag>
+	    <_locTag _loc="locData">Description</_locTag>
+	    <_locTag _loc="locData">Author</_locTag>
+	    <_locTag _loc="locData">ToolTip</_locTag>
+	</_locDefinition>
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>Registered Servers</Title>
+                <Shortcut></Shortcut>
+			<Description>Code Snippet getting list of registered servers.</Description>
+			<Author>James Lutsey</Author>
+			<SnippetTypes>
+                <SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Declarations></Declarations>
+			<Code Language="SQL"><![CDATA[
+USE msdb;
+
+SELECT    rs.server_name as instance_name
+        , case when charindex(',',rs.server_name)>0 then substring(rs.server_name,1,charindex(',',rs.server_name)-1)
+               when charindex('\',rs.server_name)>0 then substring(rs.server_name,1,charindex('\',rs.server_name)-1)
+               else rs.server_name
+          end as server_name
+        , sg.name AS group_name
+        , rs.description
+FROM      dbo.sysmanagement_shared_server_groups_internal      AS sg
+LEFT JOIN dbo.sysmanagement_shared_registered_servers_internal AS rs ON sg.server_group_id = rs.server_group_id
+WHERE     sg.server_type = 0 --only the Database Engine Server Group
+          AND rs.server_name IS NOT NULL
+          --AND sg.name IN ('AMER - PROD', 'AMER - QA', 'AMER - DEV', 'AMER - POC', 'AMER - TEST', 'AMER - PRODFIX', 'AMER - TRAIN', 'AMER - DMZ')
+          --AND rs.description like '%%'
+ORDER BY  server_name;
+]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>

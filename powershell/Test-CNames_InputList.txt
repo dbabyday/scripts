@@ -1,0 +1,2 @@
+gcc-sql-pd-008.na.plexus.com,ITSRM-prod-mssql.db.na.plexus.com
+gcc-sql-pd-008.na.plexus.com,TermCleanup-prod-mssql.db.na.plexus.com

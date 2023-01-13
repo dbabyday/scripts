@@ -1,0 +1,125 @@
+
+Get-ADUser james.lutsey.admin
+Get-ADUser james.lutsey.admin -Properties MemberOf | Select -ExpandProperty MemberOf
+Get-ADGroup 'Neenah-US Site MSSQL Administrators in NA'
+Get-ADGroupMember 'Neenah-US Site MSSQL Administrators in NA' | Select-Object name,SamAccountName | Format-Table -AutoSize
+
+Get-ADDomain eu.plexus.com
+Get-ADUser -Server "kels-dc-003.eu.plexus.com" -Identity cristian.togor -Properties MemberOf | Select -ExpandProperty MemberOf
+
+
+Get-ADDomain ap.plexus.com
+Get-ADGroup -Server 'Acc-dc-ap-001.ap.plexus.com' -Identity 'Penang-MY Site MSSQL Administrators in AP'
+
+
+Get-ADGroup -Identity "Neenah-US BizTalk Administrators Dev in NA"
+Get-ADGroup -Identity "Neenah-US BizTalk Administrators Test Users in Neenah-US"
+Get-ADGroup -Identity "Neenah-US BizTalk Administrators QA Users in NA"
+
+
+Get-ADUser james.lutsey.admin -Properties MemberOf | Select -ExpandProperty MemberOf
+
+Get-ADGroupMember 'Neenah-US Site MSSQL Administrators in NA' | Select-Object name,SamAccountName | Sort-Object name | Format-Table -AutoSize
+Get-ADGroupMember 'Neenah-US Neen SQL Backups Edit Users in NA' | Select-Object name,SamAccountName | Sort-Object name | Format-Table -AutoSize
+
+
+Get-ADGroupMember 'Neenah-US Business Intelligence Dev Team Edit' | Select-Object name,SamAccountName | Sort-Object name | Format-Table -AutoSize
+Get-ADGroupMember 'Neenah-US Business Intelligence Dev Team Non-ITAR Users in NA' | Select-Object name,SamAccountName | Sort-Object name | Format-Table -AutoSize
+Get-ADGroupMember 'Neenah-US Systems Integration Development' | Select-Object name,SamAccountName | Sort-Object name | Format-Table -AutoSize
+Get-ADGroupMember 'Neenah-US Systems Integration Development Users in Neenah-US' | Select-Object name,SamAccountName | Sort-Object name | Format-Table -AutoSize
+
+NA\Neenah-US Business Intelligence Dev Team Edit
+
+IF EXISTS( 
+SELECT	1
+FROM	[sys].[server_role_members]	 AS [srm]
+JOIN [sys].[server_principals]	AS [r] 
+ON [r].[principal_id] = [srm].[role_principal_id]
+INNER JOIN [sys].[server_principals] AS [m] 
+ON [m].[principal_id] = [srm].[member_principal_id]
+WHERE	[m].[name] = 'NA\Neenah-US Dynamics AX PRD Servers Admins'
+AND [r].[name] = N'sysadmin')
+	ALTER SERVER ROLE [sysadmin] 
+	DROP MEMBER [NA\Neenah-US Dynamics AX PRD Servers Admins];
+ELSE
+	ALTER SERVER ROLE [sysadmin] 
+	ADD MEMBER [NA\Neenah-US Dynamics AX PRD Servers Admins];
+
+
+AP\Penang-My Supplier Portal Support Team
+AP\Penang-My Supplier Portal Support Team in AP
+AP\Penang-MY GSF L10 Analyst
+
+$g = 'Neenah-US Systems Integration Development Users in Neenah-US'
+$s = 'na.plexus.com'  # 'na.plexus.com' 'ap.plexus.com' 'eu.plexus.com' 'ext.plexus.com'
+Get-ADGroupMember -Identity $g -Server $s | Select-Object name,SamAccountName | Sort-Object name | Format-Table -AutoSize
+
+
+ Get-ADUser -Filter 'Name -like "*brunov*"'
+
+
+#----------------------------------------------------
+#--// get groups for user                        //--
+#----------------------------------------------------
+
+<#
+	For a managed service account 
+		- uncomment the 2 lines that start with "Get-ADServiceAccount"
+		- comment out the "Get_ADUser" line
+	For a regular AD account
+		- comment out the 2 lines that start with "Get-ADServiceAccount"
+		- uncomment the "Get_ADUser" line
+
+ap\kuok-hsiung.tan
+ap\zhi-wei.chong
+
+Gaurav Batra
+EXT\Gaurav.Batra
+EXT\Gaurav.Batra.admin
+
+Peter Howard
+EXT\Peter.Howard
+EXT\Peter.Howard.admin
+
+NA\max.wahlgren
+
+#>
+
+$account = 'chong-soon.ng'
+$server  ='ap.plexus.com'  # 'na.plexus.com' 'ap.plexus.com' 'eu.plexus.com' 'ext.plexus.com'
+$groups = @()
+
+#Get-ADServiceAccount -Identity $account -Properties MemberOf | select -ExpandProperty MemberOf | foreach {
+Get-ADUser -Identity $account -Server $server -Properties MemberOf | select -ExpandProperty MemberOf | foreach {
+	$domain        = $null
+	$name          = $null
+	$fullname      = $null
+	$groupcategory = $null
+
+	$domain = (($_).Substring(($_).IndexOf("DC=")+3,2)).ToUpper()  # $domain = (($_).Substring(($_).IndexOf("DC=")+3,3)).ToUpper() #<--for ext domain--|
+	$name = ($_).Substring(3,($_).IndexOf(",")-3)
+	$fullname = $domain + "\" + $name
+
+	Get-ADGroup $name | ForEach-Object { $groupcategory = $_.GroupCategory }
+	
+	$group = New-Object -TypeName PSObject
+	$group | Add-Member -Name "group_name" -MemberType Noteproperty -Value $fullname
+	$group | Add-Member -Name "group_category" -MemberType Noteproperty -Value $groupcategory
+	$groups += $group
+}
+
+$groups | Sort-Object group_name
+
+#Get-ADServiceAccount $account -properties * | Select-Object Name, SamAccountName, TrustedForDelegation | Format-Table -AutoSize
+
+
+
+
+#----------------------------------------------------
+#--// mananged service accounts                  //--
+#----------------------------------------------------
+
+Get-ADServiceAccount mGDLSQLPD002S -properties TrustedForDelegation
+Get-ADServiceAccount msaGCCSQLPD007S -properties *
+
+

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+<_locDefinition xmlns="urn:locstudio">
+    <_locDefault _loc="locNone" />
+    <_locTag _loc="locData">Title</_locTag>
+    <_locTag _loc="locData">Description</_locTag>
+    <_locTag _loc="locData">Author</_locTag>
+    <_locTag _loc="locData">ToolTip</_locTag>
+</_locDefinition>
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>Temp Table</Title>
+			<Shortcut></Shortcut>
+			<Description>Creates a temp table.</Description>
+			<Author>James Lutsey</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Declarations>
+                <Literal>
+                	<ID>TableName</ID>
+                	<ToolTip>Name of the table</ToolTip>
+                    <Default>MyTempTable</Default>
+                </Literal>
+                <Literal>
+                    <ID>Column1</ID>
+                    <ToolTip>Name of first column</ToolTip>
+                    <Default>col1</Default>
+                </Literal>
+                <Literal>
+                    <ID>Datatype1</ID>
+                    <ToolTip>Datatype of first column</ToolTip>
+                    <Default>INT</Default>
+                </Literal>
+                <Literal>
+                    <ID>Column2</ID>
+                    <ToolTip>Name of second column</ToolTip>
+                    <Default>col2</Default>
+                </Literal>
+                <Literal>
+                	<ID>Datatype2</ID>
+                	<ToolTip>Datatype of the second column</ToolTip>
+                	<Default>NVARCHAR(128)</Default>
+                </Literal>
+			</Declarations>
+			<Code Language="SQL"><![CDATA[
+IF OBJECT_ID(N'tempdb..#$TableName$',N'U') IS NOT NULL DROP TABLE #$TableName$;
+CREATE TABLE #$TableName$ 
+(
+    [$Column1$] $Datatype1$,
+    [$Column2$] $Datatype2$
+);
+]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>

@@ -1,0 +1,9 @@
+
+get-wmiobject -computername buff-db-003, co-db-029, co-db-042, co-db-043, co-db-055, co-db-056, co-db-057, co-db-070, guad-db-002, guad-db-003, guad-db-004, guad-db-005, guad-db-006, kels-db-003, kels-db-005, livi-db-001, namp-db-006, namp-db-007, namp-db-008, neen-db-013, neen-db-050, orad-db-002 win32_computersystem
+
+
+
+
+get-wmiobject -computername buff-db-003 win32_computersystem
+
+
