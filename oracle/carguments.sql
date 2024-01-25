@@ -1,3 +1,14 @@
+/*
+
+https://github.com/dbabyday
+Warranty: The software is provided "AS IS", without warranty of any kind
+
+Name: carguments.sql
+Description: See arguemnts for a specified object
+
+*/
+
+
 set define on
 
 column fully_qualified_object_name format a50

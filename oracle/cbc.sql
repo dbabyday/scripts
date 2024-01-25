@@ -1,3 +1,14 @@
+/*
+
+https://github.com/dbabyday
+Warranty: The software is provided "AS IS", without warranty of any kind
+
+Name: cbc.sql
+Description: See Blocking Chain
+
+*/
+
+
 set echo off
 set linesize 500
 set pagesize 100
@@ -12,7 +23,7 @@ column program format a50
 column wait_class format a20
 column event format a40
 column waiting format a9
-
+column wait format a45
 
 
 
@@ -30,27 +41,31 @@ DECLARE
 	l_qty   number;
 	l_stmt  varchar2(500);
 BEGIN
-	/* check if table ca.blocking_chain exists */
+	/* check if table ca.blocking_chain exists with the latest update (column process) */
 	select count(1) into l_qty
-	from   dba_tables
+	from   dba_tab_columns
 	where  owner='CA'
-	       and table_name='BLOCKING_CHAIN';
+	       and table_name='BLOCKING_CHAIN'
+	       and column_name='PROCESS';
 
 	/* create the table if it does not exist */
 	IF l_qty=0 THEN
-		l_stmt := 'create table ca.blocking_chain (order_id number, level_id number, blocking_sid number, sid number, serial# number, machine varchar2(64), username varchar2(128), server varchar2(9), osuser varchar2(128), program varchar2(48), status varchar2(8), wait_class varchar2(64), event varchar2(64), seconds_in_wait number, sql_id varchar2(13))';
+		execute immediate 'drop table ca.blocking_chain';
+		l_stmt := 'create table ca.blocking_chain (order_id number, level_id number, blocking_sid number, sid number, serial# number, machine varchar2(64), process varchar2(24), username varchar2(128), server varchar2(9), osuser varchar2(128), program varchar2(48), status varchar2(8), wait_class varchar2(64), event varchar2(64), seconds_in_wait number, sql_id varchar2(13))';
 		execute immediate l_stmt;
 	END IF;
 
 	/* check if table ca.sessions_snapshot exists */
 	select count(1) into l_qty
-	from   dba_tables
+	from   dba_tab_columns
 	where  owner='CA'
-	       and table_name='SESSIONS_SNAPSHOT';
+	       and table_name='SESSIONS_SNAPSHOT'
+	       and column_name='PROCESS';
 
 	/* create the table if it does not exist */
 	IF l_qty=0 THEN
-		l_stmt := 'create table ca.sessions_snapshot (blocking_sid number, sid number, serial# number, machine varchar2(64), username varchar2(128), server varchar2(9), osuser varchar2(128), program varchar2(48), status varchar2(8), wait_class varchar2(64), event varchar2(64), seconds_in_wait number, sql_id varchar2(13))';
+		execute immediate 'drop table ca.sessions_snapshot';
+		l_stmt := 'create table ca.sessions_snapshot (blocking_sid number, sid number, serial# number, machine varchar2(64), process varchar2(24), username varchar2(128), server varchar2(9), osuser varchar2(128), program varchar2(48), status varchar2(8), wait_class varchar2(64), event varchar2(64), seconds_in_wait number, sql_id varchar2(13))';
 		execute immediate l_stmt;
 	END IF;
 END;
@@ -78,8 +93,8 @@ BEGIN
 	l_stmt := 'truncate table ca.sessions_snapshot';
 	execute immediate l_stmt;
 	insert into ca.sessions_snapshot (
-	             blocking_sid,   sid,   serial#,   machine,   username,   server,   osuser,   program,   status,   wait_class,   event,   seconds_in_wait,   sql_id)
-	select s.blocking_session, s.sid, s.serial#, s.machine, s.username, s.server, s.osuser, s.program, s.status, s.wait_class, s.event, s.seconds_in_wait, s.sql_id
+	             blocking_sid,   sid,   serial#,   machine, process,   username,   server,   osuser,   program,   status,   wait_class,   event,   seconds_in_wait,   sql_id)
+	select s.blocking_session, s.sid, s.serial#, s.machine, s.process, s.username, s.server, s.osuser, s.program, s.status, s.wait_class, s.event, s.seconds_in_wait, s.sql_id
 	from   v$session s;
 
 	/* loop through the lead blockers */
@@ -91,8 +106,8 @@ BEGIN
 	         )
 	LOOP
 		/* insert the lead blocker */
-		insert into ca.blocking_chain (order_id, level_id, blocking_sid, sid, serial#, machine, username, server, osuser, program, status, wait_class, event, seconds_in_wait, sql_id)
-		select l_order_id, l_level_id, blocking_sid, sid, serial#, machine, username, server, osuser, program, status, wait_class, event, seconds_in_wait, sql_id
+		insert into ca.blocking_chain (order_id, level_id, blocking_sid, sid, serial#, machine, process, username, server, osuser, program, status, wait_class, event, seconds_in_wait, sql_id)
+		select l_order_id, l_level_id, blocking_sid, sid, serial#, machine, process, username, server, osuser, program, status, wait_class, event, seconds_in_wait, sql_id
 		from   ca.sessions_snapshot
 		where  sid=x.sid;
 		l_order_id := l_order_id + 1;
@@ -122,8 +137,8 @@ BEGIN
 				fetch next 1 rows only;
 
 				/* insert the session into our blocking chain results table */
-				insert into ca.blocking_chain (order_id, level_id, blocking_sid, sid, serial#, machine, username, server, osuser, program, status, wait_class, event, seconds_in_wait, sql_id)
-				select l_order_id, l_level_id, blocking_sid, sid, serial#, machine, username, server, osuser, program, status, wait_class, event, seconds_in_wait, sql_id
+				insert into ca.blocking_chain (order_id, level_id, blocking_sid, sid, serial#, machine, process, username, server, osuser, program, status, wait_class, event, seconds_in_wait, sql_id)
+				select l_order_id, l_level_id, blocking_sid, sid, serial#, machine, process, username, server, osuser, program, status, wait_class, event, seconds_in_wait, sql_id
 				from   ca.sessions_snapshot
 				where  sid=l_sid;
 				/* always increment the order_id value so we keep the blocking chain results organized */
@@ -157,30 +172,46 @@ select	case
 	end sid_col_format from ca.blocking_chain;
 column sid format &&_SID_COL_FORMAT
 
+column "MACHINE:CLIENT_PROCESS_ID" format a40
+
 set termout on
+
+prompt ;
+prompt There is a database session from JDE that has been idle for about N hours.;
+prompt It has an open transaction that is blocking N other database sessions from JDE.;
+prompt ;
 
 select	  rpad('.',4*level_id,'.')||to_char(sid) sid
 	-- , blocking_sid
 	-- , serial#
 	, username
-	, osuser
-	, substr(machine,1,20) machine
-	, program
-	, status
-	, wait_class
-	, event
+	-- , osuser
+	-- , substr(machine,1,20) machine
+	-- , process client_process_id
+	, machine||':'||process "MACHINE:CLIENT_PROCESS_ID"
+	-- , program
+	-- , status
+	, wait_class||' - '||event wait
+	-- , event
 	, case 
 		when seconds_in_wait is null then null
 		when seconds_in_wait>3600 then to_char(round(seconds_in_wait/60/60,1))||' hrs'
 		when seconds_in_wait>60 then to_char(round(seconds_in_wait/60,1))||' min'
-	  else to_char(seconds_in_wait)||' sec'
+		else to_char(seconds_in_wait)||' sec'
 	  end waiting
-	, sql_id
+	-- , sql_id
 	-- , server
+	, 'alter system kill session '''||to_char(sid)||','||serial#||''';' kill_cmd
 from     ca.blocking_chain
 order by order_id;
 
 
+prompt ;
+prompt ;
+prompt ;
+prompt Lead blocking session details;
+prompt --------------------------------------------------------------;
+prompt ;
 
 
 

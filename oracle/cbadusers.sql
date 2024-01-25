@@ -1,3 +1,14 @@
+/*
+
+https://github.com/dbabyday
+Warranty: The software is provided "AS IS", without warranty of any kind
+
+Name: cbadusers.sql
+Description: See users that do not have a status of "OPEN"
+
+*/
+
+
 set linesize 32767
 set pagesize 50000
 

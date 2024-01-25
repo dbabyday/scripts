@@ -1,3 +1,13 @@
+/*
+
+https://github.com/dbabyday
+Warranty: The software is provided "AS IS", without warranty of any kind
+
+Name: cargs_pkg.sql
+Description: See arguments for a specified package
+
+*/
+
 
 variable a_owner        varchar2(128);
 variable a_package_name varchar2(128);

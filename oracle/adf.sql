@@ -1,9 +1,11 @@
 /*
 
 https://github.com/dbabyday
+Warranty: The software is provided "AS IS", without warranty of any kind
 
 Name: adf.sql
 Description: add data file
+
 Substitution variables:
 	1. TABLESPACE_NAME - tablespace to which you are adding a datafile
 	2. DATAFILE_NAME - full path name of the new datafile
@@ -14,8 +16,8 @@ Substitution variables:
 set define "&"
 set feedback off
 prompt ;
-prompt substitution variable 1 is for TABLESPACE_NAME
-prompt substitution variable 1 is for DATAFILE_NAME
+prompt substitution variable 1 is for TABLESPACE_NAME;
+prompt substitution variable 2 is for DATAFILE_NAME;
 column my_tablespace_name new_value TABLESPACE_NAME noprint;
 column my_datafile_name new_value DATAFILE_NAME noprint;
 select '&1' my_tablespace_name, '&2' my_datafile_name from dual;

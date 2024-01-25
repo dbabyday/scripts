@@ -1,25 +1,14 @@
-/* 
+/*
 
-	databases
-	-----------------
-	cogprd01
-	cogprd02
-	jdepd01
-	jdepd03
+https://github.com/dbabyday
+Warranty: The software is provided "AS IS", without warranty of any kind
 
-	Evidence Files
-	----------------------------------------------------------
-	SOX_DBAdminAccess.Oracle_cogprd01.20200205.csv
-	SOX_DBAdminAccess.Oracle_cogprd01.20200205.Signed.pdf
-	SOX_DBAdminAccess.Oracle_cogprd02.20200205.csv
-	SOX_DBAdminAccess.Oracle_cogprd02.20200205.Signed.pdf
-	SOX_DBAdminAccess.Oracle_jdepd01.20200205.csv
-	SOX_DBAdminAccess.Oracle_jdepd01.20200205.Signed.pdf
-	SOX_DBAdminAccess.Oracle_jdepd03.20200205.csv
-	SOX_DBAdminAccess.Oracle_jdepd03.20200205.Signed.pdf
-    SOX_DBAdminAccess.Oracle_Query.sql
+Name: cadminprivs.sql
+Description: See elevated privileges in the database
 
 */
+
+
 
 set linesize 300
 set pagesize 50000

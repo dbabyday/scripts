@@ -1,3 +1,14 @@
+/*
+
+https://github.com/dbabyday
+Warranty: The software is provided "AS IS", without warranty of any kind
+
+Name: bl_accepted_no.sql
+Description: Set Sql Plan Baseline accepted=NO
+
+*/
+
+
 set feedback off
 prompt Substitution variable 1 = _SQL_HANDLE;
 prompt Substitution variable 2 = _SQL_PLAN;

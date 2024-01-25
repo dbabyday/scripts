@@ -1,3 +1,14 @@
+/*
+
+https://github.com/dbabyday
+Warranty: The software is provided "AS IS", without warranty of any kind
+
+Name: cblocking.sql
+Description: See Blocking in the database with a quick and lightweight query
+
+*/
+
+
 set echo off
 set linesize 500
 set pagesize 100

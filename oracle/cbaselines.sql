@@ -1,3 +1,14 @@
+/*
+
+https://github.com/dbabyday
+Warranty: The software is provided "AS IS", without warranty of any kind
+
+Name: cbaselines.sql
+Description: See SQL Plan Baselines
+
+*/
+
+
 column plan_name     format a35
 column sql_text      format a55
 column enabled       format a10

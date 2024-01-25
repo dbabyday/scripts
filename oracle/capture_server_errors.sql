@@ -1,3 +1,14 @@
+/*
+
+https://github.com/dbabyday
+Warranty: The software is provided "AS IS", without warranty of any kind
+
+Name: capture_server_errors.sql
+Description: Create the table and trigger to capture server errors thrown by Oracle Database
+
+*/
+
+
 -- create objects as sysdba
 
 create table sys.server_errors (

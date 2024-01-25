@@ -1,3 +1,14 @@
+/*
+
+https://github.com/dbabyday
+Warranty: The software is provided "AS IS", without warranty of any kind
+
+Name: cblp.sql
+Description: See the Plan for SQL Plan Baselines
+
+*/
+
+
 set feedback off
 prompt Substitution variable 1 = PLAN_NAME;
 column my_plan_name new_value _PLAN_NAME noprint;

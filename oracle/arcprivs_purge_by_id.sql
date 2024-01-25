@@ -1,3 +1,14 @@
+/*
+
+https://github.com/dbabyday
+Warranty: The software is provided "AS IS", without warranty of any kind
+
+Name: arcprivs_purge_by_id.sql
+Description: Purge records for achived privileges by a given id
+
+*/
+
+
 set echo off
 set feedback on
 set verify off

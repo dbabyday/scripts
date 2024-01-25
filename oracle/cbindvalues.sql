@@ -1,3 +1,14 @@
+/*
+
+https://github.com/dbabyday
+Warranty: The software is provided "AS IS", without warranty of any kind
+
+Name: cbindvalues.sql
+Description: See the Bind Variable Values for a given SQL_ID
+
+*/
+
+
 set define on
 set verify off
 set long 1000000
