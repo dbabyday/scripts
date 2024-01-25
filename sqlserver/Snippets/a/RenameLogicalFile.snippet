@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+<_locDefinition xmlns="urn:locstudio">
+    <_locDefault _loc="locNone" />
+    <_locTag _loc="locData">Title</_locTag>
+    <_locTag _loc="locData">Description</_locTag>
+    <_locTag _loc="locData">Author</_locTag>
+    <_locTag _loc="locData">ToolTip</_locTag>
+</_locDefinition>
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>Rename Logical File</Title>
+			<Shortcut></Shortcut>
+			<Description>Change the logical file name for a database file</Description>
+			<Author>James Lutsey</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Declarations>
+                <Literal>
+                	<ID>DatabaseName</ID>
+                	<ToolTip>Database name</ToolTip>
+                    <Default>Pricing</Default>
+                </Literal>
+                <Literal>
+                	<ID>FileName</ID>
+                	<ToolTip>Current logical file name</ToolTip>
+                    <Default>Pricing</Default>
+                </Literal>
+                <Literal>
+                	<ID>NewName</ID>
+                	<ToolTip>New logical file name</ToolTip>
+                    <Default>Pricing_TEST</Default>
+                </Literal>
+			</Declarations>
+			<Code Language="SQL"><![CDATA[
+use master;
+alter database $DatabaseName$ modify file (NAME = $FileName$, NEWNAME = $NewName$ );
+]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>

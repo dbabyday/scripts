@@ -18,3 +18,6 @@ BEGIN
     END IF;
 END;
 /
+
+
+set feedback on

@@ -45,7 +45,7 @@ left join
 where
        s.username='&&_USERNAME'
 order by
-       s.logon_time;
+       s.seconds_in_wait;
 
 
 

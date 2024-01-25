@@ -26,36 +26,55 @@
 --     sql> startup
 
 
-
 set echo off
-set feedback off
 set define on
 set trimout on
 set serveroutput on
 set verify off
 
-DECLARE
-    cur_processes    varchar(10) := '';
-    cur_sessions     varchar(10) := '';
-    cur_transactions varchar(10) := '';
 
-	num_processes    number(38) := &num_processes;
+column resource_name format a15
+column initial_allocation format a18
+column limit_value format a11
+
+select 
+	  resource_name
+	, current_utilization
+	, max_utilization
+	, initial_allocation
+	, limit_value
+from 
+	v$resource_limit 
+where 
+	resource_name in ('processes','sessions','transactions')
+order by
+	resource_name;
+
+
+column name format a15
+column value format a15
+
+select
+	  name
+	, value
+from
+	v$parameter
+where
+	name in ('processes','sessions','transactions')
+order by
+	name;
+
+prompt ;
+
+set feedback off
+DECLARE
+	num_processes    number(38) := &new_number_of_processes;
 	num_sessions     number(38) := 0;
 	num_transactions number(38) := 0;
 BEGIN
-	select value into cur_processes    from v$parameter where name='processes';
-    select value into cur_sessions     from v$parameter where name='sessions';
-    select value into cur_transactions from v$parameter where name='transactions';
-
     num_sessions     := num_processes * 1.1 + 5;
 	num_transactions := num_sessions * 1.1;
 
-	dbms_output.put_line(chr(10));
-	dbms_output.put_line('-- current values');
-    dbms_output.put_line('-------------------------------------------------------------------------');
-    dbms_output.put_line('processes:    '||cur_processes);
-    dbms_output.put_line('sessions:     '||cur_sessions);
-    dbms_output.put_line('transactions: '||cur_transactions);
     dbms_output.put_line(chr(10));
     dbms_output.put_line('-- printing commands for you to review/use');
 	dbms_output.put_line('-------------------------------------------------------------------------');
@@ -66,4 +85,5 @@ BEGIN
 END;
 /
 
+set feedback on
 

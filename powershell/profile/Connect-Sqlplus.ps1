@@ -36,6 +36,11 @@ Function Connect-Sqlplus {
 	Process {
 		$bstr = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($yeti)
 		$yeti2 = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($bstr)
+		
+		if ($DatabaseName -in "dbadv01","cdbdv01") {
+			$Username = "C##$Username"
+		}
+
 		sqlplus $Username/$yeti2@$DatabaseName
 		Remove-Variable -Name yeti2
 	}

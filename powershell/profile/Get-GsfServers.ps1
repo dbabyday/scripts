@@ -1,0 +1,28 @@
+Write-Host
+Write-Host
+Write-Host "                   ---------------------  --------------  --------------  --------------  --------------"
+Write-Host "                   PD                     QA              Test            Dev             PRODFIX"
+Write-Host "                   ---------------------  --------------  --------------  --------------  --------------"
+Write-Host "        OLTP AMER  GCC-SQL-PD-023\OLTP01  DCC-SQL-QA-010  DCC-SQL-TS-003  DCC-SQL-DV-017  DCC-SQL-PF-001"
+Write-Host "        OLTP PENA  ACC-SQL-PD-001         ACC-SQL-QA-004  ACC-SQL-TS-006  ACC-SQL-DV-001"
+Write-Host "        OLTP XIAM  XIA-SQL-PD-011\OLTP01  XIA-SQL-QA-008"
+Write-Host "                   ---------------------  --------------  --------------  --------------  --------------"
+Write-Host "                   PD                     QA              Test            Dev             PRODFIX"
+Write-Host "                   ---------------------  --------------  --------------  --------------  --------------"
+Write-Host "   Reporting AMER  GCC-SQL-PD-019         DCC-SQL-QA-009  DCC-SQL-TS-003"
+Write-Host "   Reporting PENA  ACC-SQL-PD-008         ACC-SQL-QA-003  ACC-SQL-TS-006  ACC-SQL-DV-001"
+Write-Host "   Reporting XIAM  XIA-SQL-PD-010\REPORT  XIA-SQL-QA-007"
+Write-Host "                   ---------------------  --------------  --------------  --------------  --------------"
+Write-Host "                   PD                     QA              Test            Dev             PRODFIX"
+Write-Host "                   ---------------------  --------------  --------------  --------------  --------------"
+Write-Host "        SSIS AMER  CO-DB-079              CO-DB-779       CO-DB-992"
+Write-Host "        SSIS PENA  ACC-SQL-PD-002         ACC-SQL-QA-001  ACC-SQL-TS-002  ACC-SQL-DV-001"
+Write-Host "        SSIS XIAM  XIA-SQL-PD-005         XIA-SQL-QA-004"
+Write-Host "                   ---------------------  --------------  --------------  --------------  --------------"
+Write-Host "                   PD                     QA              Test            Dev             PRODFIX"
+Write-Host "                   ---------------------  --------------  --------------  --------------  --------------"
+Write-Host "Distribution AMER  GCC-SQL-PD-007         DCC-SQL-TS-001  DCC-SQL-TS-001  DCC-SQL-TS-001"
+Write-Host "Distribution PENA  ACC-SQL-PD-025         ACC-SQL-TS-005  ACC-SQL-TS-001  ACC-SQL-DV-001"
+Write-Host "Distribution XIAM  XIA-SQL-PD-005         XIA-SQL-QA-005"
+Write-Host
+Write-Host

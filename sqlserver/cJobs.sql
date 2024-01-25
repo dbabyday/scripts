@@ -21,19 +21,9 @@
 
 
 
-DECLARE @TimeZone VARCHAR(50)
-EXEC MASTER.dbo.xp_regread 'HKEY_LOCAL_MACHINE',
-'SYSTEM\CurrentControlSet\Control\TimeZoneInformation',
-'TimeZoneKeyName',@TimeZone OUT
-SELECT @TimeZone
-select getdate();
-* 
-
-EXECUTE SSISDB.catalog.configure_catalog @property_name=N'RETENTION_WINDOW', @property_value=1270;
-select * from catalog.catalog_properties;
-EXECUTE msdb.dbo.sp_start_job @job_name  = 'SSIS Server Maintenance Job';
-
-
+DECLARE @TimeZone VARCHAR(50);
+EXEC MASTER.dbo.xp_regread 'HKEY_LOCAL_MACHINE', 'SYSTEM\CurrentControlSet\Control\TimeZoneInformation', 'TimeZoneKeyName',@TimeZone OUT;
+SELECT @TimeZone time_zone, getdate() instance_time, getutcdate() utc_date;
 
 
 ************************************************************************************************************************************************/

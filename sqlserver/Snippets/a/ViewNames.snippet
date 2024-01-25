@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<_locDefinition xmlns="urn:locstudio">
+	    <_locDefault _loc="locNone" />
+	    <_locTag _loc="locData">Title</_locTag>
+	    <_locTag _loc="locData">Description</_locTag>
+	    <_locTag _loc="locData">Author</_locTag>
+	    <_locTag _loc="locData">ToolTip</_locTag>
+	</_locDefinition>
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>Compliations Percent</Title>
+                <Shortcut></Shortcut>
+			<Description>Code Snippet for getting the percent of batch requests that hit the plan cache.</Description>
+			<Author>James Lutsey</Author>
+			<SnippetTypes>
+                <SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Declarations>
+                <Literal>
+                	<ID>BatchRequests</ID>
+                	<ToolTip>Number of batch requests during the sample</ToolTip>
+                    <Default>0</Default>
+                </Literal>
+                <Literal>
+                	<ID>Compliations</ID>
+                	<ToolTip>Number of compilations during the sample</ToolTip>
+                    <Default>0</Default>
+                </Literal>
+            </Declarations>
+			<Code Language="SQL"><![CDATA[
+
+declare
+	  @batchRequests decimal(11,1) = $BatchRequests$
+	, @compliations  decimal(11,1) = $Compliations$;
+
+select
+	  cast(@batchRequests as int) batch_requests
+	, cast(@compliations as int) compilations
+	, cast(round((@batchRequests-@compliations)/@batchRequests*100,0) as int) percent_hit_plan_cache;
+
+]]>
+            </Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>

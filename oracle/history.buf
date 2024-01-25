@@ -1,0 +1,8 @@
+alter table ca.databases modify (
+ORA_ENV_STATUS_REPORT null,
+DATA_FILE_BACKUPS null,
+CONFIG_FILE_BACKUPS null,
+ARCHIVELOG_BACKUPS null,
+DFLT_PRIVS null,
+DB_INFO null
+);

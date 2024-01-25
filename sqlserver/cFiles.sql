@@ -271,10 +271,12 @@ ORDER BY
     --11, 1, 2  -- Drive, Database_Name, [File_Name];
     --f.size
 /*
+use master;
+ALTER DATABASE [BizTalk_General] MODIFY FILE ( NAME = N'BizTalk_General_log', SIZE=100GB, FILEGROWTH=2048MB, MAXSIZE = UNLIMITED );
+ALTER DATABASE [BizTalk_General] MODIFY FILE ( NAME = N'BizTalk_General', FILEGROWTH=2048MB );
 
-ALTER DATABASE [Label_Integration_QA] MODIFY FILE ( NAME = N'Label_Integation', MAXSIZE = UNLIMITED );
-
-
+use BizTalk_General;
+dbcc shrinkfile(BizTalk_General_log,50000);
 
 */
 ------------------------------------------------------------------------------------------

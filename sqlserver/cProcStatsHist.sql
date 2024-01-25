@@ -17,7 +17,7 @@ select
 	, convert(decimal(10,3), max_elapsed_time / 1000000.0) max_elapsed_time
 	, convert(decimal(10,3), min_elapsed_time / 1000000.0) min_elapsed_time
 	-- , total_worker_time
-	, avg_worker_time
+	, convert(decimal(10,3), avg_worker_time / 1000000.0) avg_worker_time_seconds
 	-- , last_worker_time
 	-- , min_worker_time
 	-- , max_worker_time
@@ -47,7 +47,8 @@ from
 where
 	database_name=N'GSF2_AMER_PROD'
 	and schema_name=N'dbo'
-	and object_name=N'usp_VisualDataManagementNextModel_Select'
+	and object_name=N'usp_VisualDataManagementCurrentModelSMT_Select'
+	--and execution_count_delta>0
 	--and avg_elapsed_time is not null
 	--and avg_elapsed_time>1000000*1
 	--and entry_time > getdate()-2
@@ -68,6 +69,8 @@ order by
 dbcc freeproccache(put_the_plan_handle_here);
 
 
+
+select * from sys.dm_exec_query_plan(put_the_plan_handle_here);
 
 
 */

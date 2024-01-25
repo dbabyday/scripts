@@ -23,7 +23,6 @@ SET NOCOUNT ON;
 --  SELECT 'USE ' + QUOTENAME([name]) + ';' FROM [sys].[databases] ORDER BY [name];
 
 
-
 -- USER INPUT 
 -- enter a principal name or leave blank to get all database permissions
 DECLARE @principal AS NVARCHAR(128) = N'';  -- select name from sys.database_principals where type in ('G','R','S','U') and name NOT IN (N'guest',N'INFORMATION_SCHEMA',N'sys',N'MS_DataCollectorInternalUser') and is_fixed_role = 0 order by name;
@@ -176,10 +175,10 @@ BEGIN
     INSERT INTO #Results (definition) VALUES (N''), (N'-- create sql logins');
     INSERT INTO #Results (definition)
     SELECT     CASE
-                   WHEN s.is_policy_checked = 1 AND s.is_expiration_checked = 1 THEN N'IF NOT EXISTS(SELECT 1 FROM sys.server_principals WHERE name = N''' + s.name + N''') CREATE LOGIN [' + s.name + N'] WITH PASSWORD = N''' + p.password + N''' HASHED, CHECK_EXPIRATION = ON, CHECK_POLICY = ON, DEFAULT_DATABASE = [' + s.default_database_name + N'], DEFAULT_LANGUAGE = [' + s.default_language_name + N'];'
-                   WHEN s.is_policy_checked = 1 AND s.is_expiration_checked = 0 THEN N'IF NOT EXISTS(SELECT 1 FROM sys.server_principals WHERE name = N''' + s.name + N''') CREATE LOGIN [' + s.name + N'] WITH PASSWORD = N''' + p.password + N''' HASHED, CHECK_EXPIRATION = ON, CHECK_POLICY = OFF, DEFAULT_DATABASE = [' + s.default_database_name + N'], DEFAULT_LANGUAGE = [' + s.default_language_name + N'];'
-                   WHEN s.is_policy_checked = 0 AND s.is_expiration_checked = 1 THEN N'IF NOT EXISTS(SELECT 1 FROM sys.server_principals WHERE name = N''' + s.name + N''') CREATE LOGIN [' + s.name + N'] WITH PASSWORD = N''' + p.password + N''' HASHED, CHECK_EXPIRATION = OFF, CHECK_POLICY = ON, DEFAULT_DATABASE = [' + s.default_database_name + N'], DEFAULT_LANGUAGE = [' + s.default_language_name + N'];'
-                   WHEN s.is_policy_checked = 0 AND s.is_expiration_checked = 0 THEN N'IF NOT EXISTS(SELECT 1 FROM sys.server_principals WHERE name = N''' + s.name + N''') CREATE LOGIN [' + s.name + N'] WITH PASSWORD = N''' + p.password + N''' HASHED, CHECK_EXPIRATION = OFF, CHECK_POLICY = OFF, DEFAULT_DATABASE = [' + s.default_database_name + N'], DEFAULT_LANGUAGE = [' + s.default_language_name + N'];'
+                   WHEN s.is_policy_checked = 1 AND s.is_expiration_checked = 1 THEN N'IF NOT EXISTS(SELECT 1 FROM sys.server_principals WHERE name = N''' + s.name + N''') CREATE LOGIN [' + s.name + N'] WITH PASSWORD = ' + p.password + N' HASHED, CHECK_EXPIRATION = ON, CHECK_POLICY = ON, DEFAULT_DATABASE = [' + s.default_database_name + N'], DEFAULT_LANGUAGE = [' + s.default_language_name + N'];'
+                   WHEN s.is_policy_checked = 1 AND s.is_expiration_checked = 0 THEN N'IF NOT EXISTS(SELECT 1 FROM sys.server_principals WHERE name = N''' + s.name + N''') CREATE LOGIN [' + s.name + N'] WITH PASSWORD = ' + p.password + N' HASHED, CHECK_EXPIRATION = ON, CHECK_POLICY = OFF, DEFAULT_DATABASE = [' + s.default_database_name + N'], DEFAULT_LANGUAGE = [' + s.default_language_name + N'];'
+                   WHEN s.is_policy_checked = 0 AND s.is_expiration_checked = 1 THEN N'IF NOT EXISTS(SELECT 1 FROM sys.server_principals WHERE name = N''' + s.name + N''') CREATE LOGIN [' + s.name + N'] WITH PASSWORD = ' + p.password + N' HASHED, CHECK_EXPIRATION = OFF, CHECK_POLICY = ON, DEFAULT_DATABASE = [' + s.default_database_name + N'], DEFAULT_LANGUAGE = [' + s.default_language_name + N'];'
+                   WHEN s.is_policy_checked = 0 AND s.is_expiration_checked = 0 THEN N'IF NOT EXISTS(SELECT 1 FROM sys.server_principals WHERE name = N''' + s.name + N''') CREATE LOGIN [' + s.name + N'] WITH PASSWORD = ' + p.password + N' HASHED, CHECK_EXPIRATION = OFF, CHECK_POLICY = OFF, DEFAULT_DATABASE = [' + s.default_database_name + N'], DEFAULT_LANGUAGE = [' + s.default_language_name + N'];'
                    ELSE N'-- something is wrong with the logic for sql login [' + s.name + N']'
                END
     FROM       sys.sql_logins AS s

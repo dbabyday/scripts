@@ -1,3 +1,11 @@
+set define "&"
+set feedback off
+prompt Substitution variable 1 = OWNER;
+column my_owner new_value _OWNER noprint;
+select '&1' my_owner from dual;
+set feedbac on
+
+
 column obj format a50
 column procedure_name format a30
 
@@ -8,6 +16,10 @@ select   object_type
               else owner||'.'||object_name||'.'||procedure_name
          end obj
 from     dba_procedures
-where    upper(owner)=upper('&owner')
+where    upper(owner)=upper('&&_OWNER')
 order by object_name
        , subprogram_id;
+
+
+undefine 1
+undefine _OWNER

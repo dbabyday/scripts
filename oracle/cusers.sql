@@ -18,5 +18,5 @@ select username
      , to_char(last_login,'YYYY-MM-DD HH24:MI:SS')  last_login
 from   dba_users
 where  oracle_maintained='N'
-order by last_login;
+order by username;
 

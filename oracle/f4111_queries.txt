@@ -1,0 +1,521 @@
+08:51:15 jlutsey(732)bir sql> select sql_fulltext from v$sql where upper(sql_text) like '%F4111%' and parsing_schema_name<>'GG_ADM';
+
+SQL_FULLTEXT
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+SELECT
+TRIM (a.illitm) "itemNumber",
+
+SUM(a.iltrqt) "Qty"
+
+--DECODE(ILDGL,'0',' ', TO_CHAR(TO_DATE(SUBSTR(LPAD((a.ildgl), 6, '0'), 4)
+--  || (1900 + SUBSTR(LPAD(a.ildgl, 6, '0'), 1, 3)), 'dddyyyy'),'dd/Mon/yyyy'))  "glDate"
+
+FROM proddta.F4111 a
+
+WHERE 1=1
+
+AND a.ildct = 'IA'
+
+--AND a.ilkco in ('00032', '00047') -- for a regional report
+AND a.ilkco = '00047' -- for a site report
+AND a.ilglpt = 'IN89' -- all consumables & SMIN +/- transactions
+AND A.ILTREX <> 'Location Add'
+
+-- Tuesday to Friday
+AND a.ildgl = TO_NUMBER(TO_CHAR(SYSDATE - 1, 'yyyyddd')) -1900000
+
+-- IF the report is ran on a Monday
+--AND (a.ildgl >= TO_NUMBER(TO_CHAR(SYSDATE - 3, 'yyyyddd')) -1900000) AND (a.ildgl < TO_NUMBER(TO_CHAR(SYSDATE, 'yyyyddd')) -1900000)
+
+GROUP BY a.illitm
+ORDER BY a.illitm
+
+SELECT
+TRIM(ilmcu) "Site", TRIM (illitm) "itemNumber",
+ildct "trType", iltrqt "Qty", 0 AS "extStd",
+
+DECODE(ILDGL,'0',' ', TO_CHAR(TO_DATE(SUBSTR(LPAD((ILDGL), 6, '0'), 4)
+ || (1900 + SUBSTR(LPAD(ildgl, 6, '0'), 1, 3)), 'dddyyyy'),'dd/mm/yyyy'))  "glDate",
+
+ ildoco "woNumber"
+
+FROM proddta.F4111
+
+WHERE 1 = 1
+AND ilkco =  '00047'
+AND ilglpt = 'IN50'
+AND ildct = 'IT'
+
+--Pulls data for prior day
+AND ildgl >= TO_NUMBER(TO_CHAR(SYSDATE -1, 'yyyyddd')) -1900000
+
+-- IF the report is ran on a Monday
+--AND (a.ildgl >= TO_NUMBER(TO_CHAR(SYSDATE - 3, 'yyyyddd')) -1900000) AND (a.ildgl < TO_NUMBER(TO_CHAR(SYSDATE, 'yyyyddd')) -1900000)
+
+ORDER BY illitm
+
+--Date Range
+--AND a.ildgl >= 118301
+--AND a.ildgl <= 118326
+
+SELECT
+TRIM(ilmcu) "Site", TRIM (illitm) "itemNumber",
+ildct "trType", iltrqt "Qty", 1 AS "extStd",
+
+DECODE(ILDGL,'0',' ', TO_CHAR(TO_DATE(SUBSTR(LPAD((ILDGL), 6, '0'), 4)
+ || (1900 + SUBSTR(LPAD(ildgl, 6, '0'), 1, 3)), 'dddyyyy'),'dd/mm/yyyy'))  "glDate"
+
+FROM proddta.F4111
+
+WHERE 1 = 1
+AND ILDCT = 'IT'
+AND ILGLPT IN ('IN50','IN90')
+AND ILMCU = '         470'
+AND ILLITM NOT LIKE '%*%'
+
+--Pulls data for prior day
+AND ildgl >= TO_NUMBER(TO_CHAR(SYSDATE -28, 'yyyyddd')) -1900000
+
+-- IF the report is ran on a Monday
+--AND (a.ildgl >= TO_NUMBER(TO_CHAR(SYSDATE - 3, 'yyyyddd')) -1900000) AND (a.ildgl < TO_NUMBER(TO_CHAR(SYSDATE, 'yyyyddd')) -1900000)
+
+ORDER BY illitm
+
+--Date Range
+--AND a.ildgl >= 118301
+--AND a.ildgl <= 118326
+
+SELECT  RTRIM(A.illitm) "Part Number",
+        to_char(to_date(substr(lpad(A.iltrdj, 6, '0'), 4) || (1900 + substr(lpad(A.iltrdj, 6, '0'), 1, 3)), 'dddyyyy'), 'mm') "Month",
+        to_char(to_date(substr(lpad(A.iltrdj, 6, '0'), 4) || (1900 + substr(lpad(A.iltrdj, 6, '0'), 1, 3)), 'dddyyyy'), 'yyyy') "Year",
+        SUM(A.Iltrqt) "Qty Transaction"
+
+
+FROM PRODDTA.F4111 A, PRODDTA.F4102 B
+
+WHERE A.Ilitm = B.Ibitm
+AND   A.Ilmcu = B.Ibmcu
+
+
+AND   A.Ildct = 'IM'
+AND   B.IBPRP4 = '888'
+AND   A.Iltrdj >= '113001'
+AND   A.ilkco        IN ('00060', '00040')
+GROUP BY
+ A.illitm,
+ to_char(to_date(substr(lpad(A.iltrdj, 6, '0'), 4) || (1900 + substr(lpad(A.iltrdj, 6, '0'), 1, 3)), 'dddyyyy'), 'mm'),
+ to_char(to_date(substr(lpad(A.iltrdj, 6, '0'), 4) || (1900 + substr(lpad(A.iltrdj, 6, '0'), 1, 3)), 'dddyyyy'), 'yyyy')
+
+SELECT
+TRIM(ilmcu) "Site", TRIM (illitm) "itemNumber",
+ildct "trType", iltrqt "Qty", 1 AS "extStd",
+
+DECODE(ILDGL,'0',' ', TO_CHAR(TO_DATE(SUBSTR(LPAD((ILDGL), 6, '0'), 4)
+ || (1900 + SUBSTR(LPAD(ildgl, 6, '0'), 1, 3)), 'dddyyyy'),'dd/mm/yyyy'))  "glDate"
+
+FROM proddta.F4111
+
+WHERE 1 = 1
+AND ILDCT = 'IT'
+AND ILGLPT IN ('IN50','IN90')
+AND ILMCU = '         470'
+AND ILLITM NOT LIKE '%*%'
+
+--Pulls data for prior day
+AND ildgl >= TO_NUMBER(TO_CHAR(SYSDATE -7, 'yyyyddd')) -1900000
+
+-- IF the report is ran on a Monday
+--AND (a.ildgl >= TO_NUMBER(TO_CHAR(SYSDATE - 3, 'yyyyddd')) -1900000) AND (a.ildgl < TO_NUMBER(TO_CHAR(SYSDATE, 'yyyyddd')) -1900000)
+
+ORDER BY illitm
+
+--Date Range
+--AND a.ildgl >= 118301
+--AND a.ildgl <= 118326
+
+SELECT
+TRIM (illitm) "itemNumber", COUNT(*) AS "Count"
+--ildct "trType", iltrqt "Qty", 1 AS "extStd",
+
+--DECODE(ILDGL,'0',' ', TO_CHAR(TO_DATE(SUBSTR(LPAD((ILDGL), 6, '0'), 4)
+-- || (1900 + SUBSTR(LPAD(ildgl, 6, '0'), 1, 3)), 'dddyyyy'),'dd/mm/yyyy'))  "glDate"
+
+FROM proddta.F4111
+
+WHERE 1 = 1
+AND ILDCT = 'IT'
+AND ILGLPT IN ('IN50','IN90')
+AND ILMCU = '         470'
+AND iltrqt > 0
+AND ILLITM NOT LIKE '%*%'
+
+--Pulls data for prior day
+AND ildgl >= TO_NUMBER(TO_CHAR(SYSDATE -28, 'yyyyddd')) -1900000
+
+GROUP BY illitm
+
+-- IF the report is ran on a Monday
+--AND (a.ildgl >= TO_NUMBER(TO_CHAR(SYSDATE - 3, 'yyyyddd')) -1900000) AND (a.ildgl < TO_NUMBER(TO_CHAR(SYSDATE, 'yyyyddd')) -1900000)
+
+ORDER BY illitm
+
+--Date Range
+--AND a.ildgl >= 118301
+--AND a.ildgl <= 118326
+
+SELECT
+TRIM (illitm) "itemNumber", COUNT(*)
+--ildct "trType", iltrqt "Qty", 1 AS "extStd",
+
+--DECODE(ILDGL,'0',' ', TO_CHAR(TO_DATE(SUBSTR(LPAD((ILDGL), 6, '0'), 4)
+-- || (1900 + SUBSTR(LPAD(ildgl, 6, '0'), 1, 3)), 'dddyyyy'),'dd/mm/yyyy'))  "glDate"
+
+FROM proddta.F4111
+
+WHERE 1 = 1
+AND ILDCT = 'IT'
+AND ILGLPT IN ('IN50','IN90')
+AND ILMCU = '         470'
+AND iltrqt > 0
+AND ILLITM NOT LIKE '%*%'
+
+--Pulls data for prior day
+AND ildgl >= TO_NUMBER(TO_CHAR(SYSDATE -28, 'yyyyddd')) -1900000
+
+GROUP BY illitm
+
+-- IF the report is ran on a Monday
+--AND (a.ildgl >= TO_NUMBER(TO_CHAR(SYSDATE - 3, 'yyyyddd')) -1900000) AND (a.ildgl < TO_NUMBER(TO_CHAR(SYSDATE, 'yyyyddd')) -1900000)
+
+ORDER BY illitm
+
+--Date Range
+--AND a.ildgl >= 118301
+--AND a.ildgl <= 118326
+
+select sql_fulltext from v$sql where upper(sql_text) like '%F4111%' and parsing_schema_name<>'GG_ADM'
+SELECT
+TRIM (illitm) "itemNumber", COUNT(*) AS "Count"
+--ildct "trType", iltrqt "Qty", 1 AS "extStd",
+
+--DECODE(ILDGL,'0',' ', TO_CHAR(TO_DATE(SUBSTR(LPAD((ILDGL), 6, '0'), 4)
+-- || (1900 + SUBSTR(LPAD(ildgl, 6, '0'), 1, 3)), 'dddyyyy'),'dd/mm/yyyy'))  "glDate"
+
+FROM proddta.F4111
+
+WHERE 1 = 1
+AND ILDCT = 'IT'
+AND ILGLPT IN ('IN50','IN90')
+AND ILMCU = '         470'
+AND iltrqt > 0
+AND ILLITM NOT LIKE '%*%'
+
+--Pulls data for prior day
+AND ildgl >= TO_NUMBER(TO_CHAR(SYSDATE -56, 'yyyyddd')) -1900000
+
+GROUP BY illitm
+
+-- IF the report is ran on a Monday
+--AND (a.ildgl >= TO_NUMBER(TO_CHAR(SYSDATE - 3, 'yyyyddd')) -1900000) AND (a.ildgl < TO_NUMBER(TO_CHAR(SYSDATE, 'yyyyddd')) -1900000)
+
+ORDER BY illitm
+
+--Date Range
+--AND a.ildgl >= 118301
+--AND a.ildgl <= 118326
+
+SELECT
+TRIM (illitm) "itemNumber", COUNT(*) AS "Count"
+--ildct "trType", iltrqt "Qty", 1 AS "extStd",
+
+--DECODE(ILDGL,'0',' ', TO_CHAR(TO_DATE(SUBSTR(LPAD((ILDGL), 6, '0'), 4)
+-- || (1900 + SUBSTR(LPAD(ildgl, 6, '0'), 1, 3)), 'dddyyyy'),'dd/mm/yyyy'))  "glDate"
+
+FROM proddta.F4111
+
+WHERE 1 = 1
+AND ILDCT = 'IT'
+AND ILGLPT IN ('IN50','IN90')
+AND ILMCU = '         470'
+AND iltrqt > 0
+AND ILLITM NOT LIKE '%*%'
+
+--Pulls data for prior day
+AND ildgl >= TO_NUMBER(TO_CHAR(SYSDATE -182, 'yyyyddd')) -1900000
+
+GROUP BY illitm
+
+-- IF the report is ran on a Monday
+--AND (a.ildgl >= TO_NUMBER(TO_CHAR(SYSDATE - 3, 'yyyyddd')) -1900000) AND (a.ildgl < TO_NUMBER(TO_CHAR(SYSDATE, 'yyyyddd')) -1900000)
+
+ORDER BY illitm
+
+--Date Range
+--AND a.ildgl >= 118301
+--AND a.ildgl <= 118326
+
+SELECT
+TRIM(ilmcu) "Site", TRIM (illitm) "itemNumber",
+ildct "trType", iltrqt "Qty", 1 AS "extStd",
+
+DECODE(ILDGL,'0',' ', TO_CHAR(TO_DATE(SUBSTR(LPAD((ILDGL), 6, '0'), 4)
+ || (1900 + SUBSTR(LPAD(ildgl, 6, '0'), 1, 3)), 'dddyyyy'),'dd/mm/yyyy'))  "glDate"
+
+FROM proddta.F4111
+
+WHERE 1 = 1
+AND ILDCT = 'IT'
+AND ILGLPT IN ('IN50','IN90')
+AND ILMCU = '         470'
+AND iltrqt > 0
+AND ILLITM NOT LIKE '%*%'
+
+--Pulls data for prior day
+AND ildgl >= TO_NUMBER(TO_CHAR(SYSDATE -28, 'yyyyddd')) -1900000
+
+-- IF the report is ran on a Monday
+--AND (a.ildgl >= TO_NUMBER(TO_CHAR(SYSDATE - 3, 'yyyyddd')) -1900000) AND (a.ildgl < TO_NUMBER(TO_CHAR(SYSDATE, 'yyyyddd')) -1900000)
+
+ORDER BY illitm
+
+--Date Range
+--AND a.ildgl >= 118301
+--AND a.ildgl <= 118326
+
+SELECT  CAST(TRIM(a.ilmcu) AS VARCHAR(3)) "Site", TRIM (a.illitm) "itemNumber",  a.ildct "trType", a.iltrqt "Qty", 0 AS "extStd",  DECODE(ILDGL,'0',' ', TO_CHAR(TO_DATE(SUBSTR(LPAD((a.ildgl), 6, '0'),
+ 4) || (1900 + SUBSTR(LPAD(a.ildgl, 6, '0'), 1, 3)), 'dddyyyy'),'mm/dd/yyyy'))  "glDate",  a.ildoco "woNumber"  FROM proddta.F4111 a  WHERE 1 = 1 AND a.ilkco in ('00032', '00047')  AND a.ilglpt = 'IN5
+0' AND a.ildct = 'IM' AND a.ildgl >= TO_NUMBER(TO_CHAR(SYSDATE - 7, 'yyyyddd')) -1900000
+
+SELECT
+TRIM (illitm) "itemNumber", COUNT(*) AS "Count"
+--ildct "trType", iltrqt "Qty", 1 AS "extStd",
+
+--DECODE(ILDGL,'0',' ', TO_CHAR(TO_DATE(SUBSTR(LPAD((ILDGL), 6, '0'), 4)
+-- || (1900 + SUBSTR(LPAD(ildgl, 6, '0'), 1, 3)), 'dddyyyy'),'dd/mm/yyyy'))  "glDate"
+
+FROM proddta.F4111
+
+WHERE 1 = 1
+AND ILDCT = 'IT'
+AND ILGLPT IN ('IN50','IN90')
+AND ILMCU = '         470'
+AND iltrqt > 0
+AND ILLITM NOT LIKE '%*%'
+
+--Pulls data for prior day
+AND ildgl >= TO_NUMBER(TO_CHAR(SYSDATE -91, 'yyyyddd')) -1900000
+
+GROUP BY illitm
+
+-- IF the report is ran on a Monday
+--AND (a.ildgl >= TO_NUMBER(TO_CHAR(SYSDATE - 3, 'yyyyddd')) -1900000) AND (a.ildgl < TO_NUMBER(TO_CHAR(SYSDATE, 'yyyyddd')) -1900000)
+
+ORDER BY illitm
+
+--Date Range
+--AND a.ildgl >= 118301
+--AND a.ildgl <= 118326
+
+SELECT
+TRIM(ilmcu) "Site", TRIM (illitm) "itemNumber",
+ildct "trType", iltrqt "Qty", 0 AS "extStd",
+
+DECODE(ILDGL,'0',' ', TO_CHAR(TO_DATE(SUBSTR(LPAD((ILDGL), 6, '0'), 4)
+ || (1900 + SUBSTR(LPAD(ildgl, 6, '0'), 1, 3)), 'dddyyyy'),'dd/mm/yyyy'))  "glDate",
+
+ ildoco "woNumber"
+
+FROM proddta.F4111
+
+WHERE 1 = 1
+AND ilkco =  '00047'
+AND ilglpt = 'IN50'
+AND ildct = 'IT'
+
+--Pulls data for prior day
+AND ildgl >= TO_NUMBER(TO_CHAR(SYSDATE -7, 'yyyyddd')) -1900000
+
+-- IF the report is ran on a Monday
+--AND (a.ildgl >= TO_NUMBER(TO_CHAR(SYSDATE - 3, 'yyyyddd')) -1900000) AND (a.ildgl < TO_NUMBER(TO_CHAR(SYSDATE, 'yyyyddd')) -1900000)
+
+ORDER BY illitm
+
+--Date Range
+--AND a.ildgl >= 118301
+--AND a.ildgl <= 118326
+
+SELECT
+
+TRIM(A.ILMCU) "Site",
+TRIM(A.ILLITM) "itemNumber",
+MAX(A.ILDGL) "glDate",
+'IT' "trType"
+
+FROM proddta.f4111 a
+
+WHERE 1=1
+
+AND A.ILDCT = 'IT'
+AND A.ILGLPT IN ('IN50','IN90')
+AND A.ILMCU = '         470'
+AND A.ILLITM NOT LIKE '%*%'
+
+AND A.ILDGL >= TO_NUMBER(TO_CHAR(SYSDATE -7, 'yyyyddd')) -1900000  -- GL Date, date transaction took place
+  AND A.ILDGL < TO_NUMBER(TO_CHAR(SYSDATE, 'yyyyddd')) -1900000
+
+GROUP BY
+A.ILMCU, A.ILLITM, TRIM(A.ILLITM)
+
+ORDER BY A.illitm
+
+SELECT * FROM PRODDTA.F4111
+SELECT
+       COUNT(A.Ildoc)
+
+ FROM PRODDTA.F4111 A
+
+ WHERE A.ilkco        = '00044'--IN ('00060', '00037', '00040')
+ AND   LTRIM(A.ilmcu) = '440' --IN ('605', '370', '400')
+ AND   A.ildct        = 'OV'
+ AND   A.Iltrqt > '0'
+ AND   A.Iltrdj >= TO_NUMBER(TO_CHAR(SYSDATE-31, 'YYYYDDD'))-1900000
+
+SELECT  LTRIM(A.Ilmcu) "Plant",
+        SUBSTR(RTRIM(A.Illitm),-3) "MPF",
+        RTRIM(A.illitm) "Part Number",
+        A.Ildoco "Order Number",
+        A.Ildoc  "Doc Number",
+        A.Illocn "Location",
+        A.Ildct "Transaction Type",
+        to_char(to_date(substr(lpad(A.iltrdj, 6, '0'), 4) || (1900 + substr(lpad(A.iltrdj, 6, '0'), 1, 3)), 'dddyyyy'), 'mm/dd/yyyy') "Date Transaction",
+        SUM(A.Iltrqt) "Qty Transaction"
+
+FROM PRODDTA.F4111 A
+
+WHERE A.ilkco        = '00060'
+ AND   LTRIM(A.ilmcu) = '604'
+ AND   SUBSTR(RTRIM(A.Illitm),-3) IN ('498', '499', '584', '799', '647')
+ AND   A.Ildct IN ('II', 'IA', 'IF', 'IO', 'PI')
+ AND   A.Iltrdj >= TO_NUMBER(TO_CHAR(SYSDATE - 7, 'YYYYDDD'))-1900000
+
+ GROUP BY A.Ilmcu,
+  SUBSTR(RTRIM(A.Illitm),-3),
+ RTRIM(A.illitm),
+ A.Iltrdj,
+ A.Ildct,
+ A.Illocn,
+ A.Ildoco,
+ A.Ildoc
+
+--Risk Buy - Materials Internal Site Exchange
+--Requestor: Steve Gresl
+--Create Date: 27-APR-2021
+
+SELECT
+  Trim(A.IBMCU) "Plant",
+  Trim(A.IBPRP4) "MPF",
+  Trim(A.IBLITM) "PartNumber",
+  A.IBSTKT "StockingType",
+  B.ILDCT "DocType",
+  B.ILTRQT "Qty",
+  B.ILTREX "Explanation",
+  DECODE (B.ILTRDJ,'0', ' ',TO_CHAR (TO_DATE (SUBSTR (LPAD ( (B.ILTRDJ), 6, '0'), 4)|| (1900 + SUBSTR (LPAD (B.ILTRDJ, 6, '0'), 1, 3)),'dddyyyy'),'mm/dd/yyyy')) "Transaction Date",
+  SysDate "SnapshotDate"
+
+FROM PRODDTA.F4102 A  --Item Branch
+JOIN PRODDTA.F4111 B  --Item Ledger
+  ON A.IBITM = B.ILITM
+ and A.IBMCU = B.ILMCU
+
+WHERE
+     A.IBMCU IN ('         160','         604') and A.IBPRP4 = '998'
+     and A.IBSTKT = 'P'
+     and B.ILDCT = 'IN'
+     and B.ILTRQT<0
+     and (B.ILTRDJ >= To_Number(To_Char(SysDate-366, 'YYYYDDD'))-1900000 and B.ILTRDJ <= To_Number(To_Char(SysDate, 'YYYYDDD'))-1900000)
+     --and Trim(B.ILLITM) = 'TP-11149271-752'  --test item
+ORDER BY B.ILTRDJ ASC
+
+select sql_fulltext from v$sql where upper(sql_text) like '%F4111%'
+select TRIM(il.illitm) "Item No",
+       TRIM(il.illocn) "Location",
+       TRIM(im.imdsc1) "Description",
+       TO_DATE(TO_CHAR(TO_NUMBER(SUBSTR(il.iltrdj,1,1))+ 19) || NVL(SUBSTR(il.iltrdj, 2, 5),'00001'),'YYYYDDD') "Tran Date",
+       TRIM(il.ilicu) "G/L Batch",
+       il.ildoc "G/L Voucher Invoice",
+       TRIM(il.ildcto) "Voucher Tran Type",
+       il.iltrqt "Invoice Quantity",
+       il.ildoco "WO/PO Order Doc",
+       TRIM(il.ildct) "WO/PO Order Type"
+from proddta.f4111 il,
+     proddta.f4101 im
+where il.ilmcu = lpad('680',12)
+  and il.ilitm = im.imitm(+)
+  and il.iltrdj >= '118001'
+  --and il.ildct in ('II','IM','IF')
+  --and il.illocn = 'LS'
+  and im.imprp4 = '875'
+
+SELECT
+TRIM (illitm) "itemNumber", COUNT(*) AS "Count"
+--ildct "trType", iltrqt "Qty", 1 AS "extStd",
+
+--DECODE(ILDGL,'0',' ', TO_CHAR(TO_DATE(SUBSTR(LPAD((ILDGL), 6, '0'), 4)
+-- || (1900 + SUBSTR(LPAD(ildgl, 6, '0'), 1, 3)), 'dddyyyy'),'dd/mm/yyyy'))  "glDate"
+
+FROM proddta.F4111
+
+WHERE 1 = 1
+AND ILDCT = 'IM'
+AND ILGLPT IN ('IN50','IN90')
+AND ILMCU = '         470'
+AND iltrqt > 0
+AND ILLITM NOT LIKE '%*%'
+
+--Pulls data for prior day
+AND ildgl >= TO_NUMBER(TO_CHAR(SYSDATE -182, 'yyyyddd')) -1900000
+
+GROUP BY illitm
+
+-- IF the report is ran on a Monday
+--AND (a.ildgl >= TO_NUMBER(TO_CHAR(SYSDATE - 3, 'yyyyddd')) -1900000) AND (a.ildgl < TO_NUMBER(TO_CHAR(SYSDATE, 'yyyyddd')) -1900000)
+
+ORDER BY illitm
+
+--Date Range
+--AND a.ildgl >= 118301
+--AND a.ildgl <= 118326
+
+SELECT
+TRIM(ilmcu) "Site", TRIM (illitm) "itemNumber",
+ildct "trType", iltrqt "Qty", 1 AS "extStd",
+
+DECODE(ILDGL,'0',' ', TO_CHAR(TO_DATE(SUBSTR(LPAD((ILDGL), 6, '0'), 4)
+ || (1900 + SUBSTR(LPAD(ildgl, 6, '0'), 1, 3)), 'dddyyyy'),'dd/mm/yyyy'))  "glDate",
+
+ ildoco "woNumber"
+
+FROM proddta.F4111
+
+WHERE 1 = 1
+AND ilkco =  '00047'
+AND ilglpt = 'IN50'
+AND ildct = 'IT'
+
+--Pulls data for prior day
+AND ildgl >= TO_NUMBER(TO_CHAR(SYSDATE -7, 'yyyyddd')) -1900000
+
+-- IF the report is ran on a Monday
+--AND (a.ildgl >= TO_NUMBER(TO_CHAR(SYSDATE - 3, 'yyyyddd')) -1900000) AND (a.ildgl < TO_NUMBER(TO_CHAR(SYSDATE, 'yyyyddd')) -1900000)
+
+ORDER BY illitm
+
+--Date Range
+--AND a.ildgl >= 118301
+--AND a.ildgl <= 118326
+
+select distinct PARSING_SCHEMA_NAME from v$sql where upper(sql_text) like '%F4111%'
+
+24 rows selected.
+
+08:51:22 jlutsey(732)bir sql> spool off

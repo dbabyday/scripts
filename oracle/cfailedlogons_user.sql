@@ -1,6 +1,8 @@
-set linesize 250 
-set pagesize 70
-set echo off
+
+set feedback off define "&"
+prompt substitution variable 1 = USERNAME;
+column my_username new_value _USERNAME noprint;
+select '&1' my_username from dual;
 set feedback on
 
 col dbusername format a20
@@ -26,5 +28,8 @@ select   to_char(event_timestamp,'YYYY-MM-DD HH24:MI:SS') event_timestamp
          end return_code_desc
 from     unified_audit_trail
 where    unified_audit_policies='ORA_LOGON_FAILURES'
-         and dbusername='&USERNAME'
+         and dbusername='&&_USERNAME'
 order by event_timestamp desc;
+
+undefine 1
+undefine _USERNAME

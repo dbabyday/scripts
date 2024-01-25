@@ -7,8 +7,15 @@ set heading on
 set timing off
 set verify off
 
-accept delay_seconds number prompt "Enter value for delay_seconds: "
-accept sql_id        char    prompt "If looking at specific statement, enter value for sql_id: "
+
+set feedback off
+prompt Substitution variable 1 = SQL_ID;
+prompt Substitution variable 1 = DELAY SECONDS FOR SAMPLE;
+column my_sql_id new_value _SQL_ID noprint;
+column my_delay_seconds new_value _DELAY_SECONDS noprint;
+select '&1' my_sql_id, &2 my_delay_seconds from dual;
+set feedback on
+
 
 col elapsed_seconds format 999999999.999
 col avg_elapsed_seconds format 999999999.999
@@ -57,7 +64,7 @@ END;
 /
 
 DECLARE
-	user_sql_id varchar(13) := '&&sql_id';
+	user_sql_id varchar(13) := '&&_SQL_ID';
 	now         varchar(19) := '';
 BEGIN
 	select to_char(sysdate,'YYYY-MM-DD HH24:MI:SS') into now from dual;
@@ -88,14 +95,14 @@ BEGIN
 	commit;
 
 	select to_char(sysdate,'YYYY-MM-DD HH24:MI:SS') into now from dual;
-	dbms_output.put_line(now||' - Waiting for the specified delay of '||trim(&&delay_seconds)||' seconds...');
+	dbms_output.put_line(now||' - Waiting for the specified delay of '||trim(&&_DELAY_SECONDS)||' seconds...');
 END;
 /
 
-execute dbms_lock.sleep(&&delay_seconds);
+execute dbms_lock.sleep(&&_DELAY_SECONDS);
 
 DECLARE
-	user_sql_id varchar(13) := '&&sql_id';
+	user_sql_id varchar(13) := '&&_SQL_ID';
 	now         varchar(19) := '';
 BEGIN
 	select to_char(sysdate,'YYYY-MM-DD HH24:MI:SS') into now from dual;
@@ -180,13 +187,14 @@ select     sql_id
 from       v$sql
 where      px_servers_executions>0
            and executions>0
-           and sql_id='&&sql_id'
+           and sql_id='&&_SQL_ID'
 group by   sql_id
 order by   elapsed_seconds desc
 fetch next 100 rows only;
 -- order by   elapsed_seconds desc;
 
 
-
-undefine delay_seconds;
-undefine sql_id;
+undefine 1
+undefine 2
+undefine _DELAY_SECONDS
+undefine _SQL_ID

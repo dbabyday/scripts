@@ -1,0 +1,69 @@
+jdepd01    WE8ISO8859P1
+jdepd03    WE8ISO8859P1
+ampd01     WE8ISO8859P1
+arcpd01    WE8ISO8859P1
+bchpd01    WE8ISO8859P1
+bir        WE8ISO8859P1
+knxpd01    WE8ISO8859P1
+
+bonpd01    AL32UTF8
+ebsappd1   AL32UTF8
+ebspd01    AL32UTF8
+ebspvoid   AL32UTF8
+ebsupkpd   AL32UTF8
+jabpd02    AL32UTF8
+
+iccm       US7ASCII
+
+jsprpd     WE8ISO8859P15
+
+oemprd01   WE8MSWIN1252
+plx        WE8MSWIN1252
+rmnpd01    WE8MSWIN1252
+winpd02    WE8MSWIN1252
+------------------------------------
+psfpd01    AL32UTF8
+hz1s       US7ASCII
+iccn       US7ASCII
+iccx       US7ASCII
+pg2s       US7ASCII
+pg3s       US7ASCII
+------------------------------------
+
+agldev01   AL32UTF8
+agltrn01   AL32UTF8
+
+bondv01    AL32UTF8
+bonqa01    AL32UTF8
+dbadv01    AL32UTF8
+oemdv01    AL32UTF8
+olmdv01    AL32UTF8
+
+arcdv01    WE8ISO8859P1
+ggpy01     WE8ISO8859P1
+jdepr01    WE8ISO8859P1
+jdepy01    WE8ISO8859P1
+uc4np01    WE8ISO8859P1
+jdedv01    WE8ISO8859P1
+jdetr01    WE8ISO8859P1
+jdecv01    WE8ISO8859P1
+amts01     WE8ISO8859P1
+
+jsprpy     WE8ISO8859P15
+
+plxdv01    WE8MSWIN1252
+windv02    WE8MSWIN1252
+winqa02    WE8MSWIN1252
+
+------------------------------------
+
+aglprd01
+ebsappd1
+ebspd01
+
+jdepd01
+jdepd03
+ampd01
+bir
+
+winpd02

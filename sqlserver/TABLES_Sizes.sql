@@ -19,27 +19,19 @@
 
 
 DECLARE 
-	-- user input
-	@resultsUnits  CHAR(2) = 'MB', -- 'KB', 'MB', or 'GB'
+	  @id            BIGINT
+	, @schemaname    SYSNAME
+	, @tablename     SYSNAME
+	, @pages         BIGINT
+	, @reservedpages BIGINT
+	, @rowCount      BIGINT
+	, @usedpages     BIGINT;
 
-	-- other variables
-	@id	           BIGINT,
-	@schemaname    SYSNAME,
-    @tablename     SYSNAME,
-    @pages	       BIGINT,
-	@reservedpages BIGINT,
-	@rowCount      BIGINT,
-	@usedpages     BIGINT;
-
--- set the dufault for @resultsUnits if a valid selection was not entered
-IF (UPPER(@resultsUnits) <> 'KB') AND (UPPER(@resultsUnits) <> 'MB') AND (UPPER(@resultsUnits) <> 'GB')
-	SET @resultsUnits = 'MB';
-		
 -- table variable to hold the info for each table
 DECLARE @tblTableSizes TABLE
 (
 	[server_name]   NVARCHAR(128) NOT NULL,
-    [schema_name]   SYSNAME NOT NULL,
+	[schema_name]   SYSNAME NOT NULL,
 	[database_name] SYSNAME NOT NULL,
 	[table_name]    SYSNAME NOT NULL,
 	[row_count]     INT     NOT NULL,
@@ -57,10 +49,10 @@ DECLARE @tblTableSizes TABLE
 -- all the base tables in the database
 DECLARE curTables CURSOR LOCAL FAST_FORWARD FOR
 	SELECT   [object_id],
-             SCHEMA_NAME([schema_id]),
-             [name]
-    FROM     [sys].[tables] 
-    WHERE    [type] = 'U';
+		SCHEMA_NAME([schema_id]),
+		[name]
+	FROM     [sys].[tables] 
+	WHERE    [type] = 'U';
 
 OPEN curTables;
 	FETCH NEXT FROM curTables INTO @id, @schemaname, @tablename;
@@ -120,46 +112,22 @@ DEALLOCATE curTables;
 --//  DISPLAY THE RESULTS                            //--
 ---------------------------------------------------------
 
--- sizes in KB
-IF UPPER(@resultsUnits) = 'KB'
-	SELECT   server_name,
-             database_name,
-             schema_name,
-             table_name,
-             row_count,
-             reserved_kb,
-             data_kb,
-             index_kb,
-             unused_kb 
-    FROM     @tblTableSizes
-    ORDER BY [reserved_kb] DESC;
-
--- sizes in MB
-IF UPPER(@resultsUnits) = 'MB'
-	SELECT   server_name,
-             database_name,
-             schema_name,
-             table_name,
-             row_count,
-             CAST(ROUND(reserved_kb / 1024.0, 0) AS INT) AS [reserved_mb],
-             CAST(ROUND(data_kb     / 1024.0, 0) AS INT) AS [data_mb],
-             CAST(ROUND(index_kb    / 1024.0, 0) AS INT) AS [index_mb],
-             CAST(ROUND(unused_kb   / 1024.0, 0) AS INT) AS [unused_mb]
-	FROM     @tblTableSizes
-    ORDER BY [reserved_mb] DESC;
-		
--- sizes in GB
-IF UPPER(@resultsUnits) = 'GB'
-	SELECT   server_name,
-             database_name,
-             schema_name,
-             table_name,
-             row_count,
-             CAST(ROUND(reserved_kb / 1024.0 / 1024.0, 0) AS INT) AS 'reserved_gb',
-             CAST(ROUND(data_kb     / 1024.0 / 1024.0, 0) AS INT) AS 'data_gb',
-             CAST(ROUND(index_kb    / 1024.0 / 1024.0, 0) AS INT) AS 'index_gb',
-             CAST(ROUND(unused_kb   / 1024.0 / 1024.0, 0) AS INT) AS 'unused_gb'
-	FROM     @tblTableSizes
-    ORDER BY [reserved_gb] DESC;
-GO
-
+SELECT
+	  server_name
+	, database_name
+	, schema_name
+	, table_name
+	, row_count
+	, CAST(ROUND(reserved_kb / 1024.0, 0) AS INT) AS [reserved_mb]
+	, CAST(ROUND(data_kb     / 1024.0, 0) AS INT) AS [data_mb]
+	, CAST(ROUND(index_kb    / 1024.0, 0) AS INT) AS [index_mb]
+	, CAST(ROUND(unused_kb   / 1024.0, 0) AS INT) AS [unused_mb]
+	, CAST(ROUND(reserved_kb / 1024.0 / 1024.0, 0) AS INT) AS 'reserved_gb'
+	, CAST(ROUND(data_kb     / 1024.0 / 1024.0, 0) AS INT) AS 'data_gb'
+	, CAST(ROUND(index_kb    / 1024.0 / 1024.0, 0) AS INT) AS 'index_gb'
+	, CAST(ROUND(unused_kb   / 1024.0 / 1024.0, 0) AS INT) AS 'unused_gb'
+FROM
+	@tblTableSizes
+ORDER BY
+	  schema_name
+	, table_name;

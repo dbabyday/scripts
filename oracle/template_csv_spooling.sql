@@ -7,11 +7,19 @@ set trimout on
 set trimspool on
 set markup csv on delimiter ',' quote on
 
-spool \\na.plexus.com\neendata\Swap\<SUB_DIRECTORY>\<FILE_NAME>.csv
+
+
+
+spool \\na\neendata\swap\<DIRECTORY_NAME>\<FILE_NAME>.csv
 
 -- put your query here
 
+
+
+
 spool off
+
+
 
 set termout on
 set feedback on

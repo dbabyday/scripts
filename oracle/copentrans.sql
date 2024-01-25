@@ -10,7 +10,7 @@ column wait_class      format a20
 column wait_time       format a17
 
 select
-	s.sid
+	  s.sid
 	, s.username
 	, c.command_name
 	, t.used_ublk

@@ -1,4 +1,4 @@
-set linesize 300
+set linesize 500
 set pagesize 100
 set trimout on
 set feedback off
@@ -6,6 +6,7 @@ set feedback off
 column index_name format a45
 column table_name format a45
 column columns    format a100
+column degree     format a7
 column visibility format a10
 column total_access_count format 999,999,999,999,999
 
@@ -41,10 +42,12 @@ with objects as (
 )
 select
          c.table_owner||'.'||c.table_name table_name
-       , i.visibility
-       , u.total_access_count
        , c.index_owner||'.'||c.index_name index_name
        , listagg(c.column_name,', ') within group (order by c.column_position) columns
+       , i.degree
+       , i.visibility
+       , i.status
+       , u.total_access_count
        , o.created
        , o.last_ddl_time
 from
@@ -65,7 +68,9 @@ group by
        , c.index_name
        , o.created
        , o.last_ddl_time
+       , i.degree
        , i.visibility
+       , i.status
        , u.total_access_count
 order by 
          -- 5

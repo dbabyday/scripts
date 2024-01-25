@@ -7,7 +7,7 @@ Format-Table -AutoSize
 
 
 # SQL Server Services
-Get-WmiObject Win32_Service -ComputerName co-db-779 -Filter "name Like '%SQL%' " | 
+Get-WmiObject Win32_Service -ComputerName $cn -Filter "name Like '%SQL%' " | 
 select-object State,DisplayName,Name,StartMode,StartName,__Server | 
 Sort-Object DisplayName | 
 Format-Table -AutoSize
@@ -67,8 +67,8 @@ Get-WmiObject Win32_Service -ComputerName dcc-sql-dv-019 | Where-Object Name -ma
 
 
 
-$cn="co-db-079"
-$service_name="PowerBIReportServer"
+$cn="dcc-sql-dv-024"
+$service_name='MSOLAP$TDPROCESSING'
 
 # view
 Get-WmiObject Win32_Service -ComputerName $cn | Where-Object Name -eq $service_name

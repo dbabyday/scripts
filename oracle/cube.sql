@@ -17,6 +17,13 @@ undefine _PW
 */
 
 
+set feedback off define "&"
+prompt Substitution variable 1 = JOB_NAME_LIKE;
+column my_job_name_like new_value _JOB_NAME_LIKE noprint;
+select '&1' my_job_name_like from dual;
+set feedback on
+
+
 set lines 1000
 set define "&"
 column event format a30
@@ -89,8 +96,5 @@ order by
 
 
 
-prompt;
-prompt ## Filtering on jcfndfuf2 like '%&&_JOB_NAME_LIKE%';
-prompt ## To clear filter: UNDEFINE _JOB_NAME_LIKE;
-prompt;
-
+undefine 1
+undefine _JOB_NAME_LIKE

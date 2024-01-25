@@ -102,7 +102,7 @@ BEGIN
     -- create the cname string
     SET @cname = @appName;
     IF @region <> N'' SET @cname += N'-' + LOWER(@region);
-    SET @cname += N'-' + LOWER(@environment) + N'-mssql.db.' + RIGHT(@fqdn,LEN(@fqdn) - CHARINDEX(N'.',@fqdn));
+    SET @cname += N'-' + LOWER(@environment) + N'.db.' + RIGHT(@fqdn,LEN(@fqdn) - CHARINDEX(N'.',@fqdn));
     
     -- insert the values into the result table
     INSERT INTO @Results(field,value) VALUES (N'** CNAME (DNS Request) **',N'')

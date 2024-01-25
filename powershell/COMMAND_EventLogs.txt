@@ -1,11 +1,14 @@
-$cn = "gcc-sql-pd-002.na.plexus.com"
-$start = Get-Date -Date "2018-07-31 18:00:00"
-$end = Get-Date #-Date "2018-08-01 00:00:00"
+$cn = "co-db-079.na.plexus.com"
+$start = Get-Date -Date "2023-09-06 07:00:00"
+$end = Get-Date #-Date "2023-09-06 10:30:00"
 $log = "system"  # system, application, security
 
 # get all criticals, errors, and warnings in time frame
 Get-WinEvent -ComputerName $cn -FilterHashtable @{LogName=$log; StartTime=$start; EndTime=$end} | Where-Object { $_.LevelDisplayName -ne 'Information'} | Sort-Object TimeCreated -Descending | Format-Table MachineName, TimeCreated, LevelDisplayName, Id, Message -AutoSize
+Get-WinEvent -ComputerName $cn -FilterHashtable @{LogName=$log; StartTime=$start; EndTime=$end} | Where-Object { $_.LevelDisplayName -ne 'Information'} | Sort-Object TimeCreated -Descending | Select-Object Message
 
+Get-WinEvent -ComputerName $cn -FilterHashtable @{LogName='system'; ID=4227; StartTime=$start; EndTime=$end} | Format-Table MachineName, TimeCreated, Id, Message
+Get-WinEvent -ComputerName $cn -FilterHashtable @{LogName='system'; ID=4231; StartTime=$start; EndTime=$end} | Format-Table MachineName, TimeCreated, Id, Message
 
 Get-WinEvent -ComputerName $cn -FilterHashtable @{LogName='system'; ID=6005; StartTime=$start; EndTime=$end} | Format-Table MachineName, TimeCreated, Id, Message
 Get-WinEvent -ComputerName $cn -FilterHashtable @{LogName='system'; ID=6006; StartTime=$start; EndTime=$end} | Format-Table MachineName, TimeCreated, Id, Message
@@ -39,7 +42,7 @@ Get-EventLog -ComputerName $cn -LogName System -After $after -Before $before | W
 # 7036 — Basic Service Operations (stop services is one of the events for this number)
 
 $cn = "gcc-sql-pd-002.na.plexus.com"
-$start = Get-Date -Date "2018-07-27 07:00:00"
+$start = Get-Date -Date "2023-03-01 00:00:00"
 $end = Get-Date #-Date "2018-07-06 00:00:00"
 $log = "system"
 
@@ -47,7 +50,8 @@ $log = "system"
 Get-WinEvent -ComputerName $cn -FilterHashtable @{LogName='system'; ID=7036; StartTime=$start; EndTime=$end} | Where-Object { $_.Message -match 'SQL' } | Format-Table MachineName, TimeCreated, Id, Message
 
 # All
-Get-WinEvent -ComputerName $cn -FilterHashtable @{LogName='system'; ID=7036; StartTime=$start; EndTime=$end} | Where-Object { $_.Message -match "CommVault" } | Sort-Object TimeCreated | Format-Table MachineName, TimeCreated, Id, Message
+Get-WinEvent -ComputerName $cn -FilterHashtable @{LogName='system'; ID=7036; StartTime=$start; EndTime=$end} | Where-Object { $_.Message -match "TDPROCESSING" } | Sort-Object TimeCreated | Format-Table MachineName, TimeCreated, Id, Message
+Get-WinEvent -ComputerName $cn -FilterHashtable @{LogName='system'; ID=7036; StartTime=$start; EndTime=$end} | Sort-Object TimeCreated | Format-Table MachineName, TimeCreated, Id, Message
 #Get-EventLog -ComputerName $cn -LogName System -After $after -Before $before | Where-Object { ($_.EventID -eq "7036") } | Select-Object * | Sort-Object TimeGenerated
 
 

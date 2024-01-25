@@ -105,3 +105,6 @@ clear breaks;
 
 undefine OWNER
 undefine TABLE_NAME
+
+
+set feedback on

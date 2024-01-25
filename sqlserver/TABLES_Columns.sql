@@ -10,11 +10,11 @@ SELECT 'USE ' + QUOTENAME(name) + ';' FROM sys.databases ORDER BY name;
 SELECT object_id, SCHEMA_NAME(schema_id), name FROM sys.tables ORDER BY 2,3;
 */
 
-USE Label_Integration_PROD;
+USE CentralAdmin;
 
 DECLARE @objId  AS INT = 123456789,
         @schema AS NVARCHAR(128) = N'dbo',
-        @table  AS NVARCHAR(128) = N'labels';
+        @table  AS NVARCHAR(128) = N'BlitzCache';
 
 IF @schema <> N'' AND @table <> N''
 BEGIN

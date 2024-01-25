@@ -3,6 +3,17 @@ column table_name for a20
 column column_name for a20
 column data_type for a20
 
+
+set feedback off
+prompt substitution variable 1 is for OWNER;
+prompt substitution variable 2 is for TABLE;
+prompt substitution variable 3 is for COLUMN;
+column my_owner new_value _OWNER noprint;
+column my_table new_value _TABLE noprint;
+column my_column new_value _COLUMN noprint;
+select '&1' my_owner, '&2' my_table, '&3' my_column from dual;
+set feedback on
+
 select owner
      , table_name
      , column_name
@@ -16,3 +27,9 @@ where  owner='&_OWNER'
        and table_name='&_TABLE'
        and column_name='&_COLUMN';
 
+undefine 1
+undefine 2
+undefine 3
+undefine OWNER
+undefine TABLE
+undefine COLUMN

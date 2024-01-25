@@ -7,6 +7,12 @@ column source_entry_time format a25
 column target_entry_time format a25
 
 
+set feedback off define "&"
+prompt Substitution variable 1 = Lag Threshold Minutes;
+column my_lag_threshold_minutes new_value _LAG_THRESHOLD_MINUTES noprint;
+select &1 my_lag_threshold_minutes from dual;
+set feedback on
+
 
 
 prompt ;
@@ -24,7 +30,7 @@ variable lag_threshold_minutes number;
 declare
 	l_min_hist_time timestamp(6);
 begin
-	:lag_threshold_minutes := 5;
+	:lag_threshold_minutes := &&_LAG_THRESHOLD_MINUTES;
 
 	select min(source_entry_time)
 	into   l_min_hist_time
@@ -113,3 +119,9 @@ select 'C' replicat
 from     ca.repl_canary_c
 order by  1
 /
+
+
+
+
+undefine 1
+undefine _LAG_THRESHOLD_MINUTES

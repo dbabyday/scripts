@@ -1,17 +1,18 @@
-
-ALTER PROCEDURE dbo.usp_RestoreDB
-    @dbName					VARCHAR(128)  = '',
-	@pointInTime			DATETIME      = '',
-	@path			    	NVARCHAR(512) = '',
-	@replace				CHAR(1)       = 'N',
-	@newDataFileLocation	VARCHAR(255)  = '',
-	@newLogFileLocation		VARCHAR(255)  = '',
-	@newFilestreamLocation	VARCHAR(255)  = '',
-	@newFulltextLocation	VARCHAR(255)  = '',
-	@newDBName              VARCHAR(128)  = '',
-	@selectBackupInfo       CHAR(1)       = 'N',
-	@help                   VARCHAR(25)   = '',
-	@getVersion             BIT           = 0
+use CentralAdmin;
+go
+CREATE OR ALTER PROCEDURE dbo.usp_RestoreDB
+	  @dbName                VARCHAR(128)  = ''
+	, @pointInTime           DATETIME      = ''
+	, @path                  NVARCHAR(512) = ''
+	, @replace               CHAR(1)       = 'N'
+	, @newDataFileLocation   VARCHAR(255)  = ''
+	, @newLogFileLocation    VARCHAR(255)  = ''
+	, @newFilestreamLocation VARCHAR(255)  = ''
+	, @newFulltextLocation   VARCHAR(255)  = ''
+	, @newDBName             VARCHAR(128)  = ''
+	, @selectBackupInfo      CHAR(1)       = 'N'
+	, @help                  VARCHAR(25)   = ''
+	, @getVersion            BIT           = 0
 AS
 
 SET NOCOUNT ON;
@@ -31,128 +32,128 @@ IF @help                  IS NULL SET @help                  = '';
 IF @getVersion            IS NULL SET @getVersion            = 0;
 
 DECLARE 
-	@append_2				CHAR(1),
-	@backupCommand			VARCHAR(MAX),
-	@backupIdFull			INT,
-	@backupIdDiff			INT,
-	@backupStartDate        DATETIME,
-    @cmd					VARCHAR(1000),
-    @databaseBackupLSN      NUMERIC(25,0),
-	@depth                  INT,
-	@depthChange            INT,
-	@depthPrevious          INT,
-	@diffApplicable			CHAR(1),
-	@dtString				VARCHAR(25),
-	@errorMessage			VARCHAR(MAX),
-	@file					VARCHAR(255),
-	@firstFullTime			DATETIME,
-	@firstLSN               NUMERIC(25,0),
-	@folder                 NVARCHAR(512),
-	@id                     INT,
-	@lastLSN                NUMERIC(25,0),
-	@lastTrnTime			DATETIME,
-	@logicalName			VARCHAR(128),
-	@lsn					NUMERIC(25,0),
-	@message                VARCHAR(MAX),
-	@moveDataFile			CHAR(1),
-	@moveFilestreamFile		CHAR(1),
-	@moveFulltextFile		CHAR(1),
-	@moveLogFile			CHAR(1),
-	@pathLog                NVARCHAR(512),
-	@pathPossible           NVARCHAR(512),
-	@pathRootEnd			INT,
-	@pathStart				INT,
-	@physicalName			VARCHAR(255),
-	@physicalNameTrimmed	VARCHAR(128),
-	@pointInTimeUser		CHAR(1),
-	@recoveryModel			INT,
-    @server					VARCHAR(128),
-	@stopatAdded            BIT,
-	@subdirectory           NVARCHAR(512),
-	@tailFile				VARCHAR(255),
-	@type					TINYINT,
-	@useTail				CHAR(1),
-	@version                VARCHAR(10);
+	  @append_2            CHAR(1)
+	, @backupCommand       VARCHAR(MAX)
+	, @backupIdFull        INT
+	, @backupIdDiff        INT
+	, @backupStartDate     DATETIME
+	, @cmd                 VARCHAR(1000)
+	, @databaseBackupLSN   NUMERIC(25,0)
+	, @depth               INT
+	, @depthChange         INT
+	, @depthPrevious       INT
+	, @diffApplicable      CHAR(1)
+	, @dtString            VARCHAR(25)
+	, @errorMessage        VARCHAR(MAX)
+	, @file                VARCHAR(255)
+	, @firstFullTime       DATETIME
+	, @firstLSN            NUMERIC(25,0)
+	, @folder              NVARCHAR(512)
+	, @id                  INT
+	, @lastLSN             NUMERIC(25,0)
+	, @lastTrnTime         DATETIME
+	, @logicalName         VARCHAR(128)
+	, @lsn                 NUMERIC(25,0)
+	, @message             VARCHAR(MAX)
+	, @moveDataFile        CHAR(1)
+	, @moveFilestreamFile  CHAR(1)
+	, @moveFulltextFile    CHAR(1)
+	, @moveLogFile         CHAR(1)
+	, @pathLog             NVARCHAR(512)
+	, @pathPossible        NVARCHAR(512)
+	, @pathRootEnd         INT
+	, @pathStart           INT
+	, @physicalName        VARCHAR(255)
+	, @physicalNameTrimmed VARCHAR(128)
+	, @pointInTimeUser     CHAR(1)
+	, @recoveryModel       INT
+	, @server              VARCHAR(128)
+	, @stopatAdded         BIT
+	, @subdirectory        NVARCHAR(512)
+	, @tailFile            VARCHAR(255)
+	, @type                TINYINT
+	, @useTail             CHAR(1)
+	, @version             VARCHAR(10);
 
 SET @version = '1.4';  -- SET VERSION HERE -------------------------------------------
 	
 DECLARE @tb_directoryTree TABLE
 (
-	[ID]           INT IDENTITY(1,1) PRIMARY KEY,
-	[Subdirectory] NVARCHAR(512),
-	[Depth]        INT,
-	[IsFile]       BIT,
-	[PhysicalName] NVARCHAR(512)
+	  [ID]           INT IDENTITY(1,1) PRIMARY KEY
+	, [Subdirectory] NVARCHAR(512)
+	, [Depth]        INT
+	, [IsFile]       BIT
+	, [PhysicalName] NVARCHAR(512)
 );
 
 DECLARE @tb_databaseFileList TABLE
 (
-	[ID] 				INT IDENTITY(1,1) PRIMARY KEY,
-	[LogicalName]		VARCHAR(128),
-	[PhysicalName]		VARCHAR(255),
-	[Type]				TINYINT -- 0 = Rows, 1 = Log, 2 = FILESTREAM, 4 = Full-text
+	  [ID]           INT IDENTITY(1,1) PRIMARY KEY
+	, [LogicalName]  VARCHAR(128)
+	, [PhysicalName] VARCHAR(255)
+	, [Type]         TINYINT -- 0 = Rows, 1 = Log, 2 = FILESTREAM, 4 = Full-text
 );
 
 DECLARE @tb_backupInfo TABLE
 (
-	[BackupID]					INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
-	[NameOfFile]				NVARCHAR(256),
-	[BackupName]				NVARCHAR(128),
-	[BackupDescription]			NVARCHAR(255),
-	[BackupType]				SMALLINT,
-	[ExpirationDate]			DATETIME,
-	[Compressed]				TINYINT,
-	[Position]					SMALLINT,
-	[DeviceType]				TINYINT,
-	[UserName]					NVARCHAR(128),
-	[ServerName]				NVARCHAR(128),
-	[DatabaseName]				NVARCHAR(128),
-	[DatabaseVersion]			INT,
-	[DatabaseCreationDate]		DATETIME,
-	[BackupSize]				NUMERIC(20,0),
-	[FirstLSN]					NUMERIC(25,0),
-	[LastLSN]					NUMERIC(25,0),
-	[CheckpointLSN]				NUMERIC(25,0),
-	[DatabaseBackupLSN]			NUMERIC(25,0),
-	[BackupStartDate]			DATETIME,
-	[BackupFinishDate]			DATETIME,
-	[SortOrder]					SMALLINT,
-	[CodePage]					SMALLINT,
-	[UnicodeLocaleId]			INT,
-	[UnicodeComparisonStyle]	INT,
-	[CompatibilityLevel]		TINYINT,
-	[SoftwareVendorId]			INT,
-	[SoftwareVersionMajor]		INT,
-	[SoftwareVersionMinor]		INT,
-	[SoftwareVersionBuild]		INT,
-	[MachineName]				NVARCHAR(128),
-	[Flags]						INT,
-	[BindingID]					UNIQUEIDENTIFIER,
-	[RecoveryForkID]			UNIQUEIDENTIFIER,
-	[Collation]					NVARCHAR (128),
-	[FamilyGUID]				UNIQUEIDENTIFIER,
-	[HasBulkLoggedData]			BIT,
-	[IsSnapshot]				BIT,
-	[IsReadOnly]				BIT,
-	[IsSingleUser]				BIT,
-	[HasBackupChecksums]		BIT,
-	[IsDamaged]					BIT,
-	[BeginsLogChain]			BIT,
-	[HasIncompleteMetaData]		BIT,
-	[IsForceOffline]			BIT,
-	[IsCopyOnly]				BIT,
-	[FirstRecoveryForkId]		UNIQUEIDENTIFIER,
-	[ForkPointLSN]				NUMERIC(25,0),
-	[RecoveryModel]				NVARCHAR(60),
-	[DifferentialBaseLSN]		NUMERIC(25, 0),
-	[DifferentialBaseGUID]		UNIQUEIDENTIFIER,
-	[BackupTypeDescription]		NVARCHAR (60),
-	[BackupSetGUID]				UNIQUEIDENTIFIER,
-	[CompressedBackupSize]		BIGINT,
-	[Containment]				TINYINT,
-	[KeyAlgorithm]				NVARCHAR(32),
-	[EncryptorThumbprint]		VARBINARY(20),
-	[EncryptorType]				NVARCHAR(32)
+	  [BackupID]               INT IDENTITY(1,1) NOT NULL PRIMARY KEY
+	, [NameOfFile]             NVARCHAR(256)
+	, [BackupName]             NVARCHAR(128)
+	, [BackupDescription]      NVARCHAR(255)
+	, [BackupType]             SMALLINT
+	, [ExpirationDate]         DATETIME
+	, [Compressed]             TINYINT
+	, [Position]               SMALLINT
+	, [DeviceType]             TINYINT
+	, [UserName]               NVARCHAR(128)
+	, [ServerName]             NVARCHAR(128)
+	, [DatabaseName]           NVARCHAR(128)
+	, [DatabaseVersion]        INT
+	, [DatabaseCreationDate]   DATETIME
+	, [BackupSize]             NUMERIC(20,0)
+	, [FirstLSN]               NUMERIC(25,0)
+	, [LastLSN]                NUMERIC(25,0)
+	, [CheckpointLSN]          NUMERIC(25,0)
+	, [DatabaseBackupLSN]      NUMERIC(25,0)
+	, [BackupStartDate]        DATETIME
+	, [BackupFinishDate]       DATETIME
+	, [SortOrder]              SMALLINT
+	, [CodePage]               SMALLINT
+	, [UnicodeLocaleId]        INT
+	, [UnicodeComparisonStyle] INT
+	, [CompatibilityLevel]     TINYINT
+	, [SoftwareVendorId]       INT
+	, [SoftwareVersionMajor]   INT
+	, [SoftwareVersionMinor]   INT
+	, [SoftwareVersionBuild]   INT
+	, [MachineName]            NVARCHAR(128)
+	, [Flags]                  INT
+	, [BindingID]              UNIQUEIDENTIFIER
+	, [RecoveryForkID]         UNIQUEIDENTIFIER
+	, [Collation]              NVARCHAR (128)
+	, [FamilyGUID]             UNIQUEIDENTIFIER
+	, [HasBulkLoggedData]      BIT
+	, [IsSnapshot]             BIT
+	, [IsReadOnly]             BIT
+	, [IsSingleUser]           BIT
+	, [HasBackupChecksums]     BIT
+	, [IsDamaged]              BIT
+	, [BeginsLogChain]         BIT
+	, [HasIncompleteMetaData]  BIT
+	, [IsForceOffline]         BIT
+	, [IsCopyOnly]             BIT
+	, [FirstRecoveryForkId]    UNIQUEIDENTIFIER
+	, [ForkPointLSN]           NUMERIC(25,0)
+	, [RecoveryModel]          NVARCHAR(60)
+	, [DifferentialBaseLSN]    NUMERIC(25, 0)
+	, [DifferentialBaseGUID]   UNIQUEIDENTIFIER
+	, [BackupTypeDescription]  NVARCHAR (60)
+	, [BackupSetGUID]          UNIQUEIDENTIFIER
+	, [CompressedBackupSize]   BIGINT
+	, [Containment]            TINYINT
+	, [KeyAlgorithm]           NVARCHAR(32)
+	, [EncryptorThumbprint]    VARBINARY(20)
+	, [EncryptorType]          NVARCHAR(32)
 );
 
 
@@ -208,7 +209,7 @@ BEGIN
 ------------------------------------------------------------------------------------------
 
 EXECUTE	CentralAdmin.dbo.usp_RestoreDB  --@help = ''Y''
-            @dbName = ''''
+			@dbName = ''''
 			--,@pointInTime = ''''
 			--,@path = ''''
 			--,@replace = ''N''
@@ -225,7 +226,7 @@ END
 -- make sure user entered a database
 IF (@dbName = '')
 BEGIN
-    SET @errorMessage = 'You must enter a database name';
+	SET @errorMessage = 'You must enter a database name';
 	RAISERROR(@errorMessage,16,1) WITH NOWAIT;
 	RETURN;
 END
@@ -383,56 +384,56 @@ BEGIN
 		INSERT INTO @tb_backupInfo
 		(
 			[BackupName],
-	        [BackupDescription],
-	        [BackupType],
-	        [ExpirationDate],
-	        [Compressed],
-	        [Position],
-	        [DeviceType],
-	        [UserName],
-	        [ServerName],
-	        [DatabaseName],
-	        [DatabaseVersion],
-	        [DatabaseCreationDate],
-	        [BackupSize],
-	        [FirstLSN],
-	        [LastLSN],
-	        [CheckpointLSN],
-	        [DatabaseBackupLSN],
-	        [BackupStartDate],
-	        [BackupFinishDate],
-	        [SortOrder],
-	        [CodePage],
-	        [UnicodeLocaleId],
-	        [UnicodeComparisonStyle],
-	        [CompatibilityLevel],
-	        [SoftwareVendorId],
-	        [SoftwareVersionMajor],
-	        [SoftwareVersionMinor],
-	        [SoftwareVersionBuild],
-	        [MachineName],
-	        [Flags],
-	        [BindingID],
-	        [RecoveryForkID],
-	        [Collation],
-	        [FamilyGUID],
-	        [HasBulkLoggedData],
-	        [IsSnapshot],
-	        [IsReadOnly],
-	        [IsSingleUser],
-	        [HasBackupChecksums],
-	        [IsDamaged],
-	        [BeginsLogChain],
-	        [HasIncompleteMetaData],
-	        [IsForceOffline],
-	        [IsCopyOnly],
-	        [FirstRecoveryForkId],
-	        [ForkPointLSN],
-	        [RecoveryModel],
-	        [DifferentialBaseLSN],
-	        [DifferentialBaseGUID],
-	        [BackupTypeDescription],
-	        [BackupSetGUID]
+			[BackupDescription],
+			[BackupType],
+			[ExpirationDate],
+			[Compressed],
+			[Position],
+			[DeviceType],
+			[UserName],
+			[ServerName],
+			[DatabaseName],
+			[DatabaseVersion],
+			[DatabaseCreationDate],
+			[BackupSize],
+			[FirstLSN],
+			[LastLSN],
+			[CheckpointLSN],
+			[DatabaseBackupLSN],
+			[BackupStartDate],
+			[BackupFinishDate],
+			[SortOrder],
+			[CodePage],
+			[UnicodeLocaleId],
+			[UnicodeComparisonStyle],
+			[CompatibilityLevel],
+			[SoftwareVendorId],
+			[SoftwareVersionMajor],
+			[SoftwareVersionMinor],
+			[SoftwareVersionBuild],
+			[MachineName],
+			[Flags],
+			[BindingID],
+			[RecoveryForkID],
+			[Collation],
+			[FamilyGUID],
+			[HasBulkLoggedData],
+			[IsSnapshot],
+			[IsReadOnly],
+			[IsSingleUser],
+			[HasBackupChecksums],
+			[IsDamaged],
+			[BeginsLogChain],
+			[HasIncompleteMetaData],
+			[IsForceOffline],
+			[IsCopyOnly],
+			[FirstRecoveryForkId],
+			[ForkPointLSN],
+			[RecoveryModel],
+			[DifferentialBaseLSN],
+			[DifferentialBaseGUID],
+			[BackupTypeDescription],
+			[BackupSetGUID]
 		)
 		EXECUTE (@cmd);
 
@@ -445,57 +446,57 @@ BEGIN
 		INSERT INTO @tb_backupInfo
 		(
 			[BackupName],
-	        [BackupDescription],
-	        [BackupType],
-	        [ExpirationDate],
-	        [Compressed],
-	        [Position],
-	        [DeviceType],
-	        [UserName],
-	        [ServerName],
-	        [DatabaseName],
-	        [DatabaseVersion],
-	        [DatabaseCreationDate],
-	        [BackupSize],
-	        [FirstLSN],
-	        [LastLSN],
-	        [CheckpointLSN],
-	        [DatabaseBackupLSN],
-	        [BackupStartDate],
-	        [BackupFinishDate],
-	        [SortOrder],
-	        [CodePage],
-	        [UnicodeLocaleId],
-	        [UnicodeComparisonStyle],
-	        [CompatibilityLevel],
-	        [SoftwareVendorId],
-	        [SoftwareVersionMajor],
-	        [SoftwareVersionMinor],
-	        [SoftwareVersionBuild],
-	        [MachineName],
-	        [Flags],
-	        [BindingID],
-	        [RecoveryForkID],
-	        [Collation],
-	        [FamilyGUID],
-	        [HasBulkLoggedData],
-	        [IsSnapshot],
-	        [IsReadOnly],
-	        [IsSingleUser],
-	        [HasBackupChecksums],
-	        [IsDamaged],
-	        [BeginsLogChain],
-	        [HasIncompleteMetaData],
-	        [IsForceOffline],
-	        [IsCopyOnly],
-	        [FirstRecoveryForkId],
-	        [ForkPointLSN],
-	        [RecoveryModel],
-	        [DifferentialBaseLSN],
-	        [DifferentialBaseGUID],
-	        [BackupTypeDescription],
-	        [BackupSetGUID],
-	        [CompressedBackupSize]
+			[BackupDescription],
+			[BackupType],
+			[ExpirationDate],
+			[Compressed],
+			[Position],
+			[DeviceType],
+			[UserName],
+			[ServerName],
+			[DatabaseName],
+			[DatabaseVersion],
+			[DatabaseCreationDate],
+			[BackupSize],
+			[FirstLSN],
+			[LastLSN],
+			[CheckpointLSN],
+			[DatabaseBackupLSN],
+			[BackupStartDate],
+			[BackupFinishDate],
+			[SortOrder],
+			[CodePage],
+			[UnicodeLocaleId],
+			[UnicodeComparisonStyle],
+			[CompatibilityLevel],
+			[SoftwareVendorId],
+			[SoftwareVersionMajor],
+			[SoftwareVersionMinor],
+			[SoftwareVersionBuild],
+			[MachineName],
+			[Flags],
+			[BindingID],
+			[RecoveryForkID],
+			[Collation],
+			[FamilyGUID],
+			[HasBulkLoggedData],
+			[IsSnapshot],
+			[IsReadOnly],
+			[IsSingleUser],
+			[HasBackupChecksums],
+			[IsDamaged],
+			[BeginsLogChain],
+			[HasIncompleteMetaData],
+			[IsForceOffline],
+			[IsCopyOnly],
+			[FirstRecoveryForkId],
+			[ForkPointLSN],
+			[RecoveryModel],
+			[DifferentialBaseLSN],
+			[DifferentialBaseGUID],
+			[BackupTypeDescription],
+			[BackupSetGUID],
+			[CompressedBackupSize]
 		)
 		EXECUTE (@cmd);
 
@@ -508,58 +509,58 @@ BEGIN
 		INSERT INTO @tb_backupInfo
 		(
 			[BackupName],
-	        [BackupDescription],
-	        [BackupType],
-	        [ExpirationDate],
-	        [Compressed],
-	        [Position],
-	        [DeviceType],
-	        [UserName],
-	        [ServerName],
-	        [DatabaseName],
-	        [DatabaseVersion],
-	        [DatabaseCreationDate],
-	        [BackupSize],
-	        [FirstLSN],
-	        [LastLSN],
-	        [CheckpointLSN],
-	        [DatabaseBackupLSN],
-	        [BackupStartDate],
-	        [BackupFinishDate],
-	        [SortOrder],
-	        [CodePage],
-	        [UnicodeLocaleId],
-	        [UnicodeComparisonStyle],
-	        [CompatibilityLevel],
-	        [SoftwareVendorId],
-	        [SoftwareVersionMajor],
-	        [SoftwareVersionMinor],
-	        [SoftwareVersionBuild],
-	        [MachineName],
-	        [Flags],
-	        [BindingID],
-	        [RecoveryForkID],
-	        [Collation],
-	        [FamilyGUID],
-	        [HasBulkLoggedData],
-	        [IsSnapshot],
-	        [IsReadOnly],
-	        [IsSingleUser],
-	        [HasBackupChecksums],
-	        [IsDamaged],
-	        [BeginsLogChain],
-	        [HasIncompleteMetaData],
-	        [IsForceOffline],
-	        [IsCopyOnly],
-	        [FirstRecoveryForkId],
-	        [ForkPointLSN],
-	        [RecoveryModel],
-	        [DifferentialBaseLSN],
-	        [DifferentialBaseGUID],
-	        [BackupTypeDescription],
-	        [BackupSetGUID],
-	        [CompressedBackupSize],
-	        [Containment]
+			[BackupDescription],
+			[BackupType],
+			[ExpirationDate],
+			[Compressed],
+			[Position],
+			[DeviceType],
+			[UserName],
+			[ServerName],
+			[DatabaseName],
+			[DatabaseVersion],
+			[DatabaseCreationDate],
+			[BackupSize],
+			[FirstLSN],
+			[LastLSN],
+			[CheckpointLSN],
+			[DatabaseBackupLSN],
+			[BackupStartDate],
+			[BackupFinishDate],
+			[SortOrder],
+			[CodePage],
+			[UnicodeLocaleId],
+			[UnicodeComparisonStyle],
+			[CompatibilityLevel],
+			[SoftwareVendorId],
+			[SoftwareVersionMajor],
+			[SoftwareVersionMinor],
+			[SoftwareVersionBuild],
+			[MachineName],
+			[Flags],
+			[BindingID],
+			[RecoveryForkID],
+			[Collation],
+			[FamilyGUID],
+			[HasBulkLoggedData],
+			[IsSnapshot],
+			[IsReadOnly],
+			[IsSingleUser],
+			[HasBackupChecksums],
+			[IsDamaged],
+			[BeginsLogChain],
+			[HasIncompleteMetaData],
+			[IsForceOffline],
+			[IsCopyOnly],
+			[FirstRecoveryForkId],
+			[ForkPointLSN],
+			[RecoveryModel],
+			[DifferentialBaseLSN],
+			[DifferentialBaseGUID],
+			[BackupTypeDescription],
+			[BackupSetGUID],
+			[CompressedBackupSize],
+			[Containment]
 		)
 		EXECUTE (@cmd);
 
@@ -567,66 +568,66 @@ BEGIN
 		SET [NameOfFile] = @file
 		WHERE [BackupID] = (SELECT MAX([BackupID]) FROM @tb_backupInfo);
 	END
-	ELSE IF LEFT(CAST(SERVERPROPERTY('ProductVersion') AS VARCHAR(20)),2) = '12'
+	ELSE IF LEFT(CAST(SERVERPROPERTY('ProductVersion') AS VARCHAR(20)),2) IN ('12','13')
 	BEGIN
 		INSERT INTO @tb_backupInfo
 		(
 			[BackupName],
-	        [BackupDescription],
-	        [BackupType],
-	        [ExpirationDate],
-	        [Compressed],
-	        [Position],
-	        [DeviceType],
-	        [UserName],
-	        [ServerName],
-	        [DatabaseName],
-	        [DatabaseVersion],
-	        [DatabaseCreationDate],
-	        [BackupSize],
-	        [FirstLSN],
-	        [LastLSN],
-	        [CheckpointLSN],
-	        [DatabaseBackupLSN],
-	        [BackupStartDate],
-	        [BackupFinishDate],
-	        [SortOrder],
-	        [CodePage],
-	        [UnicodeLocaleId],
-	        [UnicodeComparisonStyle],
-	        [CompatibilityLevel],
-	        [SoftwareVendorId],
-	        [SoftwareVersionMajor],
-	        [SoftwareVersionMinor],
-	        [SoftwareVersionBuild],
-	        [MachineName],
-	        [Flags],
-	        [BindingID],
-	        [RecoveryForkID],
-	        [Collation],
-	        [FamilyGUID],
-	        [HasBulkLoggedData],
-	        [IsSnapshot],
-	        [IsReadOnly],
-	        [IsSingleUser],
-	        [HasBackupChecksums],
-	        [IsDamaged],
-	        [BeginsLogChain],
-	        [HasIncompleteMetaData],
-	        [IsForceOffline],
-	        [IsCopyOnly],
-	        [FirstRecoveryForkId],
-	        [ForkPointLSN],
-	        [RecoveryModel],
-	        [DifferentialBaseLSN],
-	        [DifferentialBaseGUID],
-	        [BackupTypeDescription],
-	        [BackupSetGUID],
-	        [CompressedBackupSize],
-	        [Containment],
-	        [KeyAlgorithm],
-	        [EncryptorThumbprint],
-	        [EncryptorType]
+			[BackupDescription],
+			[BackupType],
+			[ExpirationDate],
+			[Compressed],
+			[Position],
+			[DeviceType],
+			[UserName],
+			[ServerName],
+			[DatabaseName],
+			[DatabaseVersion],
+			[DatabaseCreationDate],
+			[BackupSize],
+			[FirstLSN],
+			[LastLSN],
+			[CheckpointLSN],
+			[DatabaseBackupLSN],
+			[BackupStartDate],
+			[BackupFinishDate],
+			[SortOrder],
+			[CodePage],
+			[UnicodeLocaleId],
+			[UnicodeComparisonStyle],
+			[CompatibilityLevel],
+			[SoftwareVendorId],
+			[SoftwareVersionMajor],
+			[SoftwareVersionMinor],
+			[SoftwareVersionBuild],
+			[MachineName],
+			[Flags],
+			[BindingID],
+			[RecoveryForkID],
+			[Collation],
+			[FamilyGUID],
+			[HasBulkLoggedData],
+			[IsSnapshot],
+			[IsReadOnly],
+			[IsSingleUser],
+			[HasBackupChecksums],
+			[IsDamaged],
+			[BeginsLogChain],
+			[HasIncompleteMetaData],
+			[IsForceOffline],
+			[IsCopyOnly],
+			[FirstRecoveryForkId],
+			[ForkPointLSN],
+			[RecoveryModel],
+			[DifferentialBaseLSN],
+			[DifferentialBaseGUID],
+			[BackupTypeDescription],
+			[BackupSetGUID],
+			[CompressedBackupSize],
+			[Containment],
+			[KeyAlgorithm],
+			[EncryptorThumbprint],
+			[EncryptorType]
 		)
 		EXECUTE (@cmd);
 
@@ -742,56 +743,56 @@ BEGIN
 		INSERT INTO @tb_backupInfo
 		(
 			[BackupName],
-	        [BackupDescription],
-	        [BackupType],
-	        [ExpirationDate],
-	        [Compressed],
-	        [Position],
-	        [DeviceType],
-	        [UserName],
-	        [ServerName],
-	        [DatabaseName],
-	        [DatabaseVersion],
-	        [DatabaseCreationDate],
-	        [BackupSize],
-	        [FirstLSN],
-	        [LastLSN],
-	        [CheckpointLSN],
-	        [DatabaseBackupLSN],
-	        [BackupStartDate],
-	        [BackupFinishDate],
-	        [SortOrder],
-	        [CodePage],
-	        [UnicodeLocaleId],
-	        [UnicodeComparisonStyle],
-	        [CompatibilityLevel],
-	        [SoftwareVendorId],
-	        [SoftwareVersionMajor],
-	        [SoftwareVersionMinor],
-	        [SoftwareVersionBuild],
-	        [MachineName],
-	        [Flags],
-	        [BindingID],
-	        [RecoveryForkID],
-	        [Collation],
-	        [FamilyGUID],
-	        [HasBulkLoggedData],
-	        [IsSnapshot],
-	        [IsReadOnly],
-	        [IsSingleUser],
-	        [HasBackupChecksums],
-	        [IsDamaged],
-	        [BeginsLogChain],
-	        [HasIncompleteMetaData],
-	        [IsForceOffline],
-	        [IsCopyOnly],
-	        [FirstRecoveryForkId],
-	        [ForkPointLSN],
-	        [RecoveryModel],
-	        [DifferentialBaseLSN],
-	        [DifferentialBaseGUID],
-	        [BackupTypeDescription],
-	        [BackupSetGUID]
+			[BackupDescription],
+			[BackupType],
+			[ExpirationDate],
+			[Compressed],
+			[Position],
+			[DeviceType],
+			[UserName],
+			[ServerName],
+			[DatabaseName],
+			[DatabaseVersion],
+			[DatabaseCreationDate],
+			[BackupSize],
+			[FirstLSN],
+			[LastLSN],
+			[CheckpointLSN],
+			[DatabaseBackupLSN],
+			[BackupStartDate],
+			[BackupFinishDate],
+			[SortOrder],
+			[CodePage],
+			[UnicodeLocaleId],
+			[UnicodeComparisonStyle],
+			[CompatibilityLevel],
+			[SoftwareVendorId],
+			[SoftwareVersionMajor],
+			[SoftwareVersionMinor],
+			[SoftwareVersionBuild],
+			[MachineName],
+			[Flags],
+			[BindingID],
+			[RecoveryForkID],
+			[Collation],
+			[FamilyGUID],
+			[HasBulkLoggedData],
+			[IsSnapshot],
+			[IsReadOnly],
+			[IsSingleUser],
+			[HasBackupChecksums],
+			[IsDamaged],
+			[BeginsLogChain],
+			[HasIncompleteMetaData],
+			[IsForceOffline],
+			[IsCopyOnly],
+			[FirstRecoveryForkId],
+			[ForkPointLSN],
+			[RecoveryModel],
+			[DifferentialBaseLSN],
+			[DifferentialBaseGUID],
+			[BackupTypeDescription],
+			[BackupSetGUID]
 		)
 		EXECUTE (@cmd);
 
@@ -804,57 +805,57 @@ BEGIN
 		INSERT INTO @tb_backupInfo
 		(
 			[BackupName],
-	        [BackupDescription],
-	        [BackupType],
-	        [ExpirationDate],
-	        [Compressed],
-	        [Position],
-	        [DeviceType],
-	        [UserName],
-	        [ServerName],
-	        [DatabaseName],
-	        [DatabaseVersion],
-	        [DatabaseCreationDate],
-	        [BackupSize],
-	        [FirstLSN],
-	        [LastLSN],
-	        [CheckpointLSN],
-	        [DatabaseBackupLSN],
-	        [BackupStartDate],
-	        [BackupFinishDate],
-	        [SortOrder],
-	        [CodePage],
-	        [UnicodeLocaleId],
-	        [UnicodeComparisonStyle],
-	        [CompatibilityLevel],
-	        [SoftwareVendorId],
-	        [SoftwareVersionMajor],
-	        [SoftwareVersionMinor],
-	        [SoftwareVersionBuild],
-	        [MachineName],
-	        [Flags],
-	        [BindingID],
-	        [RecoveryForkID],
-	        [Collation],
-	        [FamilyGUID],
-	        [HasBulkLoggedData],
-	        [IsSnapshot],
-	        [IsReadOnly],
-	        [IsSingleUser],
-	        [HasBackupChecksums],
-	        [IsDamaged],
-	        [BeginsLogChain],
-	        [HasIncompleteMetaData],
-	        [IsForceOffline],
-	        [IsCopyOnly],
-	        [FirstRecoveryForkId],
-	        [ForkPointLSN],
-	        [RecoveryModel],
-	        [DifferentialBaseLSN],
-	        [DifferentialBaseGUID],
-	        [BackupTypeDescription],
-	        [BackupSetGUID],
-	        [CompressedBackupSize]
+			[BackupDescription],
+			[BackupType],
+			[ExpirationDate],
+			[Compressed],
+			[Position],
+			[DeviceType],
+			[UserName],
+			[ServerName],
+			[DatabaseName],
+			[DatabaseVersion],
+			[DatabaseCreationDate],
+			[BackupSize],
+			[FirstLSN],
+			[LastLSN],
+			[CheckpointLSN],
+			[DatabaseBackupLSN],
+			[BackupStartDate],
+			[BackupFinishDate],
+			[SortOrder],
+			[CodePage],
+			[UnicodeLocaleId],
+			[UnicodeComparisonStyle],
+			[CompatibilityLevel],
+			[SoftwareVendorId],
+			[SoftwareVersionMajor],
+			[SoftwareVersionMinor],
+			[SoftwareVersionBuild],
+			[MachineName],
+			[Flags],
+			[BindingID],
+			[RecoveryForkID],
+			[Collation],
+			[FamilyGUID],
+			[HasBulkLoggedData],
+			[IsSnapshot],
+			[IsReadOnly],
+			[IsSingleUser],
+			[HasBackupChecksums],
+			[IsDamaged],
+			[BeginsLogChain],
+			[HasIncompleteMetaData],
+			[IsForceOffline],
+			[IsCopyOnly],
+			[FirstRecoveryForkId],
+			[ForkPointLSN],
+			[RecoveryModel],
+			[DifferentialBaseLSN],
+			[DifferentialBaseGUID],
+			[BackupTypeDescription],
+			[BackupSetGUID],
+			[CompressedBackupSize]
 		)
 		EXECUTE (@cmd);
 
@@ -867,58 +868,58 @@ BEGIN
 		INSERT INTO @tb_backupInfo
 		(
 			[BackupName],
-	        [BackupDescription],
-	        [BackupType],
-	        [ExpirationDate],
-	        [Compressed],
-	        [Position],
-	        [DeviceType],
-	        [UserName],
-	        [ServerName],
-	        [DatabaseName],
-	        [DatabaseVersion],
-	        [DatabaseCreationDate],
-	        [BackupSize],
-	        [FirstLSN],
-	        [LastLSN],
-	        [CheckpointLSN],
-	        [DatabaseBackupLSN],
-	        [BackupStartDate],
-	        [BackupFinishDate],
-	        [SortOrder],
-	        [CodePage],
-	        [UnicodeLocaleId],
-	        [UnicodeComparisonStyle],
-	        [CompatibilityLevel],
-	        [SoftwareVendorId],
-	        [SoftwareVersionMajor],
-	        [SoftwareVersionMinor],
-	        [SoftwareVersionBuild],
-	        [MachineName],
-	        [Flags],
-	        [BindingID],
-	        [RecoveryForkID],
-	        [Collation],
-	        [FamilyGUID],
-	        [HasBulkLoggedData],
-	        [IsSnapshot],
-	        [IsReadOnly],
-	        [IsSingleUser],
-	        [HasBackupChecksums],
-	        [IsDamaged],
-	        [BeginsLogChain],
-	        [HasIncompleteMetaData],
-	        [IsForceOffline],
-	        [IsCopyOnly],
-	        [FirstRecoveryForkId],
-	        [ForkPointLSN],
-	        [RecoveryModel],
-	        [DifferentialBaseLSN],
-	        [DifferentialBaseGUID],
-	        [BackupTypeDescription],
-	        [BackupSetGUID],
-	        [CompressedBackupSize],
-	        [Containment]
+			[BackupDescription],
+			[BackupType],
+			[ExpirationDate],
+			[Compressed],
+			[Position],
+			[DeviceType],
+			[UserName],
+			[ServerName],
+			[DatabaseName],
+			[DatabaseVersion],
+			[DatabaseCreationDate],
+			[BackupSize],
+			[FirstLSN],
+			[LastLSN],
+			[CheckpointLSN],
+			[DatabaseBackupLSN],
+			[BackupStartDate],
+			[BackupFinishDate],
+			[SortOrder],
+			[CodePage],
+			[UnicodeLocaleId],
+			[UnicodeComparisonStyle],
+			[CompatibilityLevel],
+			[SoftwareVendorId],
+			[SoftwareVersionMajor],
+			[SoftwareVersionMinor],
+			[SoftwareVersionBuild],
+			[MachineName],
+			[Flags],
+			[BindingID],
+			[RecoveryForkID],
+			[Collation],
+			[FamilyGUID],
+			[HasBulkLoggedData],
+			[IsSnapshot],
+			[IsReadOnly],
+			[IsSingleUser],
+			[HasBackupChecksums],
+			[IsDamaged],
+			[BeginsLogChain],
+			[HasIncompleteMetaData],
+			[IsForceOffline],
+			[IsCopyOnly],
+			[FirstRecoveryForkId],
+			[ForkPointLSN],
+			[RecoveryModel],
+			[DifferentialBaseLSN],
+			[DifferentialBaseGUID],
+			[BackupTypeDescription],
+			[BackupSetGUID],
+			[CompressedBackupSize],
+			[Containment]
 		)
 		EXECUTE (@cmd);
 
@@ -931,61 +932,61 @@ BEGIN
 		INSERT INTO @tb_backupInfo
 		(
 			[BackupName],
-	        [BackupDescription],
-	        [BackupType],
-	        [ExpirationDate],
-	        [Compressed],
-	        [Position],
-	        [DeviceType],
-	        [UserName],
-	        [ServerName],
-	        [DatabaseName],
-	        [DatabaseVersion],
-	        [DatabaseCreationDate],
-	        [BackupSize],
-	        [FirstLSN],
-	        [LastLSN],
-	        [CheckpointLSN],
-	        [DatabaseBackupLSN],
-	        [BackupStartDate],
-	        [BackupFinishDate],
-	        [SortOrder],
-	        [CodePage],
-	        [UnicodeLocaleId],
-	        [UnicodeComparisonStyle],
-	        [CompatibilityLevel],
-	        [SoftwareVendorId],
-	        [SoftwareVersionMajor],
-	        [SoftwareVersionMinor],
-	        [SoftwareVersionBuild],
-	        [MachineName],
-	        [Flags],
-	        [BindingID],
-	        [RecoveryForkID],
-	        [Collation],
-	        [FamilyGUID],
-	        [HasBulkLoggedData],
-	        [IsSnapshot],
-	        [IsReadOnly],
-	        [IsSingleUser],
-	        [HasBackupChecksums],
-	        [IsDamaged],
-	        [BeginsLogChain],
-	        [HasIncompleteMetaData],
-	        [IsForceOffline],
-	        [IsCopyOnly],
-	        [FirstRecoveryForkId],
-	        [ForkPointLSN],
-	        [RecoveryModel],
-	        [DifferentialBaseLSN],
-	        [DifferentialBaseGUID],
-	        [BackupTypeDescription],
-	        [BackupSetGUID],
-	        [CompressedBackupSize],
-	        [Containment],
-	        [KeyAlgorithm],
-	        [EncryptorThumbprint],
-	        [EncryptorType]
+			[BackupDescription],
+			[BackupType],
+			[ExpirationDate],
+			[Compressed],
+			[Position],
+			[DeviceType],
+			[UserName],
+			[ServerName],
+			[DatabaseName],
+			[DatabaseVersion],
+			[DatabaseCreationDate],
+			[BackupSize],
+			[FirstLSN],
+			[LastLSN],
+			[CheckpointLSN],
+			[DatabaseBackupLSN],
+			[BackupStartDate],
+			[BackupFinishDate],
+			[SortOrder],
+			[CodePage],
+			[UnicodeLocaleId],
+			[UnicodeComparisonStyle],
+			[CompatibilityLevel],
+			[SoftwareVendorId],
+			[SoftwareVersionMajor],
+			[SoftwareVersionMinor],
+			[SoftwareVersionBuild],
+			[MachineName],
+			[Flags],
+			[BindingID],
+			[RecoveryForkID],
+			[Collation],
+			[FamilyGUID],
+			[HasBulkLoggedData],
+			[IsSnapshot],
+			[IsReadOnly],
+			[IsSingleUser],
+			[HasBackupChecksums],
+			[IsDamaged],
+			[BeginsLogChain],
+			[HasIncompleteMetaData],
+			[IsForceOffline],
+			[IsCopyOnly],
+			[FirstRecoveryForkId],
+			[ForkPointLSN],
+			[RecoveryModel],
+			[DifferentialBaseLSN],
+			[DifferentialBaseGUID],
+			[BackupTypeDescription],
+			[BackupSetGUID],
+			[CompressedBackupSize],
+			[Containment],
+			[KeyAlgorithm],
+			[EncryptorThumbprint],
+			[EncryptorType]
 		)
 		EXECUTE (@cmd);
 
@@ -1082,7 +1083,7 @@ PRINT @cmd;
 -- check to make sure there is a diff backup
 IF (@diffApplicable = 'Y')
 BEGIN
-    SELECT @cmd = 'RESTORE DATABASE [' + @newDBName + '] FROM DISK = ''' + [NameOfFile] + ''' WITH NORECOVERY;'
+	SELECT @cmd = 'RESTORE DATABASE [' + @newDBName + '] FROM DISK = ''' + [NameOfFile] + ''' WITH NORECOVERY;'
 	FROM @tb_backupInfo
 	WHERE [BackupId] = @backupIdDiff;
 

@@ -1,4 +1,3 @@
-set feedback off
 set define on
 set verify off
 set long 1000000
@@ -9,16 +8,20 @@ set timing off
 set heading on
 set echo off
 
-undefine sql_id;
+set feedback off
+prompt Substitution variable 1 = SQL_ID;
+column my_sql_id new_value _SQL_ID noprint;
+select '&1' my_sql_id from dual;
+set feedback on
 
 col sql_fulltext format a5000 wrap
 col name format a10
-col value_string format a50 wrap
+col value_string format a500 wrap
 
 
 select sql_fulltext 
 from   v$sql 
-where sql_id='&&sql_id';
+where sql_id='&&_SQL_ID';
 
 select   position
        , name
@@ -28,13 +31,14 @@ select   position
        , scale
        , to_char(last_captured,'YYYY-MM-DD HH24:MI:SS') last_captured 
 from     v$sql_bind_capture 
-where    sql_id='&&sql_id'
+where    sql_id='&&_SQL_ID'
 order by last_captured desc
        , position;
 
 prompt ;
 
-undefine sql_id;
+undefine 1
+undefine _SQL_ID
 
 
 

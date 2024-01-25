@@ -5,7 +5,6 @@ set feedback on
 set termout off
 set define "&"
 
-column spid format a10
 column machine format a20
 column username format a20
 column osuser format a20
@@ -39,7 +38,7 @@ BEGIN
 
 	/* create the table if it does not exist */
 	IF l_qty=0 THEN
-		l_stmt := 'create table ca.blocking_chain (order_id number, level_id number, blocking_sid number, sid number, serial# number, spid varchar2(24), machine varchar2(64), username varchar2(128), server varchar2(9), osuser varchar2(128), program varchar2(48), status varchar2(8), wait_class varchar2(64), event varchar2(64), seconds_in_wait number, sql_id varchar2(13))';
+		l_stmt := 'create table ca.blocking_chain (order_id number, level_id number, blocking_sid number, sid number, serial# number, machine varchar2(64), username varchar2(128), server varchar2(9), osuser varchar2(128), program varchar2(48), status varchar2(8), wait_class varchar2(64), event varchar2(64), seconds_in_wait number, sql_id varchar2(13))';
 		execute immediate l_stmt;
 	END IF;
 
@@ -51,7 +50,7 @@ BEGIN
 
 	/* create the table if it does not exist */
 	IF l_qty=0 THEN
-		l_stmt := 'create table ca.sessions_snapshot (blocking_sid number, sid number, serial# number, spid varchar2(24), machine varchar2(64), username varchar2(128), server varchar2(9), osuser varchar2(128), program varchar2(48), status varchar2(8), wait_class varchar2(64), event varchar2(64), seconds_in_wait number, sql_id varchar2(13))';
+		l_stmt := 'create table ca.sessions_snapshot (blocking_sid number, sid number, serial# number, machine varchar2(64), username varchar2(128), server varchar2(9), osuser varchar2(128), program varchar2(48), status varchar2(8), wait_class varchar2(64), event varchar2(64), seconds_in_wait number, sql_id varchar2(13))';
 		execute immediate l_stmt;
 	END IF;
 END;
@@ -79,10 +78,9 @@ BEGIN
 	l_stmt := 'truncate table ca.sessions_snapshot';
 	execute immediate l_stmt;
 	insert into ca.sessions_snapshot (
-	             blocking_sid,   sid,   serial#,   spid,   machine,   username,   server,   osuser,   program,   status,   wait_class,   event,   seconds_in_wait,   sql_id)
-	select s.blocking_session, s.sid, s.serial#, p.spid, s.machine, s.username, s.server, s.osuser, s.program, s.status, s.wait_class, s.event, s.seconds_in_wait, s.sql_id
-	from   v$session s
-	join   v$process p on p.addr = s.paddr;
+	             blocking_sid,   sid,   serial#,   machine,   username,   server,   osuser,   program,   status,   wait_class,   event,   seconds_in_wait,   sql_id)
+	select s.blocking_session, s.sid, s.serial#, s.machine, s.username, s.server, s.osuser, s.program, s.status, s.wait_class, s.event, s.seconds_in_wait, s.sql_id
+	from   v$session s;
 
 	/* loop through the lead blockers */
 	FOR x IN (  select   distinct blocker.sid
@@ -93,8 +91,8 @@ BEGIN
 	         )
 	LOOP
 		/* insert the lead blocker */
-		insert into ca.blocking_chain (order_id, level_id, blocking_sid, sid, serial#, spid, machine, username, server, osuser, program, status, wait_class, event, seconds_in_wait, sql_id)
-		select l_order_id, l_level_id, blocking_sid, sid, serial#, spid, machine, username, server, osuser, program, status, wait_class, event, seconds_in_wait, sql_id
+		insert into ca.blocking_chain (order_id, level_id, blocking_sid, sid, serial#, machine, username, server, osuser, program, status, wait_class, event, seconds_in_wait, sql_id)
+		select l_order_id, l_level_id, blocking_sid, sid, serial#, machine, username, server, osuser, program, status, wait_class, event, seconds_in_wait, sql_id
 		from   ca.sessions_snapshot
 		where  sid=x.sid;
 		l_order_id := l_order_id + 1;
@@ -124,8 +122,8 @@ BEGIN
 				fetch next 1 rows only;
 
 				/* insert the session into our blocking chain results table */
-				insert into ca.blocking_chain (order_id, level_id, blocking_sid, sid, serial#, spid, machine, username, server, osuser, program, status, wait_class, event, seconds_in_wait, sql_id)
-				select l_order_id, l_level_id, blocking_sid, sid, serial#, spid, machine, username, server, osuser, program, status, wait_class, event, seconds_in_wait, sql_id
+				insert into ca.blocking_chain (order_id, level_id, blocking_sid, sid, serial#, machine, username, server, osuser, program, status, wait_class, event, seconds_in_wait, sql_id)
+				select l_order_id, l_level_id, blocking_sid, sid, serial#, machine, username, server, osuser, program, status, wait_class, event, seconds_in_wait, sql_id
 				from   ca.sessions_snapshot
 				where  sid=l_sid;
 				/* always increment the order_id value so we keep the blocking chain results organized */
@@ -164,7 +162,6 @@ set termout on
 select	  rpad('.',4*level_id,'.')||to_char(sid) sid
 	, blocking_sid
 	, serial#
-	, spid
 	, status
 	, wait_class
 	, event
