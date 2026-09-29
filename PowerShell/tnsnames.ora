@@ -1,0 +1,489 @@
+AGLDEV01 =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=agldev01-db.na.plexus.com)(PORT=1722))
+    (CONNECT_DATA = (SERVICE_NAME=agldev01))
+  )
+
+AGLPRD01 =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=aglprd01-db.na.plexus.com)(PORT=1726))
+    (CONNECT_DATA = (SERVICE_NAME=aglprd01))
+  )
+
+AGLQA01 =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=aglqa01-db.na.plexus.com)(PORT=1725))
+    (CONNECT_DATA = (SERVICE_NAME=aglqa01))
+  )
+
+AGLRO01 =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=aglro01-db.na.plexus.com)(PORT=1728))
+    (CONNECT_DATA = (SERVICE_NAME=aglro01))
+  )
+
+AGLTRN01 =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=agltrn01-db.na.plexus.com)(PORT=1723))
+    (CONNECT_DATA = (SERVICE_NAME=agltrn01))
+  )
+
+BIR =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=bir-db.plexus.com)(PORT=15224))
+    (CONNECT_DATA = (SERVICE_NAME=bir))
+  )
+
+BMBLDARC =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=bmbldarc-db.plexus.com)(PORT=15226))
+    (CONNECT_DATA = (SERVICE_NAME=bmbldarc)(SERVER=DEDICATED))
+  )
+
+BMBLDV =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=bmbldv-db.plexus.com)(PORT=15225))
+    (CONNECT_DATA = (SERVICE_NAME=bmbldv)(SERVER=DEDICATED))
+  )
+
+BMBLPARC =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=bmblparc-db.plexus.com)(PORT=19599))
+    (CONNECT_DATA = (SERVICE_NAME=bmblparc)(SERVER=DEDICATED))
+  )
+
+BMBLPD =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=bmblpd-db.plexus.com)(PORT=19597))
+    (CONNECT_DATA = (SERVICE_NAME=bmblpd))
+  )
+
+BONDV01 = 
+  (DESCRIPTION = 
+    (ADDRESS = (PROTOCOL=TCP)(HOST=bondv01-db.na.plexus.com)(PORT=15627)) 
+    (CONNECT_DATA = (SERVICE_NAME=bondv01)(SERVER=DEDICATED)) 
+  )
+
+BONPD01 = 
+  (DESCRIPTION = 
+    (ADDRESS = (PROTOCOL=TCP)(HOST=bonpd01-db.na.plexus.com)(PORT=15624)) 
+    (CONNECT_DATA = (SERVICE_NAME=bonpd01)(SERVER=DEDICATED)) 
+  )
+
+BONQA01 = 
+  (DESCRIPTION = 
+    (ADDRESS = (PROTOCOL=TCP)(HOST=bonqa01-db.na.plexus.com)(PORT=15628)) 
+    (CONNECT_DATA = (SERVICE_NAME=bonqa01)(SERVER=DEDICATED)) 
+  )
+
+CGCP =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=cgcp-db.plexus.com)(PORT=15978))
+    (CONNECT_DATA = (SERVICE_NAME=cgcp)(SERVER=DEDICATED))
+  )
+
+CGDV =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=cgdv-db.plexus.com)(PORT=15239))
+    (CONNECT_DATA = (SERVICE_NAME=cgdv)(SERVER=DEDICATED))
+  )
+
+CGNDD =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=cgndd-db.plexus.com)(PORT=15339))
+    (CONNECT_DATA = (SERVICE_NAME=cgndd)(SERVER=DEDICATED))
+  )
+
+CGPD =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=cgpd-db.plexus.com)(PORT=15889))
+    (CONNECT_DATA = (SERVICE_NAME=cgpd)(SERVER=DEDICATED))
+  )
+
+COGDEV01 =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=cogdev01-db.na.plexus.com)(PORT=15624))
+    (CONNECT_DATA = (SERVICE_NAME=cogdev01)(SERVER=DEDICATED))
+  )
+
+COGDEV02 =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=cogdev02-db.na.plexus.com)(PORT=15626))
+    (CONNECT_DATA = (SERVICE_NAME=cogdev02)(SERVER=DEDICATED))
+  )
+
+COGPRD01 =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=cogprd01-db.plexus.com)(PORT=15621))
+    (CONNECT_DATA =(SERVICE_NAME=cogprd01)(SERVER=DEDICATED))
+  )
+
+COGPRD02 =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=cogprd02-db.na.plexus.com)(PORT=15622))
+    (CONNECT_DATA = (SERVICE_NAME=cogprd02)(SERVER=DEDICATED))
+  )
+
+EBSAPCPD =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=ebsprdapc01-db.plexus.com)(PORT=1621))
+    (CONNECT_DATA = (SERVICE_NAME=ebsapcpd))
+  )
+
+# ebscfg01 --> no access to server
+
+EBSDEV01 =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=ebsdev01-db.na.plexus.com)(PORT=1621))
+    (CONNECT_DATA = (SERVICE_NAME=ebsdev01))
+  )
+
+# ebsiampd --> no access to server
+
+EBSPRD01 =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=ebsprd01-db.plexus.com)(PORT=1621))
+    #(ADDRESS = (PROTOCOL=TCP)(HOST=ebsprd01-db.na.plexus.com)(PORT=1621))
+    (CONNECT_DATA = (SERVICE_NAME=ebsprd01)(INSTANCE_NAME = ebsprd01))
+  )
+
+# ebssbx01 --> no access to server
+
+EBSTRN01 =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=co-db-012.na.plexus.com)(PORT=1621))
+    (CONNECT_DATA = (SERVICE_NAME=ebstrn01)(INSTANCE_NAME = ebstrn01))
+  )
+
+EBSTST01 =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=co-db-969.na.plexus.com)(PORT=1621))
+    (CONNECT_DATA = (SERVICE_NAME=ebstst01)(INSTANCE_NAME = ebstst01))
+  )
+
+EBSUAT01 =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=ebsuat01-db.plexus.com)(PORT=1621))
+    #(ADDRESS = (PROTOCOL=TCP)(HOST=ebsuat01-db.na.plexus.com)(PORT=1621))
+    (CONNECT_DATA = (SERVICE_NAME=ebsuat01)(INSTANCE_NAME = ebsuat01))
+  )
+
+# ebsupkpd --> no access to server
+
+GGDV =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=ggdv-db.na.plexus.com)(PORT=1721))
+    (CONNECT_DATA =
+      (SERVER=DEDICATED)
+      (SERVICE_NAME=ggdv)
+    )
+  )
+
+GGPD =
+ (DESCRIPTION =
+   (ADDRESS = (PROTOCOL=TCP)(HOST=ggpd-db.plexus.com)(PORT=15212))
+   (CONNECT_DATA = (SERVICE_NAME=ggpd)(SERVER=DEDICATED))
+ )
+
+ GGPY01 =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=ggpy01-db.plexus.com)(PORT=15251))
+    (CONNECT_DATA = (SERVICE_NAME=ggpy01)(SERVER=DEDICATED))
+  )
+
+GRCDEV01 =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=grcdev01-db.na.plexus.com)(PORT=15622))
+    (CONNECT_DATA = (SERVICE_NAME=grcdev01)(SERVER=DEDICATED))
+  )
+
+GRCPRD01 =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=grcprd01-db.na.plexus.com)(PORT=15622))
+    (CONNECT_DATA = (SERVICE_NAME=grcprd01)(SERVER=DEDICATED))
+  )
+
+HZ1S = 
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=hang-db-001.ap.plexus.com)(PORT=1521))
+    (CONNECT_DATA = (SID=HZ1S)(SERVER=DEDICATED))
+  )
+
+ICCM =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=pena-db-iccm.ap.plexus.com)(PORT=1521))
+    (CONNECT_DATA = (SID=iccm)(SERVER=DEDICATED))
+  )
+
+ICCX =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=xiam-db-iccx.ap.plexus.com)(PORT=1521))
+    (CONNECT_DATA = (SID=ICCX)(SERVER=DEDICATED))
+  )
+
+JABPRD01 =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=jabprd01-db.na.plexus.com)(PORT=15624))
+    (CONNECT_DATA =(SERVICE_NAME=jabprd01)(SERVER=DEDICATED))
+  )
+
+JDARC =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=jdarc-db.plexus.com)(PORT=15589))
+    (CONNECT_DATA = (SERVICE_NAME=jdarc))
+  )
+
+JDARP =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=jdarp-db.plexus.com)(PORT=15589))
+    (CONNECT_DATA = (SERVICE_NAME=jdarp))
+  )
+
+JDBCH =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=jdbch-db.plexus.com)(PORT=15301))
+    (CONNECT_DATA = (SERVICE_NAME=jdbch)
+    )
+  )
+
+JDDV =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=jddv-db.plexus.com)(PORT=15211)) # LISTENER_JDDV
+    #(ADDRESS = (PROTOCOL=TCP)(HOST=jddv-db.plexus.com)(PORT=15357)) # LISTENER_JDDV_2
+    #(ADDRESS = (PROTOCOL=TCP)(HOST=jddv-db.plexus.com)(PORT=15359)) # LISTENER_JDDV_3
+    #(ADDRESS = (PROTOCOL=TCP)(HOST=jddv-db.plexus.com)(PORT=15556)) # LISTENER_JDDV_ADM
+    (CONNECT_DATA = (SERVICE_NAME=jddv)(SERVER=DEDICATED))
+  )
+
+JDDV00 =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=jddv00-db.plexus.com)(PORT=1523))
+    (CONNECT_DATA = (SERVICE_NAME=jddv00)(SERVER=DEDICATED))
+  )
+
+JDEDV01 =
+  (DESCRIPTION =
+    #(ADDRESS = (PROTOCOL=TCP)(HOST=jdedv01-db.plexus.com)(PORT=15210)) # JDEDV01_JDE
+    #(ADDRESS = (PROTOCOL=TCP)(HOST=jdedv01-db.plexus.com)(PORT=15211)) # JDEDV01_BIZ
+    (ADDRESS = (PROTOCOL=TCP)(HOST=jdedv01-db.plexus.com)(PORT=15212)) # JDEDV01_RW
+    #(ADDRESS = (PROTOCOL=TCP)(HOST=jdedv01-db.plexus.com)(PORT=15213)) # JDEDV01_RO
+    #(ADDRESS = (PROTOCOL=TCP)(HOST=jdedv01-db.plexus.com)(PORT=15214)) # JDEDV01_DHCP
+    (CONNECT_DATA = (SERVICE_NAME=jdedv01)(SERVER=DEDICATED))
+  )
+
+JDEPD01 =
+  (DESCRIPTION =
+    #(ADDRESS = (PROTOCOL=TCP)(HOST=jdepd01-db.plexus.com)(PORT=16010)) # JDEPD01_JDE
+    #(ADDRESS = (PROTOCOL=TCP)(HOST=jdepd01-db.plexus.com)(PORT=17041)) # JDEPD01_BIZ
+    (ADDRESS = (PROTOCOL=TCP)(HOST=jdepd01-db.plexus.com)(PORT=18032)) # JDEPD01_RW
+    #(ADDRESS = (PROTOCOL=TCP)(HOST=jdepd01-db.plexus.com)(PORT=19023)) # JDEPD01_RO
+    #(ADDRESS = (PROTOCOL=TCP)(HOST=jdepd01-db.plexus.com)(PORT=20044)) # JDEPD01_DHCP
+    (CONNECT_DATA = (SERVICE_NAME=jdepd01)(SERVER=DEDICATED))
+  )
+
+JDEPR01 =
+  (DESCRIPTION =
+    #(ADDRESS = (PROTOCOL=TCP)(HOST=jdepr01-db.plexus.com)(PORT=15210)) # JDEPR01_JDE
+    #(ADDRESS = (PROTOCOL=TCP)(HOST=jdepr01-db.plexus.com)(PORT=15211)) # JDEPR01_BIZ
+    (ADDRESS = (PROTOCOL=TCP)(HOST=jdepr01-db.plexus.com)(PORT=15212)) # JDEPR01_RW
+    #(ADDRESS = (PROTOCOL=TCP)(HOST=jdepr01-db.plexus.com)(PORT=15213)) # JDEPR01_RO
+    #(ADDRESS = (PROTOCOL=TCP)(HOST=jdepr01-db.plexus.com)(PORT=15214)) # JDEPR01_DHCP
+    (CONNECT_DATA = (SERVICE_NAME=JDEPR01)(SERVER=DEDICATED))
+  )
+
+JDEPY01 =
+  (DESCRIPTION =
+    #(ADDRESS = (PROTOCOL=TCP)(HOST=jdepy01-db.plexus.com)(PORT=15210)) # JDEPY01_JDE
+    #(ADDRESS = (PROTOCOL=TCP)(HOST=jdepy01-db.plexus.com)(PORT=15211)) # JDEPY01_BIZ
+    (ADDRESS = (PROTOCOL=TCP)(HOST=jdepy01-db.plexus.com)(PORT=15212)) # JDEPY01_RW
+    #(ADDRESS = (PROTOCOL=TCP)(HOST=jdepy01-db.plexus.com)(PORT=15213)) # JDEPY01_RO
+    #(ADDRESS = (PROTOCOL=TCP)(HOST=jdepy01-db.plexus.com)(PORT=15214)) # JDEPY01_DHCP
+    (CONNECT_DATA = (SERVICE_NAME=jdepy01)(SERVER=DEDICATED))
+  )
+
+JDETEST =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=dcc-ora-xf-001)(PORT=15249))
+    (CONNECT_DATA = (SERVICE_NAME=jdetest)(SERVER=DEDICATED))
+  )
+
+JDKINX =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=co-db-015.na.plexus.com)(PORT=15591))
+    (CONNECT_DATA = (SERVICE_NAME=jdkinx))
+  )
+
+JDPD =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=jdpd-db.plexus.com)(PORT=15219)) # ADMIN_JDPD
+    #(ADDRESS = (PROTOCOL=TCP)(HOST=jdpd-db.plexus.com)(PORT=15211)) # LISTENER_JDPD
+    #(ADDRESS = (PROTOCOL=TCP)(HOST=jdpd-db.plexus.com)(PORT=15210)) # LISTENER_JDPD_2
+    #(ADDRESS = (PROTOCOL=TCP)(HOST=jdpd-db.plexus.com)(PORT=15212)) # LISTENER_JDPD_3
+    #(ADDRESS = (PROTOCOL=TCP)(HOST=jdpd-db.plexus.com)(PORT=15217)) # LISTENER_JDPD_4
+    (CONNECT_DATA = (SERVICE_NAME=jdpd))
+  )
+
+JDPY =
+  (DESCRIPTION =
+    #(ADDRESS = (PROTOCOL=TCP)(HOST=jdpy-db.plexus.com)(PORT=15248)) # LISTENER_JDPY
+    (ADDRESS = (PROTOCOL=TCP)(HOST=jdpy-db.plexus.com)(PORT=15557)) # LISTENER_JDPY_ADM
+    #(ADDRESS = (PROTOCOL=TCP)(HOST=jdpy-db.plexus.com)(PORT=15246)) # LISTENER_JDPY_2
+    #(ADDRESS = (PROTOCOL=TCP)(HOST=jdpy-db.plexus.com)(PORT=15244)) # LISTENER_JDPY_3
+    #(ADDRESS = (PROTOCOL=TCP)(HOST=jdpy-db.plexus.com)(PORT=15250)) # LISTENER_JDPY_4
+    (CONNECT_DATA = (SERVICE_NAME=jdpy)(SERVER=DEDICATED))
+  )
+
+JDQA =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=jdqa-db.plexus.com)(PORT=15222)) # ADMIN_JDQA
+    #(ADDRESS = (PROTOCOL=TCP)(HOST=jdqa-db.plexus.com)(PORT=15215)) # LISTENER_JDQA
+    (CONNECT_DATA = (SERVICE_NAME=jdqa))
+  )
+
+JDRF01 =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=dcc-ora-xf-001)(PORT=15349))
+    (CONNECT_DATA = (SERVICE_NAME=jdrf01)(SERVER=DEDICATED))
+  )
+
+JDRO =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=bir-db.plexus.com)(PORT=15224))
+    (CONNECT_DATA = (SERVICE_NAME=bir))
+  )
+
+JDSD =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=jdsd-db.plexus.com)(PORT=15245))
+    (CONNECT_DATA = (SERVICE_NAME=jdsd)(SERVER=DEDICATED))
+  )
+
+JDSDV00 =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=jdsdv00-db.plexus.com)(PORT=1522))
+    (CONNECT_DATA = (SERVICE_NAME=jdsdv00)(SERVER=DEDICATED))
+  )
+
+JDSP =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=jdsp-db.plexus.com)(PORT=15221)) # ADMIN_JDSP
+    #(ADDRESS = (PROTOCOL=TCP)(HOST=jdsp-db.plexus.com)(PORT=15238)) # LISTENER_JDSP
+    (CONNECT_DATA = (SERVICE_NAME=jdsp)(SERVER=DEDICATED))
+  )
+
+JDTRN =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=jdtrn-db.plexus.com)(PORT=15247))
+    (CONNECT_DATA = (SERVICE_NAME=jdtrn)(SERVER=DEDICATED))
+  )
+
+JSPRPD =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=jsprpd-db.plexus.com)(PORT=15227))
+    (CONNECT_DATA = (SERVICE_NAME=jsprpd)(SERVER=DEDICATED))
+  )
+
+JSPRPY =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=co-db-998.plexus.com)(PORT=15213))
+    (CONNECT_DATA = (SERVICE_NAME=jsprpy)(SERVER=DEDICATED))
+  )
+
+OEMDV =
+(DESCRIPTION =
+  (ADDRESS = (PROTOCOL=TCP)(HOST=co-db-987)(PORT=15621))
+  (CONNECT_DATA = (SERVICE_NAME=oemdv))
+)
+
+OEMPRD01 =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=oemprd01-db.na.plexus.com)(PORT=15621))
+    (CONNECT_DATA = (SERVICE_NAME=oemprd01)(SERVER=DEDICATED))
+  )
+
+PG2S = 
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=pena-db-pg2s.ap.plexus.com)(PORT=1521))
+    (CONNECT_DATA = (SID=pg2s)(SERVER=DEDICATED))
+  )
+
+
+PG3S =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=pena-db-pg3s.ap.plexus.com)(PORT=1521))
+    (CONNECT_DATA = (SID=pg3s)(SERVER=DEDICATED))
+  )
+
+PLX =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=plx-db.plexus.com)(PORT=15214))
+    (CONNECT_DATA = (SERVICE_NAME=plx))
+  )
+
+PLXDV =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=co-db-996.na.plexus.com)(PORT=15219))
+    (CONNECT_DATA = (SERVICE_NAME=plxdv))
+  )
+
+PSFPD01 =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=psfpd01-db.na.plexus.com)(PORT=15623))
+    (CONNECT_DATA = (SERVICE_NAME=psfpd01)(SERVER=DEDICATED))
+  )
+
+RMNPRD01 =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=rmnprd01-db.na.plexus.com)(PORT=15623))
+    (CONNECT_DATA = (SERVICE_NAME=rmnprd01)(SERVER=DEDICATED))
+  )
+
+UC4NP01 = 
+  (DESCRIPTION = 
+    #(ADDRESS = (PROTOCOL=TCP)(HOST=uc4np01-db.plexus.com)(PORT=15210)) # UC4NP01
+    (ADDRESS = (PROTOCOL=TCP)(HOST=uc4np01-db.plexus.com)(PORT=15299)) # UC4NP01_ADMIN
+    (CONNECT_DATA = (SERVICE_NAME=uc4np01)(SERVER=DEDICATED)) 
+  )
+
+UCAMDV =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=ucam-dv-ora.db.na.plexus.com)(PORT=19591))
+    (CONNECT_DATA = (SERVICE_NAME=ucamdv)(SERVER=DEDICATED))
+  )
+
+UCAMPD =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=ucam-pd-ora.db.na.plexus.com)(PORT=19592))
+    (CONNECT_DATA = (SERVICE_NAME=ucampd)(SERVER=DEDICATED))
+  )
+
+WINDDV =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=co-db-996.na.plexus.com)(PORT=15222))
+    (CONNECT_DATA = (SERVICE_NAME=winddv)(SERVER=DEDICATED))
+  )
+
+WINDPD =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=windpd.db.na.plexus.com)(PORT=19593))
+    (CONNECT_DATA =(SERVICE_NAME=windpd)(SERVER=DEDICATED))
+  )
+
+WINDQA =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=co-db-996.na.plexus.com)(PORT=15223))
+    (CONNECT_DATA = (SERVICE_NAME=windqa)(SERVER=DEDICATED))
+  )
+
+WINDV01 =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=dcc-ora-dv-006.na.plexus.com)(PORT=15211))
+    (CONNECT_DATA = (SERVICE_NAME=windv01)(SERVER=DEDICATED))
+  )
+
+WINQA01 =
+  (DESCRIPTION =
+    (ADDRESS = (PROTOCOL=TCP)(HOST=dcc-ora-dv-006.na.plexus.com)(PORT=15212))
+    (CONNECT_DATA = (SERVICE_NAME=winqa01)(SERVER=DEDICATED))
+  )
+

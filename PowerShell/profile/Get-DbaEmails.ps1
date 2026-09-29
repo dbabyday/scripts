@@ -1,0 +1,1 @@
+Get-Content -Path \\neen-dsk-011\it$\database\users\James\JamesDocumentation\EmailGroup_DBAs.txt

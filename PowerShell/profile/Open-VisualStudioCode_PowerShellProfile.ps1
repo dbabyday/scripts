@@ -1,0 +1,1 @@
+code "\\neen-dsk-011\it$\database\users\James\JamesScripts\PowerShell\profile\Microsoft.PowerShell_profile.ps1"

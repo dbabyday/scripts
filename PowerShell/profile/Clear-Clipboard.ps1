@@ -1,0 +1,1 @@
+Set-Clipboard -Value "Rule #2: Double Tap"

@@ -1,0 +1,11 @@
+
+-- find what PID is using a specific port:
+netstat -nao
+netstat -abno
+netstat -n -a -o | find "445"
+
+-- find the service for that PID
+tasklist /svc /FI "PID eq 11816"
+
+
+

@@ -1,0 +1,146 @@
+OVERALL INFORMATION
+
+HOST_NAME                               |INSTANCE_NAME   |DATABASE_NAME |OPEN_MODE       |DATABASE_ROLE   |CREATED            |      DBID|VERSION    |BANNER
+----------------------------------------|----------------|--------------|----------------|----------------|-------------------|----------|-----------|--------------------------------------------------------------------------------
+co-db-001                               |jdpd            |JDPD          |READ WRITE      |PRIMARY         |2002.04.11_21.34.39|3630160111|11.2.0.4.0 |Oracle Database 11g Enterprise Edition Release 11.2.0.4.0 - 64bit Production
+
+PARAMETER                     |VALUE
+------------------------------|--------------------
+control_management_pack_access|DIAGNOSTIC+TUNING
+enable_ddl_logging            |FALSE
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+MULTITENANT INFORMATION (Please ignore errors in pre 12.1 databases)
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    from V$CONTAINERS c, V$DATABASE d
+         *
+ERROR at line 12:
+ORA-00942: table or view does not exist
+
+
+
+The multitenant architecture with one user-created pluggable database (single tenant) is available in all editions without the Multitenant Option.
+If more than one PDB containers are created, then Multitenant Option licensing is needed
+  from CDB_FEATURE_USAGE_STATISTICS
+       *
+ERROR at line 2:
+ORA-00942: table or view does not exist
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+>>> Selecting from DBA_FEATURE_USAGE_STATISTICS
+
+
+DBA_FEATURE_USAGE_STATISTICS (DBA_FUS) INFORMATION - MOST RECENT SAMPLE BASED ON LAST_SAMPLE_DATE
+
+LAST_DBA_FUS_DBID|LAST_DBA_FUS_VERS|LAST_DBA_FUS_SAMPLE|SYSDATE            |REMARKS
+-----------------|-----------------|-------------------|-------------------|-----------------
+       3630160111|11.2.0.4.0       |2020.02.01_17.56.41|2020.02.04_16.22.02|
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+PRODUCT USAGE
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+PRODUCT                                            |USAGE                   |LAST_SAMPLE_DATE   |FIRST_USAGE_DATE   |LAST_USAGE_DATE
+---------------------------------------------------|------------------------|-------------------|-------------------|-------------------
+Active Data Guard                                  |NO_USAGE                |2020.02.01_17.56.41|                   |
+Advanced Analytics                                 |NO_USAGE                |2020.02.01_17.56.41|                   |
+Advanced Compression                               |PAST_USAGE              |2020.02.01_17.56.41|2016.02.20_17.32.47|2019.05.18_19.41.17
+Advanced Security                                  |NO_USAGE                |2020.02.01_17.56.41|                   |
+Database Vault                                     |NO_USAGE                |2020.02.01_17.56.41|                   |
+Diagnostics Pack                                   |PAST_USAGE              |2020.02.01_17.56.41|2013.07.27_20.59.58|2019.05.25_19.47.00
+Label Security                                     |NO_USAGE                |2020.02.01_17.56.41|                   |
+OLAP                                               |NO_USAGE                |2020.02.01_17.56.41|                   |
+Partitioning                                       |CURRENT_USAGE           |2020.02.01_17.56.41|2013.07.20_20.46.29|2020.02.01_17.56.41
+Real Application Clusters                          |NO_USAGE                |2020.02.01_17.56.41|                   |
+Real Application Testing                           |NO_USAGE                |2020.02.01_17.56.41|                   |
+Tuning Pack                                        |CURRENT_USAGE           |2020.02.01_17.56.41|2013.11.16_19.15.31|2020.02.01_17.56.41
+.Exadata                                           |NO_USAGE                |2020.02.01_17.56.41|                   |
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+FEATURE USAGE DETAILS
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+PRODUCT                                            |FEATURE_BEING_USED                                      |USAGE                   |LAST_SAMPLE_DATE   |      DBID|VERSION    |DETECTED_USAGES|TOTAL_SAMPLES|CURRENTLY_USED|FIRST_USAGE_DATE   |LAST_USAGE_DATE    |EXTRA_FEATURE_INFO
+---------------------------------------------------|--------------------------------------------------------|------------------------|-------------------|----------|-----------|---------------|-------------|--------------|-------------------|-------------------|--------------------------------------------------------------------------------
+Active Data Guard                                  |Active Data Guard - Real-Time Query on Physical Standby |NO_CURRENT_USAGE        |2020.02.01_17.56.41|3630160111|11.2.0.4.0 |              0|          224|FALSE         |                   |                   |
+Advanced Analytics                                 |Data Mining                                             |NO_CURRENT_USAGE        |2020.02.01_17.56.41|3630160111|11.2.0.4.0 |              0|          224|FALSE         |                   |                   |
+Advanced Compression                               |Backup HIGH Compression                                 |NO_CURRENT_USAGE        |2020.02.01_17.56.41|3630160111|11.2.0.4.0 |              0|          224|FALSE         |                   |                   |
+Advanced Compression                               |Backup LOW Compression                                  |NO_CURRENT_USAGE        |2020.02.01_17.56.41|3630160111|11.2.0.4.0 |              0|          224|FALSE         |                   |                   |
+Advanced Compression                               |Backup MEDIUM Compression                               |NO_CURRENT_USAGE        |2020.02.01_17.56.41|3630160111|11.2.0.4.0 |              0|          224|FALSE         |                   |                   |
+Advanced Compression                               |Backup ZLIB Compression                                 |NO_CURRENT_USAGE        |2020.02.01_17.56.41|3630160111|11.2.0.4.0 |              0|          224|FALSE         |                   |                   |
+Advanced Compression                               |Data Guard                                              |NO_CURRENT_USAGE        |2020.02.01_17.56.41|3630160111|11.2.0.4.0 |              0|          224|FALSE         |                   |                   |
+Advanced Compression                               |HeapCompression                                         |SUPPRESSED_DUE_TO_BUG   |2020.02.01_17.56.41|3630160111|11.2.0.4.0 |            121|          224|FALSE         |2016.12.17_18.06.45|2019.05.11_19.54.23|
+Advanced Compression                               |HeapCompression                                         |SUPPRESSED_DUE_TO_BUG   |2015.10.17_19.56.49|3630160111|11.2.0.3.0 |              0|          118|FALSE         |                   |                   |
+Advanced Compression                               |Oracle Utility Datapump (Export)                        |PAST_USAGE              |2020.02.01_17.56.41|3630160111|11.2.0.4.0 |             25|          224|FALSE         |2016.02.20_17.32.47|2019.05.18_19.41.17|compression used: 11 times
+Advanced Compression                               |Oracle Utility Datapump (Import)                        |NO_CURRENT_USAGE        |2020.02.01_17.56.41|3630160111|11.2.0.4.0 |              5|          224|FALSE         |2015.11.14_17.27.05|2019.04.27_19.44.31|compression used: 0 times
+Advanced Compression                               |SecureFile Compression (user)                           |NO_CURRENT_USAGE        |2020.02.01_17.56.41|3630160111|11.2.0.4.0 |              0|          224|FALSE         |                   |                   |
+Advanced Compression                               |SecureFile Deduplication (user)                         |NO_CURRENT_USAGE        |2020.02.01_17.56.41|3630160111|11.2.0.4.0 |              0|          224|FALSE         |                   |                   |
+Advanced Security                                  |Backup Encryption                                       |NO_CURRENT_USAGE        |2020.02.01_17.56.41|3630160111|11.2.0.4.0 |              0|          224|FALSE         |                   |                   |
+Advanced Security                                  |Encrypted Tablespaces                                   |NO_CURRENT_USAGE        |2020.02.01_17.56.41|3630160111|11.2.0.4.0 |              0|          224|FALSE         |                   |                   |
+Advanced Security                                  |Oracle Utility Datapump (Export)                        |NO_CURRENT_USAGE        |2020.02.01_17.56.41|3630160111|11.2.0.4.0 |             25|          224|FALSE         |2016.02.20_17.32.47|2019.05.18_19.41.17|encryption used: 0 times
+Advanced Security                                  |Oracle Utility Datapump (Import)                        |NO_CURRENT_USAGE        |2020.02.01_17.56.41|3630160111|11.2.0.4.0 |              5|          224|FALSE         |2015.11.14_17.27.05|2019.04.27_19.44.31|encryption used: 0 times
+Advanced Security                                  |SecureFile Encryption (user)                            |NO_CURRENT_USAGE        |2020.02.01_17.56.41|3630160111|11.2.0.4.0 |              0|          224|FALSE         |                   |                   |
+Advanced Security                                  |Transparent Data Encryption                             |NO_CURRENT_USAGE        |2020.02.01_17.56.41|3630160111|11.2.0.4.0 |              0|          224|FALSE         |                   |                   |
+Database Vault                                     |Oracle Database Vault                                   |NO_CURRENT_USAGE        |2020.02.01_17.56.41|3630160111|11.2.0.4.0 |              0|          224|FALSE         |                   |                   |
+Diagnostics Pack                                   |ADDM                                                    |PAST_USAGE              |2020.02.01_17.56.41|3630160111|11.2.0.4.0 |             11|          224|FALSE         |2016.02.13_17.28.14|2019.05.25_19.47.00|
+Diagnostics Pack                                   |ADDM                                                    |PAST_USAGE              |2015.10.17_19.56.49|3630160111|11.2.0.3.0 |              3|          118|FALSE         |2013.08.24_19.16.46|2015.05.30_19.16.18|
+Diagnostics Pack                                   |AWR Baseline                                            |NO_CURRENT_USAGE        |2020.02.01_17.56.41|3630160111|11.2.0.4.0 |              0|          224|FALSE         |                   |                   |
+Diagnostics Pack                                   |AWR Baseline Template                                   |NO_CURRENT_USAGE        |2020.02.01_17.56.41|3630160111|11.2.0.4.0 |              0|          224|FALSE         |                   |                   |
+Diagnostics Pack                                   |AWR Report                                              |PAST_USAGE              |2020.02.01_17.56.41|3630160111|11.2.0.4.0 |             36|          224|FALSE         |2015.11.14_17.27.05|2019.05.25_19.47.00|
+Diagnostics Pack                                   |AWR Report                                              |PAST_USAGE              |2015.10.17_19.56.49|3630160111|11.2.0.3.0 |             26|          118|FALSE         |2013.07.27_20.59.58|2015.09.12_20.05.25|
+Diagnostics Pack                                   |Baseline Adaptive Thresholds                            |NO_CURRENT_USAGE        |2020.02.01_17.56.41|3630160111|11.2.0.4.0 |              0|          224|FALSE         |                   |                   |
+Diagnostics Pack                                   |Baseline Static Computations                            |NO_CURRENT_USAGE        |2020.02.01_17.56.41|3630160111|11.2.0.4.0 |              0|          224|FALSE         |                   |                   |
+Label Security                                     |Label Security                                          |NO_CURRENT_USAGE        |2020.02.01_17.56.41|3630160111|11.2.0.4.0 |              0|          224|FALSE         |                   |                   |
+OLAP                                               |OLAP - Analytic Workspaces                              |NO_CURRENT_USAGE        |2020.02.01_17.56.41|3630160111|11.2.0.4.0 |              0|          224|FALSE         |                   |                   |
+Partitioning                                       |Partitioning (user)                                     |CURRENT_USAGE           |2020.02.01_17.56.41|3630160111|11.2.0.4.0 |            224|          224|TRUE          |2015.10.24_20.13.32|2020.02.01_17.56.41|
+Partitioning                                       |Partitioning (user)                                     |PAST_USAGE              |2015.10.17_19.56.49|3630160111|11.2.0.3.0 |            118|          118|TRUE          |2013.07.20_20.46.29|2015.10.17_19.56.49|
+Real Application Clusters                          |Real Application Clusters (RAC)                         |NO_CURRENT_USAGE        |2020.02.01_17.56.41|3630160111|11.2.0.4.0 |              0|          224|FALSE         |                   |                   |
+Real Application Testing                           |Database Replay: Workload Capture                       |NO_CURRENT_USAGE        |2020.02.01_17.56.41|3630160111|11.2.0.4.0 |              0|          224|FALSE         |                   |                   |
+Real Application Testing                           |Database Replay: Workload Replay                        |NO_CURRENT_USAGE        |2020.02.01_17.56.41|3630160111|11.2.0.4.0 |              0|          224|FALSE         |                   |                   |
+Real Application Testing                           |SQL Performance Analyzer                                |NO_CURRENT_USAGE        |2020.02.01_17.56.41|3630160111|11.2.0.4.0 |              0|          224|FALSE         |                   |                   |
+Tuning Pack                                        |Real-Time SQL Monitoring                                |NO_CURRENT_USAGE        |2020.02.01_17.56.41|3630160111|11.2.0.4.0 |              0|          224|FALSE         |                   |                   |
+Tuning Pack                                        |Real-Time SQL Monitoring                                |PAST_USAGE              |2015.10.17_19.56.49|3630160111|11.2.0.3.0 |              1|          118|FALSE         |2013.11.16_19.15.31|2013.11.16_19.15.31|
+Tuning Pack                                        |SQL Access Advisor                                      |NO_CURRENT_USAGE        |2020.02.01_17.56.41|3630160111|11.2.0.4.0 |              0|          224|FALSE         |                   |                   |
+Tuning Pack                                        |SQL Profile                                             |CURRENT_USAGE           |2020.02.01_17.56.41|3630160111|11.2.0.4.0 |             90|          224|TRUE          |2018.05.19_19.15.19|2020.02.01_17.56.41|
+Tuning Pack                                        |SQL Tuning Advisor                                      |PAST_USAGE              |2020.02.01_17.56.41|3630160111|11.2.0.4.0 |              1|          224|FALSE         |2018.05.19_19.15.19|2018.05.19_19.15.19|
+.Exadata                                           |Exadata                                                 |NO_CURRENT_USAGE        |2020.02.01_17.56.41|3630160111|11.2.0.4.0 |              0|          224|FALSE         |                   |                   |
+
+USER is "JLUTSEY"
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+DESCRIPTION:
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+The two reports, PRODUCT USAGE and FEATURE USAGE DETAILS, provide usage statistics for Database Options, Management Packs
+and their corresponding features.
+Information is extracted from DBA_FEATURE_USAGE_STATISTICS view.
+
+DBA_FEATURE_USAGE_STATISTICS view is updated once a week, so it may take up to 7 days for the report to reflect usage changes.
+DBA_FEATURE_USAGE_STATISTICS view contains a different set of entries for each VERSION and DBID occurring in the database history.
+The weekly refresh process updates only the current row set.
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+NOTES:
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+The report lists all detectable products and features, used or not used.
+The CURRENTLY_USED column in the DBA_FEATURE_USAGE_STATISTICS view indicates if the feature in question was used during the last sampling interval
+or is used at the refresh moment.
+CURRENT_USAGE represents usage tracked over the last sample period, which defaults to one week.
+PAST_OR_CURRENT_USAGE example: Datapump Export entry indicates CURRENTLY_USED='TRUE' and FEATURE_INFO "compression used" counter
+indicates a non zero value that could have been triggered by past or current (last week) usage.
+For historical details check FIRST_USAGE_DATE, LAST_USAGE_DATE, LAST_SAMPLE_DATE, TOTAL_SAMPLES, DETECTED_USAGES columns
+Leading dot (.) denotes a product that is not a Database Option or Database Management Pack
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+DISCLAIMER:
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Information provided by the reports is to be used for informational purposes only and does not represent your license entitlement or requirement.
+The usage data may indicate, in some cases, false positives.
+This may be due to inclusion of usage by sample schemas (such as HR, PM, SH...) or system/internal usage.
+
+Please refer to MOS DOC ID 1317265.1 and 1309070.1 for more information.
+
+End of script (v 18.1 Apr-2018)

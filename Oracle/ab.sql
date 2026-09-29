@@ -1,0 +1,15 @@
+SELECT A.SDDOCO AS Sales_Order,
+       A.SDDCTO AS Order_Type,
+       A.SDLNID AS Sales_Order_Line,
+       TRIM(A.SDMCU) AS Site,
+       B.TS$PRCFLG AS Ship_Hold_Flag,
+       B.TS$RSP AS RSP_Flag
+FROM PRODDTA.F4211 A
+JOIN PRODDTA.F5542650 B
+  ON A.SDDOCO = B.TSDOCO
+ AND A.SDDCTO = B.TSDCTO
+ AND A.SDLNID = B.TSLNID
+WHERE TRIM(A.SDNXTR) = '560'
+  AND B.TS$PRCFLG = ' '
+  AND A.SDDCTO IN ('S1', 'S2', 'SV', 'SO');
+  

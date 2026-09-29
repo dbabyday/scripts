@@ -1,0 +1,1 @@
+Set-Clipboard "Invoke-Item \\neen-dsk-011\it$\database\users\James\JamesTools\Commvault.jnlp"

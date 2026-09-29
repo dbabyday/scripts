@@ -1,0 +1,1 @@
+@C:\oracle\product\19.0.0\client_1\sqlplus\admin\glogin.sql

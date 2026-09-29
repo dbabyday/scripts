@@ -1,0 +1,1 @@
+Set-Clipboard -Value 'tZ#rcewN3s*KEzklF6PzC^VWK38n5M'

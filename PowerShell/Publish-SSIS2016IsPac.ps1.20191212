@@ -1,0 +1,74 @@
+Function Publish-SSIS2016IsPac {
+    <#
+    .NOTES
+        Name: Publish-SSIS2016IsPac.ps1
+        Author: Drew Wilson
+        Version History:
+        1.0 - 20170628 - Initial Release.
+        1.1 - 20180526 - Rename function, added functionality
+        1.2 - 20180726 - Removed {switch} and replaced Environment parameter with Destination
+    .SYNOPSIS
+        SSIS 2016 IsPac Project Deployment
+    .DESCRIPTION
+        Deploys one or more SSIS Deployment projects (ispac files).
+    .PARAMETER $Ticket
+        Service Now Ticket number where the ispac file resides on the fileshare.
+    .PARAMETER $Destination
+        Servername where the project will be deployed. $Folder must already exist
+    .PARAMETER $Folder
+        Destination project folder where the project will be deployed.
+    .EXAMPLE
+        [PS] D:\xfr\>.\Publish-SSIS2016Ispac -Ticket CTASK12345 -Destination CO-DB-079 -Folder GDL
+        Deploys SSIS projects from CTASK12345 directory to "CO-DB-079" under the "SSISDB\GDL" folder
+    .EXAMPLE
+        [PS] D:\xfr\>.\Publish-SSIS2016Ispac -Ticket CTASK12345 -Destination XIA-SQL-PD-005 -Folder BI
+        Deploys SSIS projects from CTASK12345 directory to "XIA-SQL-PD-005" under the "SSISDB\BI" project
+    #>
+    [CmdletBinding()]
+    Param (
+        [Parameter(Mandatory = $true)]
+        [String] $Ticket
+        ,
+        [Parameter(Mandatory = $true)]
+        [String]
+        $Destination
+        ,
+        [Parameter(Mandatory = $true)]
+        [ValidateSet("BI", "BI_Restricted", "GDL", "GSF2_APP", "Integrations")]
+        [String]
+        $Folder
+    )#Param
+    Begin {
+        Write-Host " ";
+        Write-Host (Get-Date -Format "yyyy-MM-dd HH:mm:ss")"- Start";
+        Write-Host " ";
+        $ScriptPath = "\\neen-dsk-011\SSIS$\$Folder\$Ticket"
+        $ISDeploymentWizard = "C:\Program Files (x86)\Microsoft SQL Server\130\DTS\Binn\ISDeploymentWizard.exe"
+    }#Begin
+    Process {
+        Get-ChildItem -Path $ScriptPath -Filter *.ispac
+        Write-Host " "
+        $continue = Read-Host -Prompt "Do you want to deploy all of these IsPacs to $Destination ? (y/n)"
+        if (($continue -ne "y") -and ($continue -ne "Y")) {
+            Write-Warning "Exiting without deploying."
+            Write-Host " "
+            break
+        }
+        Write-Host " "
+
+        Get-ChildItem -Path $ScriptPath -Filter *.ispac |
+            Foreach-Object { 
+            $ProjectName = $_.BaseName
+            Write-Host (Get-Date -Format "yyyy-MM-dd HH:mm:ss")"- Deploying project $ProjectName ...";
+            & $ISDeploymentWizard /Silent /ModelType:Project /SourcePath:"$ScriptPath\$ProjectName.ispac" /DestinationServer:"$Destination" /DestinationPath:"/SSISDB/$folder/$ProjectName" | Out-Null
+            Write-Host (Get-Date -Format "yyyy-MM-dd HH:mm:ss")"- Deployment of project $ProjectName to $Destination completed";
+            Write-Host " ";
+        }
+    }#Process
+    End {
+        Write-Host (Get-Date -Format "yyyy-MM-dd HH:mm:ss")"- End";
+        Write-Host " ";
+    }#End
+}#Function
+
+Set-Location -Path C:\

@@ -1,0 +1,53 @@
+#========================================================================================
+# RESTART THE SERVERS                     
+#========================================================================================
+
+# Restart-Computer -ComputerName (Get-Content C:\JamesProjects\MaintenanceOutages\MaintenanceOutage_20170121\WindowsPatching_20170121_ServerList.txt) -Force
+
+Restart-Computer -ComputerName MyComputerName -Force
+
+
+APPL-AP-002
+BUFF-DB-003
+CO-DB-043
+GUAD-DB-002
+KELS-DB-005
+CO-DB-029
+GUAD-DB-003
+GUAD-DB-004
+GUAD-DB-005
+GUAD-DB-006
+KELS-DB-003
+ORAD-DB-002
+NEEN-DB-008
+NEEN-DB-050
+
+
+
+
+
+#=======================================================================================
+# GET SERVER UP TIME
+#=======================================================================================
+
+C:\JamesScripts\PowerShell\GetServerUpTime.ps1 -inputfile C:\JamesProjects\MaintenanceOutages\MaintenanceOutage_20170121\WindowsPatching_20170121_ServerList.txt
+
+C:\JamesScripts\PowerShell\GetServerUpTime.ps1 MyComputerName
+
+
+
+
+APPL-AP-002
+BUFF-DB-003
+CO-DB-043
+GUAD-DB-002
+KELS-DB-005
+CO-DB-029
+GUAD-DB-003
+GUAD-DB-004
+GUAD-DB-005
+GUAD-DB-006
+KELS-DB-003
+ORAD-DB-002
+NEEN-DB-008
+NEEN-DB-050

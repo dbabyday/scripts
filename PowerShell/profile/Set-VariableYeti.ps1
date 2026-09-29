@@ -1,0 +1,1 @@
+$yeti = Read-Host -Prompt "Password" -AsSecureString

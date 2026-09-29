@@ -1,0 +1,32 @@
+# http://www.vistax64.com/powershell/190352-executing-sql-queries-powershell.html
+$server = "localhost"
+$database = "DanCurtisDB"
+$query = "SELECT * FROM [DanCurtisDB].[dbo].[Signon_NotPLXS];"
+
+# powershell raw/verbatim strings are ugly
+# Update this with the actual path where you want data dumped
+$extractFile = @"
+F:\DanCurtis\SignonIpLocations.csv
+"@
+
+# If you have to use users and passwords, my condolences
+$connectionTemplate = "Data Source={0};Integrated Security=SSPI;Initial Catalog={1};"
+$connectionString = [string]::Format($connectionTemplate, $server, $database)
+$connection = New-Object System.Data.SqlClient.SqlConnection
+$connection.ConnectionString = $connectionString
+
+$command = New-Object System.Data.SqlClient.SqlCommand
+$command.CommandText = $query
+$command.Connection = $connection
+
+$SqlAdapter = New-Object System.Data.SqlClient.SqlDataAdapter
+$SqlAdapter.SelectCommand = $command
+$DataSet = New-Object System.Data.DataSet
+$SqlAdapter.Fill($DataSet)
+$connection.Close()
+
+# dump the data to a csv
+# http://technet.microsoft.com/en-us/library/ee176825.aspx
+$DataSet.Tables[0] | Export-Csv $extractFile
+
+

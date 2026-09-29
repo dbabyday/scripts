@@ -1,0 +1,100 @@
+#--------------------------------------
+#--// GET LOCAL GROUPS             //--
+#--------------------------------------
+
+Get-WmiObject win32_group -ComputerName dcc-sql-dv-028 | Select-Object Name
+
+
+
+
+#--------------------------------------
+#--// ADD/REMOVE MEMBERS           //--
+#--------------------------------------
+
+$computer = 'dcc-sql-dv-005'
+$Group    = 'Administrators'
+$domain   = 'NA'
+$user     = 'james.lutsey.admin'
+
+# add member to local group
+([ADSI]"WinNT://$computer/$Group,group").psbase.Invoke("Add",([ADSI]"WinNT://$domain/$user").path)
+
+# remove member from local group
+([ADSI]"WinNT://$computer/$Group,group").psbase.Invoke("Remove",([ADSI]"WinNT://$domain/$user").path)
+
+
+
+
+#--------------------------------------
+#--// GET MEMBERS OF A LOCAL GROUP //--
+#--------------------------------------
+
+# https://gist.github.com/jdhitsolutions/2b3f8761db581726802e
+
+$Computername = @()
+$Computername += "co-db-029"
+
+
+$GroupName    = 'Administrators'
+$membersArray = @()
+
+ForEach ($computer in $Computername) {
+    #the WinNT moniker is case-sensitive
+    [ADSI]$group = "WinNT://$computer/$GroupName,group"
+        
+    $members = $group.invoke("Members") 
+
+    if (-Not $script:NotFound) {
+        $found = ($members | measure).count
+
+        if ($found -gt 0 ) {
+            $members | foreach {
+            
+                #define an ordered hashtable which will hold properties
+                #for a custom object
+                $Hash = [ordered]@{Computername = $computer.toUpper()}
+
+                #Get the name property
+                $hash.Add("Name",$_[0].GetType().InvokeMember("Name", 'GetProperty', $null, $_, $null))
+            
+                #get ADS Path of member
+                $ADSPath = $_[0].GetType().InvokeMember("ADSPath", 'GetProperty', $null, $_, $null)
+                $hash.Add("ADSPath",$ADSPath)
+        
+                #get the member class, ie user or group
+                $hash.Add("Class",$_[0].GetType().InvokeMember("Class", 'GetProperty', $null, $_, $null))  
+        
+                <#
+                Domain members will have an ADSPath like WinNT://MYDomain/Domain Users.  
+                Local accounts will be like WinNT://MYDomain/Computername/Administrator
+                #>
+
+                $hash.Add("Domain",$ADSPath.Split("/")[2])
+
+                #if computer name is found between two /, then assume
+                #the ADSPath reflects a local object
+                if ($ADSPath -match "/$computer/") {
+                    $local = $True
+                    }
+                else {
+                    $local = $False
+                    }
+                $hash.Add("IsLocal",$local)
+
+                #turn the hashtable into an object
+                $member = New-Object -TypeName PSObject -Property $hash
+                $membersArray += $member
+            } #foreach member
+        } 
+        else {
+            Write-Warning "No members found in $GroupName on $Computer."
+        }
+    } #if no errors
+} #foreach $computer
+
+$membersArray | Sort-Object Computername,Name | Format-Table -AutoSize
+#$membersArray | Sort-Object Computername,Name | Out-GridView
+# $membersArray | Where-Object { Name -match 'james.lutsey' } | Sort-Object Computername,Name | Format-Table -AutoSize
+
+
+

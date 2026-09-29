@@ -1,0 +1,18 @@
+#---------------------------------------------------
+#--// RDP/USER SESSION INFO                     //--
+#---------------------------------------------------
+
+# get rdp sessions
+$server = 'gdl-sql-ts-001.na.plexus.com'
+qwinsta /server:$server
+
+# get logged in user sessions
+quser /server:$server
+
+# logoff a user
+$server = 'gdl-sql-ts-001.na.plexus.com'
+$username = 'james.lutsey.admin'
+$session = ((quser /server:$server | Where-Object { $_ -match $username }) -split ' +')[2]
+logoff $session /server:$server
+
+

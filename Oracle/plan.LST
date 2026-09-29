@@ -1,0 +1,817 @@
+11:05:29 jlutsey(37)jdedv01 SQL> @cplan fhzr5qt8hntb2
+Enter value for sqlid: fhzr5qt8hntb2
+
+PLAN_TABLE_OUTPUT
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+SQL_ID  fhzr5qt8hntb2, child number 0
+-------------------------------------
+SELECT FORM_NAME, DISPLAY_SEQUENCE, ATTRIBUTE_LABEL, RESPONSE FROM
+XXAPPS.PLXS_COMPLETE_V WHERE WORK_ORDER_NUMBER = LTRIM(RTRIM(:B3 )) AND
+DISPLAY_SEQUENCE IS NOT NULL AND (QA_HEADER_ID IS NULL OR (QA_HEADER_ID
+IS NOT NULL AND QA_LINE_ID IS NOT NULL)) AND OPERATION_SEQ =
+LTRIM(RTRIM((:B2 /100))) AND OPERATION_CODE = LTRIM(RTRIM(:B1 )) AND
+ATTRIBUTE_TYPE !='LABEL' ORDER BY OPERATION_SEQ,FORM_SEQUENCE,DISPLAY_SE
+QUENCE
+
+Plan hash value: 2143840189
+
+---------------------------------------------------------------------------------------------------------------------------------------
+| Id  | Operation                                            | Name                           | Rows  | Bytes | Cost (%CPU)| Time     |
+---------------------------------------------------------------------------------------------------------------------------------------
+|   0 | SELECT STATEMENT                                     |                                |       |       |   178 (100)|          |
+|   1 |  SORT ORDER BY                                       |                                |     1 |   634 |   178   (8)| 00:00:01 |
+|   2 |   NESTED LOOPS OUTER                                 |                                |     1 |   634 |   177   (8)| 00:00:01 |
+|   3 |    NESTED LOOPS                                      |                                |     1 |   555 |   173   (8)| 00:00:01 |
+|   4 |     NESTED LOOPS                                     |                                |     1 |   440 |   171   (8)| 00:00:01 |
+|   5 |      NESTED LOOPS                                    |                                |     1 |   374 |   169   (8)| 00:00:01 |
+|   6 |       NESTED LOOPS                                   |                                |     1 |   177 |    15   (0)| 00:00:01 |
+|   7 |        NESTED LOOPS                                  |                                |     1 |   117 |    11   (0)| 00:00:01 |
+|*  8 |         TABLE ACCESS BY INDEX ROWID BATCHED          | XXPLXS_TDM_QA_HEADERS          |     1 |    36 |     8   (0)| 00:00:01 |
+|*  9 |          INDEX RANGE SCAN                            | INDX_HEADER_AVANIJA2           |     5 |       |     3   (0)| 00:00:01 |
+|  10 |         TABLE ACCESS BY INDEX ROWID BATCHED          | XXPLXS_TDM_QA_LINES            |     1 |    81 |     3   (0)| 00:00:01 |
+|* 11 |          INDEX RANGE SCAN                            | XXPLXS_TDM_QA_LINES_P1         |     1 |       |     2   (0)| 00:00:01 |
+|  12 |        TABLE ACCESS BY INDEX ROWID BATCHED           | XXPLXS_TDM_QA_DETAILS          |     1 |    60 |     4   (0)| 00:00:01 |
+|* 13 |         INDEX RANGE SCAN                             | XXPLXS_TDM_QA_DETAILS_P1       |     1 |       |     3   (0)| 00:00:01 |
+|* 14 |       VIEW                                           | XXPLXS_CONFIGURATION_DETAILS_V |     1 |   197 |   154   (9)| 00:00:01 |
+|  15 |        SORT UNIQUE                                   |                                |     4 |  3398 |   154   (9)| 00:00:01 |
+|  16 |         UNION ALL PUSHED PREDICATE                   |                                |       |       |            |          |
+|  17 |          NESTED LOOPS ANTI                           |                                |     1 |   372 |    51   (8)| 00:00:01 |
+|  18 |           NESTED LOOPS                               |                                |     1 |   370 |    27   (8)| 00:00:01 |
+|  19 |            NESTED LOOPS                              |                                |     2 |   698 |     9   (0)| 00:00:01 |
+|  20 |             NESTED LOOPS                             |                                |     1 |   235 |     6   (0)| 00:00:01 |
+|  21 |              NESTED LOOPS                            |                                |     1 |   184 |     4   (0)| 00:00:01 |
+|* 22 |               TABLE ACCESS BY INDEX ROWID            | XXPLXS_TDM_CONFIG_RULES        |     1 |   152 |     2   (0)| 00:00:01 |
+|* 23 |                INDEX UNIQUE SCAN                     | CONFIG_ID_PK                   |     1 |       |     1   (0)| 00:00:01 |
+|  24 |               TABLE ACCESS BY INDEX ROWID            | F4101                          |     1 |    32 |     2   (0)| 00:00:01 |
+|* 25 |                INDEX UNIQUE SCAN                     | F4101_0                        |     1 |       |     1   (0)| 00:00:01 |
+|* 26 |              TABLE ACCESS BY INDEX ROWID             | F0101                          |     1 |    51 |     2   (0)| 00:00:01 |
+|* 27 |               INDEX UNIQUE SCAN                      | F0101_0                        |     1 |       |     1   (0)| 00:00:01 |
+|  28 |             TABLE ACCESS BY INDEX ROWID BATCHED      | XXPLXS_TDM_FORMS               |     2 |   228 |     3   (0)| 00:00:01 |
+|* 29 |              INDEX RANGE SCAN                        | XXPLXS_TDM_FORMS_P1            |     2 |       |     1   (0)| 00:00:01 |
+|* 30 |            VIEW                                      | XXPLXS_FORMS_STATUS_VER_V      |     1 |    21 |     9  (12)| 00:00:01 |
+|  31 |             SORT UNIQUE                              |                                |     4 |   430 |     9  (12)| 00:00:01 |
+|  32 |              UNION ALL PUSHED PREDICATE              |                                |       |       |            |          |
+|  33 |               SORT GROUP BY                          |                                |     1 |    59 |     4   (0)| 00:00:01 |
+|* 34 |                TABLE ACCESS BY INDEX ROWID BATCHED   | XXPLXS_TDM_FORMS               |     1 |    59 |     4   (0)| 00:00:01 |
+|* 35 |                 INDEX RANGE SCAN                     | XXPLXS_TDM_FORMS_P1            |     2 |       |     2   (0)| 00:00:01 |
+|* 36 |               FILTER                                 |                                |       |       |            |          |
+|* 37 |                TABLE ACCESS BY INDEX ROWID BATCHED   | XXPLXS_TDM_FORMS               |     1 |    46 |     2   (0)| 00:00:01 |
+|* 38 |                 INDEX RANGE SCAN                     | XXPLXS_TDM_FORMS_P1            |     1 |       |     1   (0)| 00:00:01 |
+|  39 |               SORT GROUP BY                          |                                |     1 |    59 |     4   (0)| 00:00:01 |
+|* 40 |                TABLE ACCESS BY INDEX ROWID BATCHED   | XXPLXS_TDM_FORMS               |     1 |    59 |     4   (0)| 00:00:01 |
+|* 41 |                 INDEX RANGE SCAN                     | XXPLXS_TDM_FORMS_P1            |     2 |       |     2   (0)| 00:00:01 |
+|  42 |               SORT GROUP BY                          |                                |     1 |    51 |            |          |
+|* 43 |                FILTER                                |                                |       |       |            |          |
+|* 44 |                 TABLE ACCESS BY INDEX ROWID BATCHED  | XXPLXS_TDM_FORMS               |     1 |    51 |     4   (0)| 00:00:01 |
+|* 45 |                  INDEX RANGE SCAN                    | XXPLXS_TDM_FORMS_P1            |     2 |       |     2   (0)| 00:00:01 |
+|  46 |           VIEW PUSHED PREDICATE                      | VW_NSO_1                       |     1 |     2 |    24   (9)| 00:00:01 |
+|  47 |            NESTED LOOPS                              |                                |     1 |    57 |    24   (9)| 00:00:01 |
+|* 48 |             INDEX RANGE SCAN                         | XXPLXS_TDM_FORMS_P1            |     2 |    72 |     2   (0)| 00:00:01 |
+|* 49 |             VIEW                                     | XXPLXS_FORMS_STATUS_VER_V      |     1 |    21 |    11  (10)| 00:00:01 |
+|  50 |              SORT UNIQUE                             |                                |     4 |   430 |    11  (10)| 00:00:01 |
+|  51 |               UNION ALL PUSHED PREDICATE             |                                |       |       |            |          |
+|  52 |                SORT GROUP BY                         |                                |     1 |    59 |     4   (0)| 00:00:01 |
+|* 53 |                 TABLE ACCESS BY INDEX ROWID BATCHED  | XXPLXS_TDM_FORMS               |     1 |    59 |     4   (0)| 00:00:01 |
+|* 54 |                  INDEX RANGE SCAN                    | XXPLXS_TDM_FORMS_P1            |     2 |       |     2   (0)| 00:00:01 |
+|* 55 |                TABLE ACCESS BY INDEX ROWID BATCHED   | XXPLXS_TDM_FORMS               |     1 |    46 |     2   (0)| 00:00:01 |
+|* 56 |                 INDEX RANGE SCAN                     | XXPLXS_TDM_FORMS_P1            |     1 |       |     1   (0)| 00:00:01 |
+|  57 |                SORT GROUP BY                         |                                |     1 |    59 |            |          |
+|* 58 |                 FILTER                               |                                |       |       |            |          |
+|* 59 |                  TABLE ACCESS BY INDEX ROWID BATCHED | XXPLXS_TDM_FORMS               |     1 |    59 |     4   (0)| 00:00:01 |
+|* 60 |                   INDEX RANGE SCAN                   | XXPLXS_TDM_FORMS_P1            |     2 |       |     2   (0)| 00:00:01 |
+|  61 |                SORT GROUP BY                         |                                |     1 |    51 |     4   (0)| 00:00:01 |
+|* 62 |                 TABLE ACCESS BY INDEX ROWID BATCHED  | XXPLXS_TDM_FORMS               |     1 |    51 |     4   (0)| 00:00:01 |
+|* 63 |                  INDEX RANGE SCAN                    | XXPLXS_TDM_FORMS_P1            |     2 |       |     2   (0)| 00:00:01 |
+|  64 |          NESTED LOOPS                                |                                |     1 |   370 |    19  (11)| 00:00:01 |
+|  65 |           NESTED LOOPS                               |                                |     2 |   698 |     9   (0)| 00:00:01 |
+|  66 |            NESTED LOOPS                              |                                |     1 |   235 |     6   (0)| 00:00:01 |
+|  67 |             NESTED LOOPS                             |                                |     1 |   184 |     4   (0)| 00:00:01 |
+|* 68 |              TABLE ACCESS BY INDEX ROWID             | XXPLXS_TDM_CONFIG_RULES        |     1 |   152 |     2   (0)| 00:00:01 |
+|* 69 |               INDEX UNIQUE SCAN                      | CONFIG_ID_PK                   |     1 |       |     1   (0)| 00:00:01 |
+|  70 |              TABLE ACCESS BY INDEX ROWID             | F4101                          |     1 |    32 |     2   (0)| 00:00:01 |
+|* 71 |               INDEX UNIQUE SCAN                      | F4101_0                        |     1 |       |     1   (0)| 00:00:01 |
+|* 72 |             TABLE ACCESS BY INDEX ROWID              | F0101                          |     1 |    51 |     2   (0)| 00:00:01 |
+|* 73 |              INDEX UNIQUE SCAN                       | F0101_0                        |     1 |       |     1   (0)| 00:00:01 |
+|  74 |            TABLE ACCESS BY INDEX ROWID BATCHED       | XXPLXS_TDM_FORMS               |     2 |   228 |     3   (0)| 00:00:01 |
+|* 75 |             INDEX RANGE SCAN                         | XXPLXS_TDM_FORMS_P1            |     2 |       |     1   (0)| 00:00:01 |
+|* 76 |           VIEW                                       | XXPLXS_FORMS_STATUS_VER_V      |     1 |    21 |     5  (20)| 00:00:01 |
+|  77 |            SORT UNIQUE                               |                                |     4 |   430 |     5  (20)| 00:00:01 |
+|  78 |             UNION ALL PUSHED PREDICATE               |                                |       |       |            |          |
+|  79 |              SORT GROUP BY                           |                                |     1 |    59 |     4   (0)| 00:00:01 |
+|* 80 |               TABLE ACCESS BY INDEX ROWID BATCHED    | XXPLXS_TDM_FORMS               |     1 |    59 |     4   (0)| 00:00:01 |
+|* 81 |                INDEX RANGE SCAN                      | XXPLXS_TDM_FORMS_P1            |     2 |       |     2   (0)| 00:00:01 |
+|* 82 |              FILTER                                  |                                |       |       |            |          |
+|* 83 |               TABLE ACCESS BY INDEX ROWID BATCHED    | XXPLXS_TDM_FORMS               |     1 |    46 |     2   (0)| 00:00:01 |
+|* 84 |                INDEX RANGE SCAN                      | XXPLXS_TDM_FORMS_P1            |     1 |       |     1   (0)| 00:00:01 |
+|  85 |              SORT GROUP BY                           |                                |     1 |    59 |            |          |
+|* 86 |               FILTER                                 |                                |       |       |            |          |
+|* 87 |                TABLE ACCESS BY INDEX ROWID BATCHED   | XXPLXS_TDM_FORMS               |     1 |    59 |     4   (0)| 00:00:01 |
+|* 88 |                 INDEX RANGE SCAN                     | XXPLXS_TDM_FORMS_P1            |     2 |       |     2   (0)| 00:00:01 |
+|  89 |              SORT GROUP BY                           |                                |     1 |    51 |            |          |
+|* 90 |               FILTER                                 |                                |       |       |            |          |
+|* 91 |                TABLE ACCESS BY INDEX ROWID BATCHED   | XXPLXS_TDM_FORMS               |     1 |    51 |     4   (0)| 00:00:01 |
+|* 92 |                 INDEX RANGE SCAN                     | XXPLXS_TDM_FORMS_P1            |     2 |       |     2   (0)| 00:00:01 |
+|  93 |          NESTED LOOPS ANTI                           |                                |     1 |   372 |    43  (10)| 00:00:01 |
+|  94 |           NESTED LOOPS                               |                                |     1 |   370 |    19  (11)| 00:00:01 |
+|  95 |            NESTED LOOPS                              |                                |     2 |   698 |     9   (0)| 00:00:01 |
+|  96 |             NESTED LOOPS                             |                                |     1 |   235 |     6   (0)| 00:00:01 |
+|  97 |              NESTED LOOPS                            |                                |     1 |   184 |     4   (0)| 00:00:01 |
+|* 98 |               TABLE ACCESS BY INDEX ROWID            | XXPLXS_TDM_CONFIG_RULES        |     1 |   152 |     2   (0)| 00:00:01 |
+|* 99 |                INDEX UNIQUE SCAN                     | CONFIG_ID_PK                   |     1 |       |     1   (0)| 00:00:01 |
+| 100 |               TABLE ACCESS BY INDEX ROWID            | F4101                          |     1 |    32 |     2   (0)| 00:00:01 |
+|*101 |                INDEX UNIQUE SCAN                     | F4101_0                        |     1 |       |     1   (0)| 00:00:01 |
+|*102 |              TABLE ACCESS BY INDEX ROWID             | F0101                          |     1 |    51 |     2   (0)| 00:00:01 |
+|*103 |               INDEX UNIQUE SCAN                      | F0101_0                        |     1 |       |     1   (0)| 00:00:01 |
+| 104 |             TABLE ACCESS BY INDEX ROWID BATCHED      | XXPLXS_TDM_FORMS               |     2 |   228 |     3   (0)| 00:00:01 |
+|*105 |              INDEX RANGE SCAN                        | XXPLXS_TDM_FORMS_P1            |     2 |       |     1   (0)| 00:00:01 |
+|*106 |            VIEW                                      | XXPLXS_FORMS_STATUS_VER_V      |     1 |    21 |     5  (20)| 00:00:01 |
+| 107 |             SORT UNIQUE                              |                                |     4 |   430 |     5  (20)| 00:00:01 |
+| 108 |              UNION ALL PUSHED PREDICATE              |                                |       |       |            |          |
+| 109 |               SORT GROUP BY                          |                                |     1 |    59 |            |          |
+|*110 |                FILTER                                |                                |       |       |            |          |
+|*111 |                 TABLE ACCESS BY INDEX ROWID BATCHED  | XXPLXS_TDM_FORMS               |     1 |    59 |     4   (0)| 00:00:01 |
+|*112 |                  INDEX RANGE SCAN                    | XXPLXS_TDM_FORMS_P1            |     2 |       |     2   (0)| 00:00:01 |
+|*113 |               FILTER                                 |                                |       |       |            |          |
+|*114 |                TABLE ACCESS BY INDEX ROWID BATCHED   | XXPLXS_TDM_FORMS               |     1 |    46 |     2   (0)| 00:00:01 |
+|*115 |                 INDEX RANGE SCAN                     | XXPLXS_TDM_FORMS_P1            |     1 |       |     1   (0)| 00:00:01 |
+| 116 |               SORT GROUP BY                          |                                |     1 |    59 |            |          |
+|*117 |                FILTER                                |                                |       |       |            |          |
+|*118 |                 TABLE ACCESS BY INDEX ROWID BATCHED  | XXPLXS_TDM_FORMS               |     1 |    59 |     4   (0)| 00:00:01 |
+|*119 |                  INDEX RANGE SCAN                    | XXPLXS_TDM_FORMS_P1            |     2 |       |     2   (0)| 00:00:01 |
+| 120 |               SORT GROUP BY                          |                                |     1 |    51 |     4   (0)| 00:00:01 |
+|*121 |                TABLE ACCESS BY INDEX ROWID BATCHED   | XXPLXS_TDM_FORMS               |     1 |    51 |     4   (0)| 00:00:01 |
+|*122 |                 INDEX RANGE SCAN                     | XXPLXS_TDM_FORMS_P1            |     2 |       |     2   (0)| 00:00:01 |
+| 123 |           VIEW PUSHED PREDICATE                      | VW_SQ_2                        |     1 |     2 |    24   (9)| 00:00:01 |
+|*124 |            FILTER                                    |                                |       |       |            |          |
+| 125 |             NESTED LOOPS                             |                                |     1 |    57 |    24   (9)| 00:00:01 |
+|*126 |              INDEX RANGE SCAN                        | XXPLXS_TDM_FORMS_P1            |     2 |    72 |     2   (0)| 00:00:01 |
+|*127 |              VIEW                                    | XXPLXS_FORMS_STATUS_VER_V      |     1 |    21 |    11  (10)| 00:00:01 |
+| 128 |               SORT UNIQUE                            |                                |     4 |   430 |    11  (10)| 00:00:01 |
+| 129 |                UNION ALL PUSHED PREDICATE            |                                |       |       |            |          |
+| 130 |                 SORT GROUP BY                        |                                |     1 |    59 |     4   (0)| 00:00:01 |
+|*131 |                  TABLE ACCESS BY INDEX ROWID BATCHED | XXPLXS_TDM_FORMS               |     1 |    59 |     4   (0)| 00:00:01 |
+|*132 |                   INDEX RANGE SCAN                   | XXPLXS_TDM_FORMS_P1            |     2 |       |     2   (0)| 00:00:01 |
+|*133 |                 TABLE ACCESS BY INDEX ROWID BATCHED  | XXPLXS_TDM_FORMS               |     1 |    46 |     2   (0)| 00:00:01 |
+|*134 |                  INDEX RANGE SCAN                    | XXPLXS_TDM_FORMS_P1            |     1 |       |     1   (0)| 00:00:01 |
+| 135 |                 SORT GROUP BY                        |                                |     1 |    59 |     4   (0)| 00:00:01 |
+|*136 |                  TABLE ACCESS BY INDEX ROWID BATCHED | XXPLXS_TDM_FORMS               |     1 |    59 |     4   (0)| 00:00:01 |
+|*137 |                   INDEX RANGE SCAN                   | XXPLXS_TDM_FORMS_P1            |     2 |       |     2   (0)| 00:00:01 |
+| 138 |                 SORT GROUP BY                        |                                |     1 |    51 |            |          |
+|*139 |                  FILTER                              |                                |       |       |            |          |
+|*140 |                   TABLE ACCESS BY INDEX ROWID BATCHED| XXPLXS_TDM_FORMS               |     1 |    51 |     4   (0)| 00:00:01 |
+|*141 |                    INDEX RANGE SCAN                  | XXPLXS_TDM_FORMS_P1            |     2 |       |     2   (0)| 00:00:01 |
+|*142 |          FILTER                                      |                                |       |       |            |          |
+| 143 |           NESTED LOOPS OUTER                         |                                |     1 |   585 |    40   (5)| 00:00:01 |
+| 144 |            NESTED LOOPS                              |                                |     1 |   235 |     6   (0)| 00:00:01 |
+| 145 |             NESTED LOOPS                             |                                |     1 |   184 |     4   (0)| 00:00:01 |
+|*146 |              TABLE ACCESS BY INDEX ROWID             | XXPLXS_TDM_CONFIG_RULES        |     1 |   152 |     2   (0)| 00:00:01 |
+|*147 |               INDEX UNIQUE SCAN                      | CONFIG_ID_PK                   |     1 |       |     1   (0)| 00:00:01 |
+| 148 |              TABLE ACCESS BY INDEX ROWID             | F4101                          |     1 |    32 |     2   (0)| 00:00:01 |
+|*149 |               INDEX UNIQUE SCAN                      | F4101_0                        |     1 |       |     1   (0)| 00:00:01 |
+|*150 |             TABLE ACCESS BY INDEX ROWID              | F0101                          |     1 |    51 |     2   (0)| 00:00:01 |
+|*151 |              INDEX UNIQUE SCAN                       | F0101_0                        |     1 |       |     1   (0)| 00:00:01 |
+| 152 |            VIEW PUSHED PREDICATE                     | XXPLXS_FORMS_V                 |     1 |   350 |    34   (6)| 00:00:01 |
+| 153 |             NESTED LOOPS                             |                                |     1 |   135 |    34   (6)| 00:00:01 |
+| 154 |              TABLE ACCESS BY INDEX ROWID BATCHED     | XXPLXS_TDM_FORMS               |     2 |   228 |     4   (0)| 00:00:01 |
+|*155 |               INDEX RANGE SCAN                       | XXPLXS_TDM_FORMS_P1            |     2 |       |     2   (0)| 00:00:01 |
+|*156 |              VIEW                                    | XXPLXS_FORMS_STATUS_VER_V      |     1 |    21 |    15   (7)| 00:00:01 |
+| 157 |               SORT UNIQUE                            |                                |     4 |   430 |    15   (7)| 00:00:01 |
+| 158 |                UNION ALL PUSHED PREDICATE            |                                |       |       |            |          |
+| 159 |                 SORT GROUP BY                        |                                |     1 |    59 |     4   (0)| 00:00:01 |
+|*160 |                  TABLE ACCESS BY INDEX ROWID BATCHED | XXPLXS_TDM_FORMS               |     1 |    59 |     4   (0)| 00:00:01 |
+|*161 |                   INDEX RANGE SCAN                   | XXPLXS_TDM_FORMS_P1            |     2 |       |     2   (0)| 00:00:01 |
+|*162 |                 TABLE ACCESS BY INDEX ROWID BATCHED  | XXPLXS_TDM_FORMS               |     1 |    46 |     2   (0)| 00:00:01 |
+|*163 |                  INDEX RANGE SCAN                    | XXPLXS_TDM_FORMS_P1            |     1 |       |     1   (0)| 00:00:01 |
+| 164 |                 SORT GROUP BY                        |                                |     1 |    59 |     4   (0)| 00:00:01 |
+|*165 |                  TABLE ACCESS BY INDEX ROWID BATCHED | XXPLXS_TDM_FORMS               |     1 |    59 |     4   (0)| 00:00:01 |
+|*166 |                   INDEX RANGE SCAN                   | XXPLXS_TDM_FORMS_P1            |     2 |       |     2   (0)| 00:00:01 |
+| 167 |                 SORT GROUP BY                        |                                |     1 |    51 |     4   (0)| 00:00:01 |
+|*168 |                  TABLE ACCESS BY INDEX ROWID BATCHED | XXPLXS_TDM_FORMS               |     1 |    51 |     4   (0)| 00:00:01 |
+|*169 |                   INDEX RANGE SCAN                   | XXPLXS_TDM_FORMS_P1            |     2 |       |     2   (0)| 00:00:01 |
+| 170 |      TABLE ACCESS BY INDEX ROWID BATCHED             | XXPLXS_TDM_FORMS               |     1 |    66 |     2   (0)| 00:00:01 |
+|*171 |       INDEX RANGE SCAN                               | XXPLXS_TDM_FORMS_P1            |     1 |       |     1   (0)| 00:00:01 |
+|*172 |     TABLE ACCESS BY INDEX ROWID BATCHED              | XXPLXS_TDM_FORM_ATTRIBUTES     |     1 |   115 |     2   (0)| 00:00:01 |
+|*173 |      INDEX RANGE SCAN                                | XXPLXS_TDM_FORM_ATTRIBUTES_P3  |     1 |       |     1   (0)| 00:00:01 |
+|*174 |    TABLE ACCESS BY INDEX ROWID BATCHED               | XXPLXS_TDM_LIST_OF_VALUES      |     1 |    79 |     4   (0)| 00:00:01 |
+|*175 |     INDEX RANGE SCAN                                 | XXPLXS_TDM_LIST_OF_VALUES_P1   |    18 |       |     1   (0)| 00:00:01 |
+---------------------------------------------------------------------------------------------------------------------------------------
+
+Query Block Name / Object Alias (identified by operation id):
+-------------------------------------------------------------
+
+   1 - SEL$F5BB74E1
+   8 - SEL$F5BB74E1 / QH@SEL$2
+   9 - SEL$F5BB74E1 / QH@SEL$2
+  10 - SEL$F5BB74E1 / QL@SEL$2
+  11 - SEL$F5BB74E1 / QL@SEL$2
+  12 - SEL$F5BB74E1 / QD@SEL$2
+  13 - SEL$F5BB74E1 / QD@SEL$2
+  14 - SET$5715CE2E / CONFIG@SEL$2
+  15 - SET$5715CE2E
+  17 - SEL$4CC22E16
+  22 - SEL$4CC22E16 / C@SEL$3
+  23 - SEL$4CC22E16 / C@SEL$3
+  24 - SEL$4CC22E16 / I@SEL$3
+  25 - SEL$4CC22E16 / I@SEL$3
+  26 - SEL$4CC22E16 / F0101@SEL$4
+  27 - SEL$4CC22E16 / F0101@SEL$4
+  28 - SEL$4CC22E16 / XTF@SEL$5
+  29 - SEL$4CC22E16 / XTF@SEL$5
+  30 - SET$BE4AEC69 / XFSV@SEL$5
+  31 - SET$BE4AEC69
+  33 - SEL$394CDC0A
+  34 - SEL$394CDC0A / XXPLXS_TDM_FORMS@SEL$7
+  35 - SEL$394CDC0A / XXPLXS_TDM_FORMS@SEL$7
+  36 - SEL$FE7E982E
+  37 - SEL$FE7E982E / XXPLXS_TDM_FORMS@SEL$8
+  38 - SEL$FE7E982E / XXPLXS_TDM_FORMS@SEL$8
+  39 - SEL$0D054503
+  40 - SEL$0D054503 / XXPLXS_TDM_FORMS@SEL$10
+  41 - SEL$0D054503 / XXPLXS_TDM_FORMS@SEL$10
+  42 - SEL$85D92BB9
+  44 - SEL$85D92BB9 / XXPLXS_TDM_FORMS@SEL$12
+  45 - SEL$85D92BB9 / XXPLXS_TDM_FORMS@SEL$12
+  46 - SEL$BEC2279A / VW_NSO_1@SEL$6A1F3F3E
+  47 - SEL$BEC2279A
+  48 - SEL$BEC2279A / XTF@SEL$14
+  49 - SET$4D926EB9 / XFSV@SEL$14
+  50 - SET$4D926EB9
+  52 - SEL$00EE7D31
+  53 - SEL$00EE7D31 / XXPLXS_TDM_FORMS@SEL$16
+  54 - SEL$00EE7D31 / XXPLXS_TDM_FORMS@SEL$16
+  55 - SEL$6A03F9A0 / XXPLXS_TDM_FORMS@SEL$17
+  56 - SEL$6A03F9A0 / XXPLXS_TDM_FORMS@SEL$17
+  57 - SEL$16390A23
+  59 - SEL$16390A23 / XXPLXS_TDM_FORMS@SEL$19
+  60 - SEL$16390A23 / XXPLXS_TDM_FORMS@SEL$19
+  61 - SEL$3FB0DD50
+  62 - SEL$3FB0DD50 / XXPLXS_TDM_FORMS@SEL$21
+  63 - SEL$3FB0DD50 / XXPLXS_TDM_FORMS@SEL$21
+  64 - SEL$04626B07
+  68 - SEL$04626B07 / C@SEL$22
+  69 - SEL$04626B07 / C@SEL$22
+  70 - SEL$04626B07 / ITEM@SEL$22
+  71 - SEL$04626B07 / ITEM@SEL$22
+  72 - SEL$04626B07 / F0101@SEL$23
+  73 - SEL$04626B07 / F0101@SEL$23
+  74 - SEL$04626B07 / XTF@SEL$24
+  75 - SEL$04626B07 / XTF@SEL$24
+  76 - SET$BBBBE444 / XFSV@SEL$24
+  77 - SET$BBBBE444
+  79 - SEL$47B10E45
+  80 - SEL$47B10E45 / XXPLXS_TDM_FORMS@SEL$26
+  81 - SEL$47B10E45 / XXPLXS_TDM_FORMS@SEL$26
+  82 - SEL$320DB38A
+  83 - SEL$320DB38A / XXPLXS_TDM_FORMS@SEL$27
+  84 - SEL$320DB38A / XXPLXS_TDM_FORMS@SEL$27
+  85 - SEL$7895187F
+  87 - SEL$7895187F / XXPLXS_TDM_FORMS@SEL$29
+  88 - SEL$7895187F / XXPLXS_TDM_FORMS@SEL$29
+  89 - SEL$1F49EB09
+  91 - SEL$1F49EB09 / XXPLXS_TDM_FORMS@SEL$31
+  92 - SEL$1F49EB09 / XXPLXS_TDM_FORMS@SEL$31
+  93 - SEL$15B68DFF
+  98 - SEL$15B68DFF / C@SEL$32
+  99 - SEL$15B68DFF / C@SEL$32
+ 100 - SEL$15B68DFF / ITEM@SEL$32
+ 101 - SEL$15B68DFF / ITEM@SEL$32
+ 102 - SEL$15B68DFF / F0101@SEL$33
+ 103 - SEL$15B68DFF / F0101@SEL$33
+ 104 - SEL$15B68DFF / XTF@SEL$34
+ 105 - SEL$15B68DFF / XTF@SEL$34
+ 106 - SET$AC71949B / XFSV@SEL$34
+ 107 - SET$AC71949B
+ 109 - SEL$2662CC07
+ 111 - SEL$2662CC07 / XXPLXS_TDM_FORMS@SEL$36
+ 112 - SEL$2662CC07 / XXPLXS_TDM_FORMS@SEL$36
+ 113 - SEL$30EC2570
+ 114 - SEL$30EC2570 / XXPLXS_TDM_FORMS@SEL$37
+ 115 - SEL$30EC2570 / XXPLXS_TDM_FORMS@SEL$37
+ 116 - SEL$CE0B31AF
+ 118 - SEL$CE0B31AF / XXPLXS_TDM_FORMS@SEL$39
+ 119 - SEL$CE0B31AF / XXPLXS_TDM_FORMS@SEL$39
+ 120 - SEL$F3836621
+ 121 - SEL$F3836621 / XXPLXS_TDM_FORMS@SEL$41
+ 122 - SEL$F3836621 / XXPLXS_TDM_FORMS@SEL$41
+ 123 - SEL$F75B72E1 / VW_SQ_2@SEL$F9139697
+ 124 - SEL$F75B72E1
+ 126 - SEL$F75B72E1 / XTF@SEL$43
+ 127 - SET$D6F41E1B / XFSV@SEL$43
+ 128 - SET$D6F41E1B
+ 130 - SEL$732C1FBB
+ 131 - SEL$732C1FBB / XXPLXS_TDM_FORMS@SEL$45
+ 132 - SEL$732C1FBB / XXPLXS_TDM_FORMS@SEL$45
+ 133 - SEL$011FE9F8 / XXPLXS_TDM_FORMS@SEL$46
+ 134 - SEL$011FE9F8 / XXPLXS_TDM_FORMS@SEL$46
+ 135 - SEL$459A9C37
+ 136 - SEL$459A9C37 / XXPLXS_TDM_FORMS@SEL$48
+ 137 - SEL$459A9C37 / XXPLXS_TDM_FORMS@SEL$48
+ 138 - SEL$674ECF7B
+ 140 - SEL$674ECF7B / XXPLXS_TDM_FORMS@SEL$50
+ 141 - SEL$674ECF7B / XXPLXS_TDM_FORMS@SEL$50
+ 142 - SEL$65F47E5F
+ 146 - SEL$65F47E5F / C@SEL$51
+ 147 - SEL$65F47E5F / C@SEL$51
+ 148 - SEL$65F47E5F / ITEM@SEL$51
+ 149 - SEL$65F47E5F / ITEM@SEL$51
+ 150 - SEL$65F47E5F / F0101@SEL$52
+ 151 - SEL$65F47E5F / F0101@SEL$52
+ 152 - SEL$071972EE / F@SEL$51
+ 153 - SEL$071972EE
+ 154 - SEL$071972EE / XTF@SEL$53
+ 155 - SEL$071972EE / XTF@SEL$53
+ 156 - SET$D59E10A0 / XFSV@SEL$53
+ 157 - SET$D59E10A0
+ 159 - SEL$0AA11341
+ 160 - SEL$0AA11341 / XXPLXS_TDM_FORMS@SEL$55
+ 161 - SEL$0AA11341 / XXPLXS_TDM_FORMS@SEL$55
+ 162 - SEL$8D834793 / XXPLXS_TDM_FORMS@SEL$56
+ 163 - SEL$8D834793 / XXPLXS_TDM_FORMS@SEL$56
+ 164 - SEL$2A3C8835
+ 165 - SEL$2A3C8835 / XXPLXS_TDM_FORMS@SEL$58
+ 166 - SEL$2A3C8835 / XXPLXS_TDM_FORMS@SEL$58
+ 167 - SEL$FE31322A
+ 168 - SEL$FE31322A / XXPLXS_TDM_FORMS@SEL$60
+ 169 - SEL$FE31322A / XXPLXS_TDM_FORMS@SEL$60
+ 170 - SEL$F5BB74E1 / FORM@SEL$2
+ 171 - SEL$F5BB74E1 / FORM@SEL$2
+ 172 - SEL$F5BB74E1 / ATTR@SEL$2
+ 173 - SEL$F5BB74E1 / ATTR@SEL$2
+ 174 - SEL$F5BB74E1 / LOV@SEL$2
+ 175 - SEL$F5BB74E1 / LOV@SEL$2
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+
+   8 - filter(("QH"."OPERATION_CODE"=LTRIM(RTRIM(:B1)) AND "QH"."OPERATION_SEQ"=TO_NUMBER(LTRIM(RTRIM(TO_CHAR(:B2/100))))))
+   9 - access("QH"."WORK_ORDER_NUMBER"=TO_NUMBER(LTRIM(RTRIM(TO_CHAR(:B3)))))
+  11 - access("QH"."QA_HEADER_ID"="QL"."QA_HEADER_ID")
+  13 - access("QH"."QA_HEADER_ID"="QD"."QA_HEADER_ID" AND "QL"."QA_LINE_ID"="QD"."QA_LINE_ID")
+  14 - filter(("CONFIG"."CUSTOMER_ID"="QH"."CUSTOMER_ID" AND "CONFIG"."ITEM_ID"="QH"."ITEM_ID" AND
+              "CONFIG"."FORM_ID"="QL"."FORM_ID" AND NVL("CONFIG"."RETURN_TYPE",'X')=NVL("QH"."RETURN_TYPE",'X')))
+  22 - filter("C"."OPERATION_CODE"=LTRIM(RTRIM(:B1)))
+  23 - access("C"."CONFIG_ID"="QL"."CONFIG_ID")
+  25 - access("I"."IMITM"="C"."ITEM_ID")
+  26 - filter("ABAT1"='C')
+  27 - access("ABAN8"="C"."CUSTOMER_ID")
+  29 - access("C"."FORM_ID"="XTF"."FORM_ID")
+  30 - filter(("XTF"."VERSION"="XFSV"."VERSION" AND INTERNAL_FUNCTION("XFSV"."STATUS")))
+  34 - filter(("STATUS"='PUBLISHED' AND TRUNC(INTERNAL_FUNCTION("START_DATE"))<=TRUNC(SYSDATE@!) AND
+              (TRUNC(INTERNAL_FUNCTION("END_DATE")) IS NULL OR TRUNC(INTERNAL_FUNCTION("END_DATE"))>=TRUNC(SYSDATE@!))))
+  35 - access("FORM_ID"="XTF"."FORM_ID")
+  36 - filter((NULL IS NOT NULL AND NULL IS NOT NULL))
+  37 - filter("STATUS"='DRAFT')
+  38 - access("FORM_ID"="XTF"."FORM_ID" AND "VERSION"=1)
+  40 - filter(("STATUS"='PUBLISHED' AND TRUNC(INTERNAL_FUNCTION("START_DATE"))>SYSDATE@! AND
+              (TRUNC(INTERNAL_FUNCTION("END_DATE")) IS NULL OR TRUNC(INTERNAL_FUNCTION("END_DATE"))>=TRUNC(SYSDATE@!))))
+  41 - access("FORM_ID"="XTF"."FORM_ID")
+  43 - filter((NULL IS NOT NULL AND NULL IS NOT NULL))
+  44 - filter(("STATUS"='INACTIVE' OR (TRUNC(INTERNAL_FUNCTION("END_DATE"))<=TRUNC(SYSDATE@!) AND "STATUS"<>'DRAFT')))
+  45 - access("FORM_ID"="XTF"."FORM_ID")
+  48 - access("XTF"."FORM_ID"="XTF"."FORM_ID")
+  49 - filter(("XTF"."VERSION"="XFSV"."VERSION" AND "XFSV"."STATUS"<>'PUBLISHED'))
+  53 - filter(("STATUS"='PUBLISHED' AND TRUNC(INTERNAL_FUNCTION("START_DATE"))<=TRUNC(SYSDATE@!) AND
+              (TRUNC(INTERNAL_FUNCTION("END_DATE")) IS NULL OR TRUNC(INTERNAL_FUNCTION("END_DATE"))>=TRUNC(SYSDATE@!))))
+  54 - access("FORM_ID"="XTF"."FORM_ID")
+  55 - filter("STATUS"='DRAFT')
+  56 - access("FORM_ID"="XTF"."FORM_ID" AND "VERSION"=1)
+  58 - filter(NULL IS NOT NULL)
+  59 - filter(("STATUS"='PUBLISHED' AND TRUNC(INTERNAL_FUNCTION("START_DATE"))>SYSDATE@! AND
+              (TRUNC(INTERNAL_FUNCTION("END_DATE")) IS NULL OR TRUNC(INTERNAL_FUNCTION("END_DATE"))>=TRUNC(SYSDATE@!))))
+  60 - access("FORM_ID"="XTF"."FORM_ID")
+  62 - filter(("STATUS"='INACTIVE' OR (TRUNC(INTERNAL_FUNCTION("END_DATE"))<=TRUNC(SYSDATE@!) AND "STATUS"<>'DRAFT')))
+  63 - access("FORM_ID"="XTF"."FORM_ID")
+  68 - filter("C"."OPERATION_CODE"=LTRIM(RTRIM(:B1)))
+  69 - access("C"."CONFIG_ID"="QL"."CONFIG_ID")
+  71 - access("ITEM"."IMITM"="C"."ITEM_ID")
+  72 - filter("ABAT1"='C')
+  73 - access("ABAN8"="C"."CUSTOMER_ID")
+  75 - access("C"."FORM_ID"="XTF"."FORM_ID")
+  76 - filter(("XTF"."VERSION"="XFSV"."VERSION" AND "XFSV"."STATUS"='ACTIVE'))
+  80 - filter(("STATUS"='PUBLISHED' AND TRUNC(INTERNAL_FUNCTION("START_DATE"))<=TRUNC(SYSDATE@!) AND
+              (TRUNC(INTERNAL_FUNCTION("END_DATE")) IS NULL OR TRUNC(INTERNAL_FUNCTION("END_DATE"))>=TRUNC(SYSDATE@!))))
+  81 - access("FORM_ID"="XTF"."FORM_ID")
+  82 - filter((NULL IS NOT NULL AND NULL IS NOT NULL))
+  83 - filter("STATUS"='DRAFT')
+  84 - access("FORM_ID"="XTF"."FORM_ID" AND "VERSION"=1)
+  86 - filter((NULL IS NOT NULL AND NULL IS NOT NULL))
+  87 - filter(("STATUS"='PUBLISHED' AND TRUNC(INTERNAL_FUNCTION("START_DATE"))>SYSDATE@! AND
+              (TRUNC(INTERNAL_FUNCTION("END_DATE")) IS NULL OR TRUNC(INTERNAL_FUNCTION("END_DATE"))>=TRUNC(SYSDATE@!))))
+  88 - access("FORM_ID"="XTF"."FORM_ID")
+  90 - filter((NULL IS NOT NULL AND NULL IS NOT NULL))
+  91 - filter(("STATUS"='INACTIVE' OR (TRUNC(INTERNAL_FUNCTION("END_DATE"))<=TRUNC(SYSDATE@!) AND "STATUS"<>'DRAFT')))
+  92 - access("FORM_ID"="XTF"."FORM_ID")
+  98 - filter("C"."OPERATION_CODE"=LTRIM(RTRIM(:B1)))
+  99 - access("C"."CONFIG_ID"="QL"."CONFIG_ID")
+ 101 - access("ITEM"."IMITM"="C"."ITEM_ID")
+ 102 - filter("ABAT1"='C')
+ 103 - access("ABAN8"="C"."CUSTOMER_ID")
+ 105 - access("C"."FORM_ID"="XTF"."FORM_ID")
+ 106 - filter(("XTF"."VERSION"="XFSV"."VERSION" AND "XFSV"."STATUS"='INACTIVE'))
+ 110 - filter((NULL IS NOT NULL AND NULL IS NOT NULL))
+ 111 - filter(("STATUS"='PUBLISHED' AND TRUNC(INTERNAL_FUNCTION("START_DATE"))<=TRUNC(SYSDATE@!) AND
+              (TRUNC(INTERNAL_FUNCTION("END_DATE")) IS NULL OR TRUNC(INTERNAL_FUNCTION("END_DATE"))>=TRUNC(SYSDATE@!))))
+ 112 - access("FORM_ID"="XTF"."FORM_ID")
+ 113 - filter((NULL IS NOT NULL AND NULL IS NOT NULL))
+ 114 - filter("STATUS"='DRAFT')
+ 115 - access("FORM_ID"="XTF"."FORM_ID" AND "VERSION"=1)
+ 117 - filter((NULL IS NOT NULL AND NULL IS NOT NULL))
+ 118 - filter(("STATUS"='PUBLISHED' AND TRUNC(INTERNAL_FUNCTION("START_DATE"))>SYSDATE@! AND
+              (TRUNC(INTERNAL_FUNCTION("END_DATE")) IS NULL OR TRUNC(INTERNAL_FUNCTION("END_DATE"))>=TRUNC(SYSDATE@!))))
+ 119 - access("FORM_ID"="XTF"."FORM_ID")
+ 121 - filter(("STATUS"='INACTIVE' OR (TRUNC(INTERNAL_FUNCTION("END_DATE"))<=TRUNC(SYSDATE@!) AND "STATUS"<>'DRAFT')))
+ 122 - access("FORM_ID"="XTF"."FORM_ID")
+ 124 - filter("XTF"."FORM_ID"="XTF"."FORM_ID")
+ 126 - access("XTF"."FORM_ID"="XTF"."FORM_ID")
+ 127 - filter(("XTF"."VERSION"="XFSV"."VERSION" AND INTERNAL_FUNCTION("XFSV"."STATUS")))
+ 131 - filter(("STATUS"='PUBLISHED' AND TRUNC(INTERNAL_FUNCTION("START_DATE"))<=TRUNC(SYSDATE@!) AND
+              (TRUNC(INTERNAL_FUNCTION("END_DATE")) IS NULL OR TRUNC(INTERNAL_FUNCTION("END_DATE"))>=TRUNC(SYSDATE@!))))
+ 132 - access("FORM_ID"="XTF"."FORM_ID")
+ 133 - filter("STATUS"='DRAFT')
+ 134 - access("FORM_ID"="XTF"."FORM_ID" AND "VERSION"=1)
+ 136 - filter(("STATUS"='PUBLISHED' AND TRUNC(INTERNAL_FUNCTION("START_DATE"))>SYSDATE@! AND
+              (TRUNC(INTERNAL_FUNCTION("END_DATE")) IS NULL OR TRUNC(INTERNAL_FUNCTION("END_DATE"))>=TRUNC(SYSDATE@!))))
+ 137 - access("FORM_ID"="XTF"."FORM_ID")
+ 139 - filter((NULL IS NOT NULL AND NULL IS NOT NULL))
+ 140 - filter(("STATUS"='INACTIVE' OR (TRUNC(INTERNAL_FUNCTION("END_DATE"))<=TRUNC(SYSDATE@!) AND "STATUS"<>'DRAFT')))
+ 141 - access("FORM_ID"="XTF"."FORM_ID")
+ 142 - filter(("F"."STATUS"='DRAFT' OR "F"."STATUS" IS NULL))
+ 146 - filter("C"."OPERATION_CODE"=LTRIM(RTRIM(:B1)))
+ 147 - access("C"."CONFIG_ID"="QL"."CONFIG_ID")
+ 149 - access("ITEM"."IMITM"="C"."ITEM_ID")
+ 150 - filter("ABAT1"='C')
+ 151 - access("ABAN8"="C"."CUSTOMER_ID")
+ 155 - access("XTF"."FORM_ID"="C"."FORM_ID")
+ 156 - filter("XTF"."VERSION"="XFSV"."VERSION")
+ 160 - filter(("STATUS"='PUBLISHED' AND TRUNC(INTERNAL_FUNCTION("START_DATE"))<=TRUNC(SYSDATE@!) AND
+              (TRUNC(INTERNAL_FUNCTION("END_DATE")) IS NULL OR TRUNC(INTERNAL_FUNCTION("END_DATE"))>=TRUNC(SYSDATE@!))))
+ 161 - access("FORM_ID"="XTF"."FORM_ID")
+ 162 - filter("STATUS"='DRAFT')
+ 163 - access("FORM_ID"="XTF"."FORM_ID" AND "VERSION"=1)
+ 165 - filter(("STATUS"='PUBLISHED' AND TRUNC(INTERNAL_FUNCTION("START_DATE"))>SYSDATE@! AND
+              (TRUNC(INTERNAL_FUNCTION("END_DATE")) IS NULL OR TRUNC(INTERNAL_FUNCTION("END_DATE"))>=TRUNC(SYSDATE@!))))
+ 166 - access("FORM_ID"="XTF"."FORM_ID")
+ 168 - filter(("STATUS"='INACTIVE' OR (TRUNC(INTERNAL_FUNCTION("END_DATE"))<=TRUNC(SYSDATE@!) AND "STATUS"<>'DRAFT')))
+ 169 - access("FORM_ID"="XTF"."FORM_ID")
+ 171 - access("CONFIG"."FORM_ID"="FORM"."FORM_ID" AND "FORM"."VERSION"="QL"."VERSION")
+ 172 - filter(("ATTR"."ATTRIBUTE_ID"="QD"."ATTRIBUTE_ID" AND "ATTR"."ATTRIBUTE_TYPE"<>'LABEL' AND "ATTR"."DISPLAY_SEQUENCE" IS
+              NOT NULL))
+ 173 - access("FORM"."FORM_ID"="ATTR"."FORM_ID" AND "FORM"."VERSION"="ATTR"."VERSION")
+ 174 - filter("LOV_VALUE"="RESPONSE_TEXT")
+ 175 - access("LOV"."LOV_NAME"="ATTR"."LOV_NAME")
+
+Column Projection Information (identified by operation id):
+-----------------------------------------------------------
+
+   1 - (#keys=3) "QH"."OPERATION_SEQ"[NUMBER,22], "CONFIG"."FORM_SEQUENCE"[NUMBER,22], "ATTR"."DISPLAY_SEQUENCE"[NUMBER,22],
+       "FORM"."FORM_NAME"[VARCHAR2,250], "ATTR"."ATTRIBUTE_LABEL"[VARCHAR2,300], CASE  WHEN ("ATTR"."ATTRIBUTE_TYPE"='LOV' AND
+       "QD"."RESPONSE_TEXT" IS NOT NULL) THEN "LOV"."LOV_DESCRIPTION" WHEN ("QD"."RESPONSE_TEXT" IS NOT NULL AND
+       "ATTR"."ATTRIBUTE_TYPE"<>'LOV') THEN "RESPONSE_TEXT" WHEN "RESPONSE_NUMBER" IS NOT NULL THEN TO_CHAR("RESPONSE_NUMBER") WHEN
+       "RESPONSE_DATE" IS NOT NULL THEN TO_CHAR(INTERNAL_FUNCTION("RESPONSE_DATE")) ELSE NULL END [2000]
+   2 - "QH"."OPERATION_SEQ"[NUMBER,22], "RESPONSE_TEXT"[VARCHAR2,2000], "RESPONSE_DATE"[DATE,7], "RESPONSE_NUMBER"[NUMBER,22],
+       "CONFIG"."FORM_SEQUENCE"[NUMBER,22], "FORM"."FORM_NAME"[VARCHAR2,250], "FORM"."FORM_NAME"[VARCHAR2,250],
+       "ATTR"."ATTRIBUTE_LABEL"[VARCHAR2,300], "ATTR"."DISPLAY_SEQUENCE"[NUMBER,22], "ATTR"."ATTRIBUTE_TYPE"[VARCHAR2,300],
+       "ATTR"."LOV_NAME"[VARCHAR2,300], "ATTR"."ATTRIBUTE_LABEL"[VARCHAR2,300], "ATTR"."DISPLAY_SEQUENCE"[NUMBER,22],
+       "ATTR"."ATTRIBUTE_TYPE"[VARCHAR2,300], "ATTR"."LOV_NAME"[VARCHAR2,300], "LOV"."LOV_DESCRIPTION"[VARCHAR2,1000]
+   3 - "FORM"."FORM_ID"[VARCHAR2,100], "FORM"."VERSION"[NUMBER,22], "QH"."OPERATION_SEQ"[NUMBER,22],
+       "FORM"."VERSION"[NUMBER,22], "RESPONSE_TEXT"[VARCHAR2,2000], "RESPONSE_DATE"[DATE,7], "RESPONSE_NUMBER"[NUMBER,22],
+       "QD"."ATTRIBUTE_ID"[VARCHAR2,100], "FORM"."FORM_ID"[VARCHAR2,100], "CONFIG"."FORM_SEQUENCE"[NUMBER,22],
+       "FORM"."FORM_NAME"[VARCHAR2,250], "FORM"."FORM_NAME"[VARCHAR2,250], "ATTR"."ATTRIBUTE_LABEL"[VARCHAR2,300],
+       "ATTR"."DISPLAY_SEQUENCE"[NUMBER,22], "ATTR"."ATTRIBUTE_TYPE"[VARCHAR2,300], "ATTR"."LOV_NAME"[VARCHAR2,300]
+   4 - "QH"."OPERATION_SEQ"[NUMBER,22], "QL"."VERSION"[NUMBER,22], "RESPONSE_TEXT"[VARCHAR2,2000], "RESPONSE_DATE"[DATE,7],
+       "RESPONSE_NUMBER"[NUMBER,22], "QD"."ATTRIBUTE_ID"[VARCHAR2,100], "CONFIG"."FORM_ID"[VARCHAR2,100],
+       "CONFIG"."FORM_SEQUENCE"[NUMBER,22], "FORM"."FORM_NAME"[VARCHAR2,250], "FORM"."VERSION"[NUMBER,22],
+       "FORM"."FORM_ID"[VARCHAR2,100]
+   5 - "QH"."OPERATION_SEQ"[NUMBER,22], "QL"."VERSION"[NUMBER,22], "RESPONSE_TEXT"[VARCHAR2,2000], "RESPONSE_DATE"[DATE,7],
+       "RESPONSE_NUMBER"[NUMBER,22], "QD"."ATTRIBUTE_ID"[VARCHAR2,100], "CONFIG"."FORM_ID"[VARCHAR2,100],
+       "CONFIG"."FORM_SEQUENCE"[NUMBER,22]
+   6 - "QH"."CUSTOMER_ID"[NUMBER,22], "QH"."ITEM_ID"[NUMBER,22], "QH"."OPERATION_SEQ"[NUMBER,22],
+       "QH"."RETURN_TYPE"[VARCHAR2,100], "QL"."VERSION"[NUMBER,22], "QL"."FORM_ID"[VARCHAR2,100], "QL"."CONFIG_ID"[VARCHAR2,100],
+       "RESPONSE_TEXT"[VARCHAR2,2000], "RESPONSE_DATE"[DATE,7], "RESPONSE_NUMBER"[NUMBER,22], "QD"."ATTRIBUTE_ID"[VARCHAR2,100]
+   7 - "QH"."QA_HEADER_ID"[NUMBER,22], "QH"."CUSTOMER_ID"[NUMBER,22], "QH"."ITEM_ID"[NUMBER,22],
+       "QH"."OPERATION_SEQ"[NUMBER,22], "QH"."RETURN_TYPE"[VARCHAR2,100], "QL"."QA_LINE_ID"[NUMBER,22], "QL"."VERSION"[NUMBER,22],
+       "QL"."FORM_ID"[VARCHAR2,100], "QL"."CONFIG_ID"[VARCHAR2,100]
+   8 - "QH"."QA_HEADER_ID"[NUMBER,22], "QH"."CUSTOMER_ID"[NUMBER,22], "QH"."ITEM_ID"[NUMBER,22],
+       "QH"."OPERATION_SEQ"[NUMBER,22], "QH"."RETURN_TYPE"[VARCHAR2,100]
+   9 - "QH".ROWID[ROWID,10]
+  10 - "QL"."QA_LINE_ID"[NUMBER,22], "QL"."VERSION"[NUMBER,22], "QL"."FORM_ID"[VARCHAR2,100], "QL"."CONFIG_ID"[VARCHAR2,100]
+  11 - "QL".ROWID[ROWID,10], "QL"."QA_LINE_ID"[NUMBER,22], "QL"."FORM_ID"[VARCHAR2,100], "QL"."VERSION"[NUMBER,22]
+  12 - "RESPONSE_TEXT"[VARCHAR2,2000], "RESPONSE_DATE"[DATE,7], "RESPONSE_NUMBER"[NUMBER,22], "QD"."ATTRIBUTE_ID"[VARCHAR2,100]
+  13 - "QD".ROWID[ROWID,10], "QD"."ATTRIBUTE_ID"[VARCHAR2,100]
+  14 - "CONFIG"."CUSTOMER_ID"[NUMBER,22], "CONFIG"."ITEM_ID"[NUMBER,22], "CONFIG"."FORM_ID"[VARCHAR2,100],
+       "CONFIG"."FORM_SEQUENCE"[NUMBER,22], "CONFIG"."RETURN_TYPE"[VARCHAR2,150]
+  15 - (#keys=29) STRDEF[40], STRDEF[83], STRDEF[25], STRDEF[250], STRDEF[22], STRDEF[7], STRDEF[9], STRDEF[7], STRDEF[250],
+       STRDEF[10], STRDEF[100], STRDEF[22], STRDEF[22], STRDEF[100], STRDEF[100], STRDEF[22], STRDEF[7], STRDEF[7], STRDEF[250],
+       STRDEF[9], STRDEF[150], STRDEF[50], STRDEF[50], STRDEF[7], STRDEF[250], STRDEF[7], STRDEF[7], STRDEF[550], STRDEF[10]
+  16 - STRDEF[40], STRDEF[83], STRDEF[25], STRDEF[250], STRDEF[22], STRDEF[7], STRDEF[9], STRDEF[7], STRDEF[250], STRDEF[10],
+       STRDEF[100], STRDEF[22], STRDEF[22], STRDEF[100], STRDEF[100], STRDEF[22], STRDEF[7], STRDEF[7], STRDEF[250], STRDEF[9],
+       STRDEF[150], STRDEF[50], STRDEF[50], STRDEF[7], STRDEF[250], STRDEF[7], STRDEF[7], STRDEF[550], STRDEF[10]
+  17 - "C"."CUSTOMER_ID"[NUMBER,22], "C"."ITEM_ID"[NUMBER,22], "C"."FORM_SEQUENCE"[NUMBER,22],
+       "C"."EFFECTIVE_START_DATE"[DATE,7], "C"."EFFECTIVE_END_DATE"[DATE,7], "C"."LAST_UPDATE_DATE"[DATE,7],
+       "C"."CHANGE_REASON"[VARCHAR2,250], "C"."NAVIGATION_RULE"[VARCHAR2,250], "C"."FLOW_COMPLETION_EVENT"[VARCHAR2,550],
+       "C"."RETURN_TYPE"[VARCHAR2,150], "C"."CONFIGURATION_STATUS"[VARCHAR2,50], "C"."OPERATION_CODE"[VARCHAR2,50],
+       "C"."EXPORT_START_DATE"[DATE,7], "C"."EXPORT_END_DATE"[DATE,7], "C"."CONFIG_ID"[VARCHAR2,100],
+       "C"."BATCH_FORM_ID"[VARCHAR2,100], "C"."AUTHENTICATION_FLAG"[VARCHAR2,10], "I"."IMLITM"[CHARACTER,25], "ABALPH"[CHARACTER,40],
+       "FORM_CODE"[VARCHAR2,250], "XTF"."FORM_NAME"[VARCHAR2,250], "XTF"."BATCH_ENABLED"[VARCHAR2,10], "XTF"."START_DATE"[DATE,7],
+       "XTF"."END_DATE"[DATE,7], "XTF"."FORM_ID"[VARCHAR2,100], "XFSV"."VERSION"[NUMBER,22], "XFSV"."STATUS"[VARCHAR2,9]
+  18 - "C"."CUSTOMER_ID"[NUMBER,22], "C"."ITEM_ID"[NUMBER,22], "C"."FORM_SEQUENCE"[NUMBER,22],
+       "C"."EFFECTIVE_START_DATE"[DATE,7], "C"."EFFECTIVE_END_DATE"[DATE,7], "C"."LAST_UPDATE_DATE"[DATE,7],
+       "C"."CHANGE_REASON"[VARCHAR2,250], "C"."NAVIGATION_RULE"[VARCHAR2,250], "C"."FLOW_COMPLETION_EVENT"[VARCHAR2,550],
+       "C"."RETURN_TYPE"[VARCHAR2,150], "C"."CONFIGURATION_STATUS"[VARCHAR2,50], "C"."OPERATION_CODE"[VARCHAR2,50],
+       "C"."EXPORT_START_DATE"[DATE,7], "C"."EXPORT_END_DATE"[DATE,7], "C"."CONFIG_ID"[VARCHAR2,100],
+       "C"."BATCH_FORM_ID"[VARCHAR2,100], "C"."AUTHENTICATION_FLAG"[VARCHAR2,10], "I"."IMLITM"[CHARACTER,25], "ABALPH"[CHARACTER,40],
+       "FORM_CODE"[VARCHAR2,250], "XTF"."FORM_NAME"[VARCHAR2,250], "XTF"."BATCH_ENABLED"[VARCHAR2,10], "XTF"."START_DATE"[DATE,7],
+       "XTF"."END_DATE"[DATE,7], "XTF"."FORM_ID"[VARCHAR2,100], "XFSV"."VERSION"[NUMBER,22], "XFSV"."STATUS"[VARCHAR2,9]
+  19 - "C"."CUSTOMER_ID"[NUMBER,22], "C"."ITEM_ID"[NUMBER,22], "C"."FORM_SEQUENCE"[NUMBER,22],
+       "C"."EFFECTIVE_START_DATE"[DATE,7], "C"."EFFECTIVE_END_DATE"[DATE,7], "C"."LAST_UPDATE_DATE"[DATE,7],
+       "C"."CHANGE_REASON"[VARCHAR2,250], "C"."NAVIGATION_RULE"[VARCHAR2,250], "C"."FLOW_COMPLETION_EVENT"[VARCHAR2,550],
+       "C"."RETURN_TYPE"[VARCHAR2,150], "C"."CONFIGURATION_STATUS"[VARCHAR2,50], "C"."OPERATION_CODE"[VARCHAR2,50],
+       "C"."EXPORT_START_DATE"[DATE,7], "C"."EXPORT_END_DATE"[DATE,7], "C"."CONFIG_ID"[VARCHAR2,100],
+       "C"."BATCH_FORM_ID"[VARCHAR2,100], "C"."AUTHENTICATION_FLAG"[VARCHAR2,10], "I"."IMLITM"[CHARACTER,25], "ABALPH"[CHARACTER,40],
+       "FORM_CODE"[VARCHAR2,250], "XTF"."FORM_NAME"[VARCHAR2,250], "XTF"."VERSION"[NUMBER,22], "XTF"."BATCH_ENABLED"[VARCHAR2,10],
+       "XTF"."START_DATE"[DATE,7], "XTF"."END_DATE"[DATE,7], "XTF"."FORM_ID"[VARCHAR2,100]
+  20 - "C"."CUSTOMER_ID"[NUMBER,22], "C"."ITEM_ID"[NUMBER,22], "C"."FORM_SEQUENCE"[NUMBER,22],
+       "C"."EFFECTIVE_START_DATE"[DATE,7], "C"."EFFECTIVE_END_DATE"[DATE,7], "C"."LAST_UPDATE_DATE"[DATE,7],
+       "C"."CHANGE_REASON"[VARCHAR2,250], "C"."NAVIGATION_RULE"[VARCHAR2,250], "C"."FLOW_COMPLETION_EVENT"[VARCHAR2,550],
+       "C"."RETURN_TYPE"[VARCHAR2,150], "C"."CONFIGURATION_STATUS"[VARCHAR2,50], "C"."OPERATION_CODE"[VARCHAR2,50],
+       "C"."EXPORT_START_DATE"[DATE,7], "C"."EXPORT_END_DATE"[DATE,7], "C"."CONFIG_ID"[VARCHAR2,100], "C"."FORM_ID"[VARCHAR2,100],
+       "C"."BATCH_FORM_ID"[VARCHAR2,100], "C"."AUTHENTICATION_FLAG"[VARCHAR2,10], "I"."IMLITM"[CHARACTER,25], "ABALPH"[CHARACTER,40]
+  21 - "C"."CUSTOMER_ID"[NUMBER,22], "C"."ITEM_ID"[NUMBER,22], "C"."FORM_SEQUENCE"[NUMBER,22],
+       "C"."EFFECTIVE_START_DATE"[DATE,7], "C"."EFFECTIVE_END_DATE"[DATE,7], "C"."LAST_UPDATE_DATE"[DATE,7],
+       "C"."CHANGE_REASON"[VARCHAR2,250], "C"."NAVIGATION_RULE"[VARCHAR2,250], "C"."FLOW_COMPLETION_EVENT"[VARCHAR2,550],
+       "C"."RETURN_TYPE"[VARCHAR2,150], "C"."CONFIGURATION_STATUS"[VARCHAR2,50], "C"."OPERATION_CODE"[VARCHAR2,50],
+       "C"."EXPORT_START_DATE"[DATE,7], "C"."EXPORT_END_DATE"[DATE,7], "C"."CONFIG_ID"[VARCHAR2,100], "C"."FORM_ID"[VARCHAR2,100],
+       "C"."BATCH_FORM_ID"[VARCHAR2,100], "C"."AUTHENTICATION_FLAG"[VARCHAR2,10], "I"."IMLITM"[CHARACTER,25]
+  22 - "C"."CUSTOMER_ID"[NUMBER,22], "C"."ITEM_ID"[NUMBER,22], "C"."FORM_SEQUENCE"[NUMBER,22],
+       "C"."EFFECTIVE_START_DATE"[DATE,7], "C"."EFFECTIVE_END_DATE"[DATE,7], "C"."LAST_UPDATE_DATE"[DATE,7],
+       "C"."CHANGE_REASON"[VARCHAR2,250], "C"."NAVIGATION_RULE"[VARCHAR2,250], "C"."FLOW_COMPLETION_EVENT"[VARCHAR2,550],
+       "C"."RETURN_TYPE"[VARCHAR2,150], "C"."CONFIGURATION_STATUS"[VARCHAR2,50], "C"."OPERATION_CODE"[VARCHAR2,50],
+       "C"."EXPORT_START_DATE"[DATE,7], "C"."EXPORT_END_DATE"[DATE,7], "C"."CONFIG_ID"[VARCHAR2,100], "C"."FORM_ID"[VARCHAR2,100],
+       "C"."BATCH_FORM_ID"[VARCHAR2,100], "C"."AUTHENTICATION_FLAG"[VARCHAR2,10]
+  23 - "C".ROWID[ROWID,10], "C"."CONFIG_ID"[VARCHAR2,100]
+  24 - "I"."IMLITM"[CHARACTER,25]
+  25 - "I".ROWID[ROWID,10]
+  26 - "ABALPH"[CHARACTER,40]
+  27 - "F0101".ROWID[ROWID,10]
+  28 - "FORM_CODE"[VARCHAR2,250], "XTF"."FORM_NAME"[VARCHAR2,250], "XTF"."VERSION"[NUMBER,22],
+       "XTF"."BATCH_ENABLED"[VARCHAR2,10], "XTF"."START_DATE"[DATE,7], "XTF"."END_DATE"[DATE,7], "XTF"."FORM_ID"[VARCHAR2,100]
+  29 - "XTF".ROWID[ROWID,10], "XTF"."FORM_ID"[VARCHAR2,100], "XTF"."VERSION"[NUMBER,22]
+  30 - "XFSV"."VERSION"[NUMBER,22], "XFSV"."STATUS"[VARCHAR2,9]
+  31 - (#keys=3) STRDEF[100], STRDEF[22], STRDEF[9]
+  32 - STRDEF[100], STRDEF[22], STRDEF[9]
+  33 - (#keys=1) "FORM_ID"[VARCHAR2,100], MAX("VERSION")[22]
+  34 - "VERSION"[NUMBER,22], "FORM_ID"[VARCHAR2,100]
+  35 - "XXPLXS_TDM_FORMS".ROWID[ROWID,10], "FORM_ID"[VARCHAR2,100], "VERSION"[NUMBER,22]
+  36 - "VERSION"[NUMBER,22], "FORM_ID"[VARCHAR2,100]
+  37 - "VERSION"[NUMBER,22], "FORM_ID"[VARCHAR2,100]
+  38 - "XXPLXS_TDM_FORMS".ROWID[ROWID,10], "FORM_ID"[VARCHAR2,100], "VERSION"[NUMBER,22]
+  39 - (#keys=1) "FORM_ID"[VARCHAR2,100], MAX("VERSION")[22]
+  40 - "VERSION"[NUMBER,22], "FORM_ID"[VARCHAR2,100]
+  41 - "XXPLXS_TDM_FORMS".ROWID[ROWID,10], "FORM_ID"[VARCHAR2,100], "VERSION"[NUMBER,22]
+  42 - (#keys=1) "FORM_ID"[VARCHAR2,100], MAX("VERSION")[22]
+  43 - "VERSION"[NUMBER,22], "FORM_ID"[VARCHAR2,100]
+  44 - "VERSION"[NUMBER,22], "FORM_ID"[VARCHAR2,100]
+  45 - "XXPLXS_TDM_FORMS".ROWID[ROWID,10], "FORM_ID"[VARCHAR2,100], "VERSION"[NUMBER,22]
+  48 - "XTF"."VERSION"[NUMBER,22], "XTF"."FORM_ID"[VARCHAR2,100]
+  49 - "XFSV"."VERSION"[NUMBER,22], "XFSV"."STATUS"[VARCHAR2,9]
+  50 - (#keys=3) STRDEF[100], STRDEF[22], STRDEF[9]
+  51 - STRDEF[100], STRDEF[22], STRDEF[9]
+  52 - (#keys=1) "FORM_ID"[VARCHAR2,100], MAX("VERSION")[22]
+  53 - "VERSION"[NUMBER,22], "FORM_ID"[VARCHAR2,100]
+  54 - "XXPLXS_TDM_FORMS".ROWID[ROWID,10], "FORM_ID"[VARCHAR2,100], "VERSION"[NUMBER,22]
+  55 - "VERSION"[NUMBER,22], "FORM_ID"[VARCHAR2,100]
+  56 - "XXPLXS_TDM_FORMS".ROWID[ROWID,10], "FORM_ID"[VARCHAR2,100], "VERSION"[NUMBER,22]
+  57 - (#keys=1) "FORM_ID"[VARCHAR2,100], MAX("VERSION")[22]
+  58 - "VERSION"[NUMBER,22], "FORM_ID"[VARCHAR2,100]
+  59 - "VERSION"[NUMBER,22], "FORM_ID"[VARCHAR2,100]
+  60 - "XXPLXS_TDM_FORMS".ROWID[ROWID,10], "FORM_ID"[VARCHAR2,100], "VERSION"[NUMBER,22]
+  61 - (#keys=1) "FORM_ID"[VARCHAR2,100], MAX("VERSION")[22]
+  62 - "VERSION"[NUMBER,22], "FORM_ID"[VARCHAR2,100]
+  63 - "XXPLXS_TDM_FORMS".ROWID[ROWID,10], "FORM_ID"[VARCHAR2,100], "VERSION"[NUMBER,22]
+  64 - "C"."CUSTOMER_ID"[NUMBER,22], "C"."ITEM_ID"[NUMBER,22], "C"."FORM_SEQUENCE"[NUMBER,22],
+       "C"."EFFECTIVE_START_DATE"[DATE,7], "C"."EFFECTIVE_END_DATE"[DATE,7], "C"."LAST_UPDATE_DATE"[DATE,7],
+       "C"."CHANGE_REASON"[VARCHAR2,250], "C"."NAVIGATION_RULE"[VARCHAR2,250], "C"."FLOW_COMPLETION_EVENT"[VARCHAR2,550],
+       "C"."RETURN_TYPE"[VARCHAR2,150], "C"."CONFIGURATION_STATUS"[VARCHAR2,50], "C"."OPERATION_CODE"[VARCHAR2,50],
+       "C"."EXPORT_START_DATE"[DATE,7], "C"."EXPORT_END_DATE"[DATE,7], "C"."CONFIG_ID"[VARCHAR2,100],
+       "C"."BATCH_FORM_ID"[VARCHAR2,100], "C"."AUTHENTICATION_FLAG"[VARCHAR2,10], "ITEM"."IMLITM"[CHARACTER,25],
+       "ABALPH"[CHARACTER,40], "FORM_CODE"[VARCHAR2,250], "XTF"."FORM_NAME"[VARCHAR2,250], "XTF"."BATCH_ENABLED"[VARCHAR2,10],
+       "XTF"."START_DATE"[DATE,7], "XTF"."END_DATE"[DATE,7], "XTF"."FORM_ID"[VARCHAR2,100], "XFSV"."VERSION"[NUMBER,22],
+       "XFSV"."STATUS"[VARCHAR2,9]
+  65 - "C"."CUSTOMER_ID"[NUMBER,22], "C"."ITEM_ID"[NUMBER,22], "C"."FORM_SEQUENCE"[NUMBER,22],
+       "C"."EFFECTIVE_START_DATE"[DATE,7], "C"."EFFECTIVE_END_DATE"[DATE,7], "C"."LAST_UPDATE_DATE"[DATE,7],
+       "C"."CHANGE_REASON"[VARCHAR2,250], "C"."NAVIGATION_RULE"[VARCHAR2,250], "C"."FLOW_COMPLETION_EVENT"[VARCHAR2,550],
+       "C"."RETURN_TYPE"[VARCHAR2,150], "C"."CONFIGURATION_STATUS"[VARCHAR2,50], "C"."OPERATION_CODE"[VARCHAR2,50],
+       "C"."EXPORT_START_DATE"[DATE,7], "C"."EXPORT_END_DATE"[DATE,7], "C"."CONFIG_ID"[VARCHAR2,100],
+       "C"."BATCH_FORM_ID"[VARCHAR2,100], "C"."AUTHENTICATION_FLAG"[VARCHAR2,10], "ITEM"."IMLITM"[CHARACTER,25],
+       "ABALPH"[CHARACTER,40], "FORM_CODE"[VARCHAR2,250], "XTF"."FORM_NAME"[VARCHAR2,250], "XTF"."VERSION"[NUMBER,22],
+       "XTF"."BATCH_ENABLED"[VARCHAR2,10], "XTF"."START_DATE"[DATE,7], "XTF"."END_DATE"[DATE,7], "XTF"."FORM_ID"[VARCHAR2,100]
+  66 - "C"."CUSTOMER_ID"[NUMBER,22], "C"."ITEM_ID"[NUMBER,22], "C"."FORM_SEQUENCE"[NUMBER,22],
+       "C"."EFFECTIVE_START_DATE"[DATE,7], "C"."EFFECTIVE_END_DATE"[DATE,7], "C"."LAST_UPDATE_DATE"[DATE,7],
+       "C"."CHANGE_REASON"[VARCHAR2,250], "C"."NAVIGATION_RULE"[VARCHAR2,250], "C"."FLOW_COMPLETION_EVENT"[VARCHAR2,550],
+       "C"."RETURN_TYPE"[VARCHAR2,150], "C"."CONFIGURATION_STATUS"[VARCHAR2,50], "C"."OPERATION_CODE"[VARCHAR2,50],
+       "C"."EXPORT_START_DATE"[DATE,7], "C"."EXPORT_END_DATE"[DATE,7], "C"."CONFIG_ID"[VARCHAR2,100], "C"."FORM_ID"[VARCHAR2,100],
+       "C"."BATCH_FORM_ID"[VARCHAR2,100], "C"."AUTHENTICATION_FLAG"[VARCHAR2,10], "ITEM"."IMLITM"[CHARACTER,25],
+       "ABALPH"[CHARACTER,40]
+  67 - "C"."CUSTOMER_ID"[NUMBER,22], "C"."ITEM_ID"[NUMBER,22], "C"."FORM_SEQUENCE"[NUMBER,22],
+       "C"."EFFECTIVE_START_DATE"[DATE,7], "C"."EFFECTIVE_END_DATE"[DATE,7], "C"."LAST_UPDATE_DATE"[DATE,7],
+       "C"."CHANGE_REASON"[VARCHAR2,250], "C"."NAVIGATION_RULE"[VARCHAR2,250], "C"."FLOW_COMPLETION_EVENT"[VARCHAR2,550],
+       "C"."RETURN_TYPE"[VARCHAR2,150], "C"."CONFIGURATION_STATUS"[VARCHAR2,50], "C"."OPERATION_CODE"[VARCHAR2,50],
+       "C"."EXPORT_START_DATE"[DATE,7], "C"."EXPORT_END_DATE"[DATE,7], "C"."CONFIG_ID"[VARCHAR2,100], "C"."FORM_ID"[VARCHAR2,100],
+       "C"."BATCH_FORM_ID"[VARCHAR2,100], "C"."AUTHENTICATION_FLAG"[VARCHAR2,10], "ITEM"."IMLITM"[CHARACTER,25]
+  68 - "C"."CUSTOMER_ID"[NUMBER,22], "C"."ITEM_ID"[NUMBER,22], "C"."FORM_SEQUENCE"[NUMBER,22],
+       "C"."EFFECTIVE_START_DATE"[DATE,7], "C"."EFFECTIVE_END_DATE"[DATE,7], "C"."LAST_UPDATE_DATE"[DATE,7],
+       "C"."CHANGE_REASON"[VARCHAR2,250], "C"."NAVIGATION_RULE"[VARCHAR2,250], "C"."FLOW_COMPLETION_EVENT"[VARCHAR2,550],
+       "C"."RETURN_TYPE"[VARCHAR2,150], "C"."CONFIGURATION_STATUS"[VARCHAR2,50], "C"."OPERATION_CODE"[VARCHAR2,50],
+       "C"."EXPORT_START_DATE"[DATE,7], "C"."EXPORT_END_DATE"[DATE,7], "C"."CONFIG_ID"[VARCHAR2,100], "C"."FORM_ID"[VARCHAR2,100],
+       "C"."BATCH_FORM_ID"[VARCHAR2,100], "C"."AUTHENTICATION_FLAG"[VARCHAR2,10]
+  69 - "C".ROWID[ROWID,10], "C"."CONFIG_ID"[VARCHAR2,100]
+  70 - "ITEM"."IMLITM"[CHARACTER,25]
+  71 - "ITEM".ROWID[ROWID,10]
+  72 - "ABALPH"[CHARACTER,40]
+  73 - "F0101".ROWID[ROWID,10]
+  74 - "FORM_CODE"[VARCHAR2,250], "XTF"."FORM_NAME"[VARCHAR2,250], "XTF"."VERSION"[NUMBER,22],
+       "XTF"."BATCH_ENABLED"[VARCHAR2,10], "XTF"."START_DATE"[DATE,7], "XTF"."END_DATE"[DATE,7], "XTF"."FORM_ID"[VARCHAR2,100]
+  75 - "XTF".ROWID[ROWID,10], "XTF"."FORM_ID"[VARCHAR2,100], "XTF"."VERSION"[NUMBER,22]
+  76 - "XFSV"."VERSION"[NUMBER,22], "XFSV"."STATUS"[VARCHAR2,9]
+  77 - (#keys=3) STRDEF[100], STRDEF[22], STRDEF[9]
+  78 - STRDEF[100], STRDEF[22], STRDEF[9]
+  79 - (#keys=1) "FORM_ID"[VARCHAR2,100], MAX("VERSION")[22]
+  80 - "VERSION"[NUMBER,22], "FORM_ID"[VARCHAR2,100]
+  81 - "XXPLXS_TDM_FORMS".ROWID[ROWID,10], "FORM_ID"[VARCHAR2,100], "VERSION"[NUMBER,22]
+  82 - "VERSION"[NUMBER,22], "FORM_ID"[VARCHAR2,100]
+  83 - "VERSION"[NUMBER,22], "FORM_ID"[VARCHAR2,100]
+  84 - "XXPLXS_TDM_FORMS".ROWID[ROWID,10], "FORM_ID"[VARCHAR2,100], "VERSION"[NUMBER,22]
+  85 - (#keys=1) "FORM_ID"[VARCHAR2,100], MAX("VERSION")[22]
+  86 - "VERSION"[NUMBER,22], "FORM_ID"[VARCHAR2,100]
+  87 - "VERSION"[NUMBER,22], "FORM_ID"[VARCHAR2,100]
+  88 - "XXPLXS_TDM_FORMS".ROWID[ROWID,10], "FORM_ID"[VARCHAR2,100], "VERSION"[NUMBER,22]
+  89 - (#keys=1) "FORM_ID"[VARCHAR2,100], MAX("VERSION")[22]
+  90 - "VERSION"[NUMBER,22], "FORM_ID"[VARCHAR2,100]
+  91 - "VERSION"[NUMBER,22], "FORM_ID"[VARCHAR2,100]
+  92 - "XXPLXS_TDM_FORMS".ROWID[ROWID,10], "FORM_ID"[VARCHAR2,100], "VERSION"[NUMBER,22]
+  93 - "C"."CUSTOMER_ID"[NUMBER,22], "C"."ITEM_ID"[NUMBER,22], "C"."FORM_SEQUENCE"[NUMBER,22],
+       "C"."EFFECTIVE_START_DATE"[DATE,7], "C"."EFFECTIVE_END_DATE"[DATE,7], "C"."LAST_UPDATE_DATE"[DATE,7],
+       "C"."CHANGE_REASON"[VARCHAR2,250], "C"."NAVIGATION_RULE"[VARCHAR2,250], "C"."FLOW_COMPLETION_EVENT"[VARCHAR2,550],
+       "C"."RETURN_TYPE"[VARCHAR2,150], "C"."CONFIGURATION_STATUS"[VARCHAR2,50], "C"."OPERATION_CODE"[VARCHAR2,50],
+       "C"."EXPORT_START_DATE"[DATE,7], "C"."EXPORT_END_DATE"[DATE,7], "C"."CONFIG_ID"[VARCHAR2,100],
+       "C"."BATCH_FORM_ID"[VARCHAR2,100], "C"."AUTHENTICATION_FLAG"[VARCHAR2,10], "ITEM"."IMLITM"[CHARACTER,25],
+       "ABALPH"[CHARACTER,40], "FORM_CODE"[VARCHAR2,250], "XTF"."FORM_NAME"[VARCHAR2,250], "XTF"."BATCH_ENABLED"[VARCHAR2,10],
+       "XTF"."START_DATE"[DATE,7], "XTF"."END_DATE"[DATE,7], "XTF"."FORM_ID"[VARCHAR2,100], "XFSV"."VERSION"[NUMBER,22],
+       "XFSV"."STATUS"[VARCHAR2,9]
+  94 - "C"."CUSTOMER_ID"[NUMBER,22], "C"."ITEM_ID"[NUMBER,22], "C"."FORM_SEQUENCE"[NUMBER,22],
+       "C"."EFFECTIVE_START_DATE"[DATE,7], "C"."EFFECTIVE_END_DATE"[DATE,7], "C"."LAST_UPDATE_DATE"[DATE,7],
+       "C"."CHANGE_REASON"[VARCHAR2,250], "C"."NAVIGATION_RULE"[VARCHAR2,250], "C"."FLOW_COMPLETION_EVENT"[VARCHAR2,550],
+       "C"."RETURN_TYPE"[VARCHAR2,150], "C"."CONFIGURATION_STATUS"[VARCHAR2,50], "C"."OPERATION_CODE"[VARCHAR2,50],
+       "C"."EXPORT_START_DATE"[DATE,7], "C"."EXPORT_END_DATE"[DATE,7], "C"."CONFIG_ID"[VARCHAR2,100],
+       "C"."BATCH_FORM_ID"[VARCHAR2,100], "C"."AUTHENTICATION_FLAG"[VARCHAR2,10], "ITEM"."IMLITM"[CHARACTER,25],
+       "ABALPH"[CHARACTER,40], "FORM_CODE"[VARCHAR2,250], "XTF"."FORM_NAME"[VARCHAR2,250], "XTF"."BATCH_ENABLED"[VARCHAR2,10],
+       "XTF"."START_DATE"[DATE,7], "XTF"."END_DATE"[DATE,7], "XTF"."FORM_ID"[VARCHAR2,100], "XFSV"."VERSION"[NUMBER,22],
+       "XFSV"."STATUS"[VARCHAR2,9]
+  95 - "C"."CUSTOMER_ID"[NUMBER,22], "C"."ITEM_ID"[NUMBER,22], "C"."FORM_SEQUENCE"[NUMBER,22],
+       "C"."EFFECTIVE_START_DATE"[DATE,7], "C"."EFFECTIVE_END_DATE"[DATE,7], "C"."LAST_UPDATE_DATE"[DATE,7],
+       "C"."CHANGE_REASON"[VARCHAR2,250], "C"."NAVIGATION_RULE"[VARCHAR2,250], "C"."FLOW_COMPLETION_EVENT"[VARCHAR2,550],
+       "C"."RETURN_TYPE"[VARCHAR2,150], "C"."CONFIGURATION_STATUS"[VARCHAR2,50], "C"."OPERATION_CODE"[VARCHAR2,50],
+       "C"."EXPORT_START_DATE"[DATE,7], "C"."EXPORT_END_DATE"[DATE,7], "C"."CONFIG_ID"[VARCHAR2,100],
+       "C"."BATCH_FORM_ID"[VARCHAR2,100], "C"."AUTHENTICATION_FLAG"[VARCHAR2,10], "ITEM"."IMLITM"[CHARACTER,25],
+       "ABALPH"[CHARACTER,40], "FORM_CODE"[VARCHAR2,250], "XTF"."FORM_NAME"[VARCHAR2,250], "XTF"."VERSION"[NUMBER,22],
+       "XTF"."BATCH_ENABLED"[VARCHAR2,10], "XTF"."START_DATE"[DATE,7], "XTF"."END_DATE"[DATE,7], "XTF"."FORM_ID"[VARCHAR2,100]
+  96 - "C"."CUSTOMER_ID"[NUMBER,22], "C"."ITEM_ID"[NUMBER,22], "C"."FORM_SEQUENCE"[NUMBER,22],
+       "C"."EFFECTIVE_START_DATE"[DATE,7], "C"."EFFECTIVE_END_DATE"[DATE,7], "C"."LAST_UPDATE_DATE"[DATE,7],
+       "C"."CHANGE_REASON"[VARCHAR2,250], "C"."NAVIGATION_RULE"[VARCHAR2,250], "C"."FLOW_COMPLETION_EVENT"[VARCHAR2,550],
+       "C"."RETURN_TYPE"[VARCHAR2,150], "C"."CONFIGURATION_STATUS"[VARCHAR2,50], "C"."OPERATION_CODE"[VARCHAR2,50],
+       "C"."EXPORT_START_DATE"[DATE,7], "C"."EXPORT_END_DATE"[DATE,7], "C"."CONFIG_ID"[VARCHAR2,100], "C"."FORM_ID"[VARCHAR2,100],
+       "C"."BATCH_FORM_ID"[VARCHAR2,100], "C"."AUTHENTICATION_FLAG"[VARCHAR2,10], "ITEM"."IMLITM"[CHARACTER,25],
+       "ABALPH"[CHARACTER,40]
+  97 - "C"."CUSTOMER_ID"[NUMBER,22], "C"."ITEM_ID"[NUMBER,22], "C"."FORM_SEQUENCE"[NUMBER,22],
+       "C"."EFFECTIVE_START_DATE"[DATE,7], "C"."EFFECTIVE_END_DATE"[DATE,7], "C"."LAST_UPDATE_DATE"[DATE,7],
+       "C"."CHANGE_REASON"[VARCHAR2,250], "C"."NAVIGATION_RULE"[VARCHAR2,250], "C"."FLOW_COMPLETION_EVENT"[VARCHAR2,550],
+       "C"."RETURN_TYPE"[VARCHAR2,150], "C"."CONFIGURATION_STATUS"[VARCHAR2,50], "C"."OPERATION_CODE"[VARCHAR2,50],
+       "C"."EXPORT_START_DATE"[DATE,7], "C"."EXPORT_END_DATE"[DATE,7], "C"."CONFIG_ID"[VARCHAR2,100], "C"."FORM_ID"[VARCHAR2,100],
+       "C"."BATCH_FORM_ID"[VARCHAR2,100], "C"."AUTHENTICATION_FLAG"[VARCHAR2,10], "ITEM"."IMLITM"[CHARACTER,25]
+  98 - "C"."CUSTOMER_ID"[NUMBER,22], "C"."ITEM_ID"[NUMBER,22], "C"."FORM_SEQUENCE"[NUMBER,22],
+       "C"."EFFECTIVE_START_DATE"[DATE,7], "C"."EFFECTIVE_END_DATE"[DATE,7], "C"."LAST_UPDATE_DATE"[DATE,7],
+       "C"."CHANGE_REASON"[VARCHAR2,250], "C"."NAVIGATION_RULE"[VARCHAR2,250], "C"."FLOW_COMPLETION_EVENT"[VARCHAR2,550],
+       "C"."RETURN_TYPE"[VARCHAR2,150], "C"."CONFIGURATION_STATUS"[VARCHAR2,50], "C"."OPERATION_CODE"[VARCHAR2,50],
+       "C"."EXPORT_START_DATE"[DATE,7], "C"."EXPORT_END_DATE"[DATE,7], "C"."CONFIG_ID"[VARCHAR2,100], "C"."FORM_ID"[VARCHAR2,100],
+       "C"."BATCH_FORM_ID"[VARCHAR2,100], "C"."AUTHENTICATION_FLAG"[VARCHAR2,10]
+  99 - "C".ROWID[ROWID,10], "C"."CONFIG_ID"[VARCHAR2,100]
+ 100 - "ITEM"."IMLITM"[CHARACTER,25]
+ 101 - "ITEM".ROWID[ROWID,10]
+ 102 - "ABALPH"[CHARACTER,40]
+ 103 - "F0101".ROWID[ROWID,10]
+ 104 - "FORM_CODE"[VARCHAR2,250], "XTF"."FORM_NAME"[VARCHAR2,250], "XTF"."VERSION"[NUMBER,22],
+       "XTF"."BATCH_ENABLED"[VARCHAR2,10], "XTF"."START_DATE"[DATE,7], "XTF"."END_DATE"[DATE,7], "XTF"."FORM_ID"[VARCHAR2,100]
+ 105 - "XTF".ROWID[ROWID,10], "XTF"."FORM_ID"[VARCHAR2,100], "XTF"."VERSION"[NUMBER,22]
+ 106 - "XFSV"."VERSION"[NUMBER,22], "XFSV"."STATUS"[VARCHAR2,9]
+ 107 - (#keys=3) STRDEF[100], STRDEF[22], STRDEF[9]
+ 108 - STRDEF[100], STRDEF[22], STRDEF[9]
+ 109 - (#keys=1) "FORM_ID"[VARCHAR2,100], MAX("VERSION")[22]
+ 110 - "VERSION"[NUMBER,22], "FORM_ID"[VARCHAR2,100]
+ 111 - "VERSION"[NUMBER,22], "FORM_ID"[VARCHAR2,100]
+ 112 - "XXPLXS_TDM_FORMS".ROWID[ROWID,10], "FORM_ID"[VARCHAR2,100], "VERSION"[NUMBER,22]
+ 113 - "VERSION"[NUMBER,22], "FORM_ID"[VARCHAR2,100]
+ 114 - "VERSION"[NUMBER,22], "FORM_ID"[VARCHAR2,100]
+ 115 - "XXPLXS_TDM_FORMS".ROWID[ROWID,10], "FORM_ID"[VARCHAR2,100], "VERSION"[NUMBER,22]
+ 116 - (#keys=1) "FORM_ID"[VARCHAR2,100], MAX("VERSION")[22]
+ 117 - "VERSION"[NUMBER,22], "FORM_ID"[VARCHAR2,100]
+ 118 - "VERSION"[NUMBER,22], "FORM_ID"[VARCHAR2,100]
+ 119 - "XXPLXS_TDM_FORMS".ROWID[ROWID,10], "FORM_ID"[VARCHAR2,100], "VERSION"[NUMBER,22]
+ 120 - (#keys=1) "FORM_ID"[VARCHAR2,100], MAX("VERSION")[22]
+ 121 - "VERSION"[NUMBER,22], "FORM_ID"[VARCHAR2,100]
+ 122 - "XXPLXS_TDM_FORMS".ROWID[ROWID,10], "FORM_ID"[VARCHAR2,100], "VERSION"[NUMBER,22]
+ 126 - "XTF"."VERSION"[NUMBER,22], "XTF"."FORM_ID"[VARCHAR2,100]
+ 127 - "XFSV"."VERSION"[NUMBER,22], "XFSV"."STATUS"[VARCHAR2,9]
+ 128 - (#keys=3) STRDEF[100], STRDEF[22], STRDEF[9]
+ 129 - STRDEF[100], STRDEF[22], STRDEF[9]
+ 130 - (#keys=1) "FORM_ID"[VARCHAR2,100], MAX("VERSION")[22]
+ 131 - "VERSION"[NUMBER,22], "FORM_ID"[VARCHAR2,100]
+ 132 - "XXPLXS_TDM_FORMS".ROWID[ROWID,10], "FORM_ID"[VARCHAR2,100], "VERSION"[NUMBER,22]
+ 133 - "VERSION"[NUMBER,22], "FORM_ID"[VARCHAR2,100]
+ 134 - "XXPLXS_TDM_FORMS".ROWID[ROWID,10], "FORM_ID"[VARCHAR2,100], "VERSION"[NUMBER,22]
+ 135 - (#keys=1) "FORM_ID"[VARCHAR2,100], MAX("VERSION")[22]
+ 136 - "VERSION"[NUMBER,22], "FORM_ID"[VARCHAR2,100]
+ 137 - "XXPLXS_TDM_FORMS".ROWID[ROWID,10], "FORM_ID"[VARCHAR2,100], "VERSION"[NUMBER,22]
+ 138 - (#keys=1) "FORM_ID"[VARCHAR2,100], MAX("VERSION")[22]
+ 139 - "VERSION"[NUMBER,22], "FORM_ID"[VARCHAR2,100]
+ 140 - "VERSION"[NUMBER,22], "FORM_ID"[VARCHAR2,100]
+ 141 - "XXPLXS_TDM_FORMS".ROWID[ROWID,10], "FORM_ID"[VARCHAR2,100], "VERSION"[NUMBER,22]
+ 142 - "C"."CUSTOMER_ID"[NUMBER,22], "C"."ITEM_ID"[NUMBER,22], "C"."FORM_SEQUENCE"[NUMBER,22],
+       "C"."EFFECTIVE_START_DATE"[DATE,7], "C"."EFFECTIVE_END_DATE"[DATE,7], "C"."LAST_UPDATE_DATE"[DATE,7],
+       "C"."CHANGE_REASON"[VARCHAR2,250], "C"."NAVIGATION_RULE"[VARCHAR2,250], "C"."FLOW_COMPLETION_EVENT"[VARCHAR2,550],
+       "C"."RETURN_TYPE"[VARCHAR2,150], "C"."CONFIGURATION_STATUS"[VARCHAR2,50], "C"."OPERATION_CODE"[VARCHAR2,50],
+       "C"."EXPORT_START_DATE"[DATE,7], "C"."EXPORT_END_DATE"[DATE,7], "C"."CONFIG_ID"[VARCHAR2,100],
+       "C"."BATCH_FORM_ID"[VARCHAR2,100], "C"."AUTHENTICATION_FLAG"[VARCHAR2,10], "ITEM"."IMLITM"[CHARACTER,25],
+       "ABALPH"[CHARACTER,40], "F"."FORM_ID"[VARCHAR2,100], "F"."FORM_NAME"[VARCHAR2,250], "F"."FORM_CODE"[VARCHAR2,250],
+       "F"."VERSION"[NUMBER,22], "F"."STATUS"[VARCHAR2,9], "F"."BATCH_ENABLED"[VARCHAR2,10], "F"."START_DATE"[DATE,7],
+       "F"."END_DATE"[DATE,7]
+ 143 - "C"."CUSTOMER_ID"[NUMBER,22], "C"."ITEM_ID"[NUMBER,22], "C"."FORM_SEQUENCE"[NUMBER,22],
+       "C"."EFFECTIVE_START_DATE"[DATE,7], "C"."EFFECTIVE_END_DATE"[DATE,7], "C"."LAST_UPDATE_DATE"[DATE,7],
+       "C"."CHANGE_REASON"[VARCHAR2,250], "C"."NAVIGATION_RULE"[VARCHAR2,250], "C"."FLOW_COMPLETION_EVENT"[VARCHAR2,550],
+       "C"."RETURN_TYPE"[VARCHAR2,150], "C"."CONFIGURATION_STATUS"[VARCHAR2,50], "C"."OPERATION_CODE"[VARCHAR2,50],
+       "C"."EXPORT_START_DATE"[DATE,7], "C"."EXPORT_END_DATE"[DATE,7], "C"."CONFIG_ID"[VARCHAR2,100],
+       "C"."BATCH_FORM_ID"[VARCHAR2,100], "C"."AUTHENTICATION_FLAG"[VARCHAR2,10], "ITEM"."IMLITM"[CHARACTER,25],
+       "ABALPH"[CHARACTER,40], "F"."FORM_ID"[VARCHAR2,100], "F"."FORM_NAME"[VARCHAR2,250], "F"."FORM_CODE"[VARCHAR2,250],
+       "F"."VERSION"[NUMBER,22], "F"."STATUS"[VARCHAR2,9], "F"."BATCH_ENABLED"[VARCHAR2,10], "F"."START_DATE"[DATE,7],
+       "F"."END_DATE"[DATE,7]
+ 144 - "C"."CUSTOMER_ID"[NUMBER,22], "C"."ITEM_ID"[NUMBER,22], "C"."FORM_SEQUENCE"[NUMBER,22],
+       "C"."EFFECTIVE_START_DATE"[DATE,7], "C"."EFFECTIVE_END_DATE"[DATE,7], "C"."LAST_UPDATE_DATE"[DATE,7],
+       "C"."CHANGE_REASON"[VARCHAR2,250], "C"."NAVIGATION_RULE"[VARCHAR2,250], "C"."FLOW_COMPLETION_EVENT"[VARCHAR2,550],
+       "C"."RETURN_TYPE"[VARCHAR2,150], "C"."CONFIGURATION_STATUS"[VARCHAR2,50], "C"."OPERATION_CODE"[VARCHAR2,50],
+       "C"."EXPORT_START_DATE"[DATE,7], "C"."EXPORT_END_DATE"[DATE,7], "C"."CONFIG_ID"[VARCHAR2,100], "C"."FORM_ID"[VARCHAR2,100],
+       "C"."BATCH_FORM_ID"[VARCHAR2,100], "C"."AUTHENTICATION_FLAG"[VARCHAR2,10], "ITEM"."IMLITM"[CHARACTER,25],
+       "ABALPH"[CHARACTER,40]
+ 145 - "C"."CUSTOMER_ID"[NUMBER,22], "C"."ITEM_ID"[NUMBER,22], "C"."FORM_SEQUENCE"[NUMBER,22],
+       "C"."EFFECTIVE_START_DATE"[DATE,7], "C"."EFFECTIVE_END_DATE"[DATE,7], "C"."LAST_UPDATE_DATE"[DATE,7],
+       "C"."CHANGE_REASON"[VARCHAR2,250], "C"."NAVIGATION_RULE"[VARCHAR2,250], "C"."FLOW_COMPLETION_EVENT"[VARCHAR2,550],
+       "C"."RETURN_TYPE"[VARCHAR2,150], "C"."CONFIGURATION_STATUS"[VARCHAR2,50], "C"."OPERATION_CODE"[VARCHAR2,50],
+       "C"."EXPORT_START_DATE"[DATE,7], "C"."EXPORT_END_DATE"[DATE,7], "C"."CONFIG_ID"[VARCHAR2,100], "C"."FORM_ID"[VARCHAR2,100],
+       "C"."BATCH_FORM_ID"[VARCHAR2,100], "C"."AUTHENTICATION_FLAG"[VARCHAR2,10], "ITEM"."IMLITM"[CHARACTER,25]
+ 146 - "C"."CUSTOMER_ID"[NUMBER,22], "C"."ITEM_ID"[NUMBER,22], "C"."FORM_SEQUENCE"[NUMBER,22],
+       "C"."EFFECTIVE_START_DATE"[DATE,7], "C"."EFFECTIVE_END_DATE"[DATE,7], "C"."LAST_UPDATE_DATE"[DATE,7],
+       "C"."CHANGE_REASON"[VARCHAR2,250], "C"."NAVIGATION_RULE"[VARCHAR2,250], "C"."FLOW_COMPLETION_EVENT"[VARCHAR2,550],
+       "C"."RETURN_TYPE"[VARCHAR2,150], "C"."CONFIGURATION_STATUS"[VARCHAR2,50], "C"."OPERATION_CODE"[VARCHAR2,50],
+       "C"."EXPORT_START_DATE"[DATE,7], "C"."EXPORT_END_DATE"[DATE,7], "C"."CONFIG_ID"[VARCHAR2,100], "C"."FORM_ID"[VARCHAR2,100],
+       "C"."BATCH_FORM_ID"[VARCHAR2,100], "C"."AUTHENTICATION_FLAG"[VARCHAR2,10]
+ 147 - "C".ROWID[ROWID,10], "C"."CONFIG_ID"[VARCHAR2,100]
+ 148 - "ITEM"."IMLITM"[CHARACTER,25]
+ 149 - "ITEM".ROWID[ROWID,10]
+ 150 - "ABALPH"[CHARACTER,40]
+ 151 - "F0101".ROWID[ROWID,10]
+ 152 - "F"."FORM_ID"[VARCHAR2,100], "F"."FORM_NAME"[VARCHAR2,250], "F"."FORM_CODE"[VARCHAR2,250], "F"."VERSION"[NUMBER,22],
+       "F"."STATUS"[VARCHAR2,9], "F"."BATCH_ENABLED"[VARCHAR2,10], "F"."START_DATE"[DATE,7], "F"."END_DATE"[DATE,7]
+ 153 - "FORM_CODE"[VARCHAR2,250], "XTF"."FORM_NAME"[VARCHAR2,250], "XTF"."BATCH_ENABLED"[VARCHAR2,10],
+       "XTF"."START_DATE"[DATE,7], "XTF"."END_DATE"[DATE,7], "XTF"."FORM_ID"[VARCHAR2,100], "XFSV"."VERSION"[NUMBER,22],
+       "XFSV"."STATUS"[VARCHAR2,9]
+ 154 - "FORM_CODE"[VARCHAR2,250], "XTF"."FORM_NAME"[VARCHAR2,250], "XTF"."VERSION"[NUMBER,22],
+       "XTF"."BATCH_ENABLED"[VARCHAR2,10], "XTF"."START_DATE"[DATE,7], "XTF"."END_DATE"[DATE,7], "XTF"."FORM_ID"[VARCHAR2,100]
+ 155 - "XTF".ROWID[ROWID,10], "XTF"."FORM_ID"[VARCHAR2,100], "XTF"."VERSION"[NUMBER,22]
+ 156 - "XFSV"."VERSION"[NUMBER,22], "XFSV"."STATUS"[VARCHAR2,9]
+ 157 - (#keys=3) STRDEF[100], STRDEF[22], STRDEF[9]
+ 158 - STRDEF[100], STRDEF[22], STRDEF[9]
+ 159 - (#keys=1) "FORM_ID"[VARCHAR2,100], MAX("VERSION")[22]
+ 160 - "VERSION"[NUMBER,22], "FORM_ID"[VARCHAR2,100]
+ 161 - "XXPLXS_TDM_FORMS".ROWID[ROWID,10], "FORM_ID"[VARCHAR2,100], "VERSION"[NUMBER,22]
+ 162 - "VERSION"[NUMBER,22], "FORM_ID"[VARCHAR2,100]
+ 163 - "XXPLXS_TDM_FORMS".ROWID[ROWID,10], "FORM_ID"[VARCHAR2,100], "VERSION"[NUMBER,22]
+ 164 - (#keys=1) "FORM_ID"[VARCHAR2,100], MAX("VERSION")[22]
+ 165 - "VERSION"[NUMBER,22], "FORM_ID"[VARCHAR2,100]
+ 166 - "XXPLXS_TDM_FORMS".ROWID[ROWID,10], "FORM_ID"[VARCHAR2,100], "VERSION"[NUMBER,22]
+ 167 - (#keys=1) "FORM_ID"[VARCHAR2,100], MAX("VERSION")[22]
+ 168 - "VERSION"[NUMBER,22], "FORM_ID"[VARCHAR2,100]
+ 169 - "XXPLXS_TDM_FORMS".ROWID[ROWID,10], "FORM_ID"[VARCHAR2,100], "VERSION"[NUMBER,22]
+ 170 - "FORM"."FORM_NAME"[VARCHAR2,250], "FORM"."VERSION"[NUMBER,22], "FORM"."FORM_ID"[VARCHAR2,100]
+ 171 - "FORM".ROWID[ROWID,10], "FORM"."FORM_ID"[VARCHAR2,100], "FORM"."VERSION"[NUMBER,22]
+ 172 - "ATTR"."ATTRIBUTE_LABEL"[VARCHAR2,300], "ATTR"."DISPLAY_SEQUENCE"[NUMBER,22], "ATTR"."ATTRIBUTE_TYPE"[VARCHAR2,300],
+       "ATTR"."LOV_NAME"[VARCHAR2,300]
+ 173 - "ATTR".ROWID[ROWID,10]
+ 174 - "LOV"."LOV_DESCRIPTION"[VARCHAR2,1000]
+ 175 - "LOV".ROWID[ROWID,10]
+
+Note
+-----
+   - this is an adaptive plan
+
+
+808 rows selected.
+
+11:05:38 jlutsey(37)jdedv01 SQL> spool off

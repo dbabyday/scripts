@@ -1,0 +1,1 @@
+New-PSDrive -Name "codb779f" -PSProvider FileSystem -Root "\\co-db-779\F$" -Credential $mac

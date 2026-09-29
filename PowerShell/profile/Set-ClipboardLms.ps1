@@ -1,0 +1,1 @@
+Set-Clipboard -Value 'Think.tank.goldfish4'

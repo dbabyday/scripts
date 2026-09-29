@@ -1,0 +1,15 @@
+$cn = ""
+$result = $false
+
+Do {
+    $now = Get-Date -Format s
+    $result = Test-Connection -ComputerName $cn -Count 1 -Quiet
+    "$now - $result"
+}
+Until ( $result -eq $true )
+
+###############################
+## TEST CONNECTION SUCCEEDED ##
+###############################
+
+

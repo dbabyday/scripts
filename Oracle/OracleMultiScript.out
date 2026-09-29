@@ -1,0 +1,116 @@
+jdepd01    WE8ISO8859P1
+jdepd03    WE8ISO8859P1
+ampd01     WE8ISO8859P1
+arcpd01    WE8ISO8859P1
+bchpd01    WE8ISO8859P1
+bir        WE8ISO8859P1
+knxpd01    WE8ISO8859P1
+
+bonpd01    AL32UTF8
+ebsappd1   AL32UTF8
+ebspd01    AL32UTF8
+ebspvoid   AL32UTF8
+ebsupkpd   AL32UTF8
+jabpd02    AL32UTF8
+
+iccm       US7ASCII
+
+jsprpd     WE8ISO8859P15
+
+oemprd01   WE8MSWIN1252
+plx        WE8MSWIN1252
+rmnpd01    WE8MSWIN1252
+winpd02    WE8MSWIN1252
+------------------------------------
+psfpd01    AL32UTF8
+hz1s       US7ASCII
+iccn       US7ASCII
+iccx       US7ASCII
+pg2s       US7ASCII
+pg3s       US7ASCII
+------------------------------------
+
+agldev01   AL32UTF8
+agltrn01   AL32UTF8
+
+bondv01    AL32UTF8
+bonqa01    AL32UTF8
+dbadv01    AL32UTF8
+oemdv01    AL32UTF8
+olmdv01    AL32UTF8
+
+arcdv01    WE8ISO8859P1
+ggpy01     WE8ISO8859P1
+jdepr01    WE8ISO8859P1
+jdepy01    WE8ISO8859P1
+uc4np01    WE8ISO8859P1
+jdedv01    WE8ISO8859P1
+jdetr01    WE8ISO8859P1
+jdecv01    WE8ISO8859P1
+amts01     WE8ISO8859P1
+
+jsprpy     WE8ISO8859P15
+
+plxdv01    WE8MSWIN1252
+windv02    WE8MSWIN1252
+winqa02    WE8MSWIN1252
+
+------------------------------------
+
+aglprd01
+ebsappd1
+ebspd01
+
+jdepd01
+jdepd03
+ampd01
+bir
+
+winpd02
+AGLDEV01   AL32UTF8
+agldev01         OPEN            2023-11-29 14:57:09 NO               ACTIVE            READ WRITE
+agltrn01         OPEN            2023-12-29 18:26:17 NO               ACTIVE            READ WRITE
+ampd01           OPEN            2023-10-14 17:55:43 NO               ACTIVE            READ WRITE
+amts01           OPEN            2023-11-11 17:49:42 NO               ACTIVE            READ WRITE
+arcdv01          OPEN            2023-12-01 11:22:28 NO               ACTIVE            READ WRITE
+arcpd01          OPEN            2024-01-13 18:47:40 NO               ACTIVE            READ WRITE
+bchpd01          OPEN            2024-03-07 19:14:59 NO               ACTIVE            READ WRITE
+bir              OPEN            2024-01-13 18:56:43 NO               ACTIVE            READ WRITE
+bondv01          OPEN            2023-11-11 17:42:10 NO               ACTIVE            READ WRITE
+bonpd01          OPEN            2024-01-13 15:56:36 NO               ACTIVE            READ WRITE
+bonqa01          OPEN            2023-11-11 17:43:33 NO               ACTIVE            READ WRITE
+cdbdv01          OPEN            2023-11-11 18:00:41 NO               ACTIVE            READ WRITE
+cdbdv01          OPEN            2023-11-11 18:00:41 NO               ACTIVE            READ WRITE
+ebsappd1         OPEN            2024-01-22 10:54:39 NO               ACTIVE            READ WRITE
+ebspd01          OPEN            2023-10-14 18:07:00 NO               ACTIVE            READ WRITE
+ebspvoid         OPEN            2023-10-14 18:03:48 NO               ACTIVE            READ WRITE
+ebsupkpd         OPEN            2023-10-14 17:55:43 NO               ACTIVE            READ WRITE
+ggpy01           OPEN            2024-01-24 15:59:43 NO               ACTIVE            READ WRITE
+hz1s             OPEN            2024-01-11 15:50:22 NO               ACTIVE            READ WRITE
+iccm             OPEN            2024-01-11 15:50:22 NO               ACTIVE            READ WRITE
+iccn             OPEN            2024-01-11 15:50:22 NO               ACTIVE            READ WRITE
+iccx             OPEN            2024-01-11 15:50:22 NO               ACTIVE            READ WRITE
+jabpd02          OPEN            2024-01-31 21:29:41 NO               ACTIVE            READ WRITE
+jdecv01          OPEN            2023-12-01 14:24:05 NO               ACTIVE            READ WRITE
+jdedv01          OPEN            2023-12-05 09:30:53 NO               ACTIVE            READ WRITE
+jdepd01          OPEN            2024-01-13 17:41:37 NO               ACTIVE            READ WRITE
+jdepd03          OPEN            2024-01-13 17:41:38 NO               ACTIVE            READ WRITE
+jdepr01          OPEN            2023-11-11 18:06:48 NO               ACTIVE            READ WRITE
+jdepy01          OPEN            2023-12-01 09:49:36 NO               ACTIVE            READ WRITE
+jdetr01          OPEN            2023-11-29 09:03:26 NO               ACTIVE            READ WRITE
+jsprpd           OPEN            2023-10-14 17:55:43 NO               ACTIVE            READ WRITE
+jsprpy           OPEN            2023-11-11 17:50:51 NO               ACTIVE            READ WRITE
+knxpd01          OPEN            2024-03-08 04:52:57 NO               ACTIVE            READ WRITE
+oemdv01          OPEN            2023-11-11 18:02:11 NO               ACTIVE            READ WRITE
+oemprd01         OPEN            2024-01-26 12:43:00 NO               ACTIVE            READ WRITE
+olmdv01          OPEN            2024-02-28 09:02:33 NO               ACTIVE            READ WRITE
+pg2s             OPEN            2024-01-11 15:50:22 NO               ACTIVE            READ WRITE
+pg3s             OPEN            2024-01-11 15:50:22 NO               ACTIVE            READ WRITE
+plx              OPEN            2024-01-13 17:06:07 NO               ACTIVE            READ WRITE
+plxdv01          OPEN            2023-11-11 17:51:13 NO               ACTIVE            READ WRITE
+psfpd01          OPEN            2024-01-12 13:26:02 NO               ACTIVE            READ WRITE
+rmnpd01          OPEN            2024-01-10 18:06:27 NO               ACTIVE            READ WRITE
+uc4np01          OPEN            2023-11-11 17:51:36 NO               ACTIVE            READ WRITE
+windv02          OPEN            2023-11-11 17:51:59 NO               ACTIVE            READ WRITE
+winpd02          OPEN            2024-01-13 17:06:07 NO               ACTIVE            READ WRITE
+winqa02          OPEN            2023-11-11 17:52:24 NO               ACTIVE            READ WRITE
