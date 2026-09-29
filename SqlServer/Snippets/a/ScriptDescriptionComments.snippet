@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+<_locDefinition xmlns="urn:locstudio">
+    <_locDefault _loc="locNone" />
+    <_locTag _loc="locData">Title</_locTag>
+    <_locTag _loc="locData">Description</_locTag>
+    <_locTag _loc="locData">Author</_locTag>
+    <_locTag _loc="locData">ToolTip</_locTag>
+</_locDefinition>
+    <CodeSnippet Format="1.0.0">
+        <Header>
+            <Title>Script Description Comments</Title>
+            <Shortcut></Shortcut>
+            <Description>Creates the comment section used at the top of scripts</Description>
+            <Author>James Lutsey</Author>
+            <SnippetTypes>
+                <SnippetType>Expansion</SnippetType>
+            </SnippetTypes>
+        </Header>
+        <Snippet>
+            <Declarations>
+                <Literal>
+                    <ID>ScriptName</ID>
+                    <ToolTip>Name of the script file</ToolTip>
+                    <Default>MyScript.sql</Default>
+                </Literal>
+                <Literal>
+                    <ID>Author</ID>
+                    <ToolTip>Name of the author</ToolTip>
+                    <Default>James Lutsey</Default>
+                </Literal>
+                <Literal>
+                    <ID>Date</ID>
+                    <ToolTip>Date script was written</ToolTip>
+                    <Default>2018-01-01</Default>
+                </Literal>
+                <Literal>
+                    <ID>Purpose</ID>
+                    <ToolTip>Purpose of the script</ToolTip>
+                    <Default>Describe what the script does</Default>
+                </Literal>
+            </Declarations>
+            <Code Language="SQL"><![CDATA[/*********************************************************************************************************************
+* 
+* $ScriptName$
+* 
+* Author: $Author$
+* Date:   $Date$
+* 
+* Purpose: $Purpose$
+* 
+* Date        Name                  Description of change
+* ----------  --------------------  ---------------------------------------------------------------------------------
+* 
+* 
+*********************************************************************************************************************/
+
+
+
+]]>
+            </Code>
+        </Snippet>
+    </CodeSnippet>
+</CodeSnippets>

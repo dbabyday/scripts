@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<_locDefinition xmlns="urn:locstudio">
+	    <_locDefault _loc="locNone" />
+	    <_locTag _loc="locData">Title</_locTag>
+	    <_locTag _loc="locData">Description</_locTag>
+	    <_locTag _loc="locData">Author</_locTag>
+	    <_locTag _loc="locData">ToolTip</_locTag>
+	</_locDefinition>
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>cWhoIsActiveResults</Title>
+                <Shortcut></Shortcut>
+			<Description>Query the saved data for sp_WhoIsActive.</Description>
+			<Author>dbabyday</Author>
+			<SnippetTypes>
+                <SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Declarations></Declarations>
+			<Code Language="SQL"><![CDATA[
+select
+	  collection_time
+/* status */
+	, start_time
+	, [dd hh:mm:ss.mss]
+	, session_id
+	--, request_id
+	, blocking_session_id
+	--, status
+	--, open_tran_count
+	--, tran_start_time
+	--, percent_complete
+/* metrics */
+	, wait_info
+	, CPU
+	, reads
+	, physical_reads
+	, writes
+	, used_memory
+	, tempdb_allocations
+	, tempdb_current
+	, tran_log_writes
+/* who */
+	, login_name
+	, host_name
+	, program_name
+	, login_time
+	, database_name
+/* what */
+	, sql_command
+	----, sql_text	
+	, query_plan
+from
+	dbo.tbl_Whoisactive
+where
+	collection_time = '2025-12-09 13:36:01.143' -- > dateadd(hour,-1, getdate())
+order by
+	  collection_time desc
+	, [dd hh:mm:ss.mss];
+]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>

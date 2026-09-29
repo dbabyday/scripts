@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<_locDefinition xmlns="urn:locstudio">
+		<_locDefault _loc="locNone" />
+		<_locTag _loc="locData">Title</_locTag>
+		<_locTag _loc="locData">Description</_locTag>
+		<_locTag _loc="locData">Author</_locTag>
+		<_locTag _loc="locData">ToolTip</_locTag>
+	</_locDefinition>
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>cWmsDatabases</Title>
+		<Shortcut></Shortcut>
+			<Description>Code Snippet for listing WMS databases</Description>
+			<Author>dbabyday</Author>
+			<SnippetTypes>
+		<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Declarations></Declarations>
+			<Code Language="SQL"><![CDATA[
+select name, 'use '+name+';'
+from sys.databases
+where	name like 'WMS%'
+	and name not like 'Wms_Config%'
+	and name not like 'Wms_History%'
+	and name not like 'Wms_Operational_Reporting%'
+	and name not like '%Archive%'
+	and name not like 'Wms%OLD'
+	and is_read_only=0
+	and state=0
+order by name;
+]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>

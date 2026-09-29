@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<_locDefinition xmlns="urn:locstudio">
+	    <_locDefault _loc="locNone" />
+	    <_locTag _loc="locData">Title</_locTag>
+	    <_locTag _loc="locData">Description</_locTag>
+	    <_locTag _loc="locData">Author</_locTag>
+	    <_locTag _loc="locData">ToolTip</_locTag>
+	</_locDefinition>
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>Role Members | Database</Title>
+                <Shortcut></Shortcut>
+			<Description>Code Snippet for getting database role members.</Description>
+			<Author>James Lutsey</Author>
+			<SnippetTypes>
+                <SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Declarations></Declarations>
+			<Code Language="SQL"><![CDATA[
+SELECT   theUser.name AS TheUser
+       , theRole.name AS TheRole
+FROM     sys.database_role_members AS srm
+JOIN     sys.database_principals   AS theUser ON theUser.principal_id = srm.member_principal_id
+JOIN     sys.database_principals   AS theRole ON theRole.principal_id = srm.role_principal_id
+ORDER BY theUser.name  
+       , theRole.name;
+]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>

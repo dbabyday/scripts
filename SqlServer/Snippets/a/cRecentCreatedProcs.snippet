@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<_locDefinition xmlns="urn:locstudio">
+	    <_locDefault _loc="locNone" />
+	    <_locTag _loc="locData">Title</_locTag>
+	    <_locTag _loc="locData">Description</_locTag>
+	    <_locTag _loc="locData">Author</_locTag>
+	    <_locTag _loc="locData">ToolTip</_locTag>
+	</_locDefinition>
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>cRecentCreatedProcs</Title>
+                <Shortcut></Shortcut>
+			<Description>Code Snippet for finding recently created procedures.</Description>
+			<Author>dbabyday</Author>
+			<SnippetTypes>
+                <SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Declarations></Declarations>
+			<Code Language="SQL"><![CDATA[
+
+
+SELECT
+	  create_date
+	, OBJECT_SCHEMA_NAME(object_id) + N'.' + name AS ProcName
+	, N'drop procedure if exists ' + OBJECT_SCHEMA_NAME(object_id) + N'.' + name + N';' AS DropCmd
+FROM
+	sys.procedures
+WHERE
+	--create_date > DATEADD(MONTH,-1,GETDATE())
+	name like '%James%'
+ORDER BY
+	create_date DESC;
+]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>

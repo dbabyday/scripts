@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<_locDefinition xmlns="urn:locstudio">
+	    <_locDefault _loc="locNone" />
+	    <_locTag _loc="locData">Title</_locTag>
+	    <_locTag _loc="locData">Description</_locTag>
+	    <_locTag _loc="locData">Author</_locTag>
+	    <_locTag _loc="locData">ToolTip</_locTag>
+	</_locDefinition>
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>CreateDatabase</Title>
+                <Shortcut></Shortcut>
+			<Description>Code Snippet for creating a database.</Description>
+			<Author>James Lutsey</Author>
+			<SnippetTypes>
+                <SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Declarations>
+                <Literal>
+                	<ID>DatabaseName</ID>
+                	<ToolTip>Name of the database</ToolTip>
+                    <Default>NewDatabase</Default>
+                </Literal>
+                <Literal>
+                	<ID>DataDirectory</ID>
+                	<ToolTip>Name of the data directory</ToolTip>
+                    <Default>F:\Databases</Default>
+                </Literal>
+                <Literal>
+                    <ID>DataFileSize</ID>
+                    <ToolTip>Size (MB) of the data file</ToolTip>
+                    <Default>1024</Default>
+                </Literal>
+                <Literal>
+                    <ID>DataFileGrowth</ID>
+                    <ToolTip>Autogrowth (MB) of the data file</ToolTip>
+                    <Default>64</Default>
+                </Literal>
+                <Literal>
+                    <ID>LogDirectory</ID>
+                    <ToolTip>Name of the log directory</ToolTip>
+                    <Default>G:\Logs</Default>
+                </Literal>
+                <Literal>
+                    <ID>LogFileSize</ID>
+                    <ToolTip>Size (MB) of the log file</ToolTip>
+                    <Default>512</Default>
+                </Literal>
+                <Literal>
+                    <ID>LogFileGrowth</ID>
+                    <ToolTip>Autogrowth (MB) of the log file</ToolTip>
+                    <Default>32</Default>
+                </Literal>
+                <Literal>
+                    <ID>TicketNumber</ID>
+                    <ToolTip>ServiceNow ticket number</ToolTip>
+                    <Default>TicketNumber</Default>
+                </Literal>
+            </Declarations>
+			<Code Language="SQL"><![CDATA[
+USE master;
+
+CREATE DATABASE $DatabaseName$
+ON     (   NAME       = $DatabaseName$
+         , FILENAME   = '$DataDirectory$\$DatabaseName$.mdf'
+         , SIZE       = $DataFileSize$MB
+         , MAXSIZE    = UNLIMITED
+         , FILEGROWTH = $DataFileGrowth$MB  )
+LOG ON (   NAME       = Crowd_PROD_log
+         , FILENAME   = '$LogDirectory$\$DatabaseName$_log.ldf'
+         , SIZE       = $LogFileSize$MB
+         , MAXSIZE    = UNLIMITED
+         , FILEGROWTH = $LogFileGrowth$MB  ) /*$TicketNumber$*/;
+GO
+]]>
+            </Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>

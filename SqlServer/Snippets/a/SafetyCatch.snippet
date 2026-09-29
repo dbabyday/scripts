@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+<_locDefinition xmlns="urn:locstudio">
+    <_locDefault _loc="locNone" />
+    <_locTag _loc="locData">Title</_locTag>
+    <_locTag _loc="locData">Description</_locTag>
+    <_locTag _loc="locData">Author</_locTag>
+    <_locTag _loc="locData">ToolTip</_locTag>
+</_locDefinition>
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>Safety Catch</Title>
+			<Shortcut></Shortcut>
+			<Description>Checks server name and exits execution (RETURN) if it does not match.</Description>
+			<Author>dbabyday</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Code Language="SQL"><![CDATA[
+
+/*********************************************************************************************************************/
+    RAISERROR('Caught you! You don''t really want to run this whole script...exeting execution',16,1) WITH NOWAIT;
+    RETURN;
+/*********************************************************************************************************************/
+
+]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>

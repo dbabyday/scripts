@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+<_locDefinition xmlns="urn:locstudio">
+    <_locDefault _loc="locNone" />
+    <_locTag _loc="locData">Title</_locTag>
+    <_locTag _loc="locData">Description</_locTag>
+    <_locTag _loc="locData">Author</_locTag>
+    <_locTag _loc="locData">ToolTip</_locTag>
+</_locDefinition>
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>BlitzIndex</Title>
+			<Shortcut></Shortcut>
+			<Description>sp_BlitzIndex</Description>
+			<Author>dbabyday</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Declarations>
+                <Literal>
+                	<ID>DatabaseName</ID>
+                	<ToolTip>Database Name</ToolTip>
+                    <Default>StackOverflow</Default>
+                </Literal>
+                <Literal>
+                	<ID>SchemaName</ID>
+                	<ToolTip>Schema Name</ToolTip>
+                    <Default>dbo</Default>
+                </Literal>
+                <Literal>
+                	<ID>TableName</ID>
+                	<ToolTip>Table Name</ToolTip>
+                    <Default>Users</Default>
+                </Literal>
+			</Declarations>
+			<Code Language="SQL"><![CDATA[
+/*
+execute sp_BlitzIndex @GetAllDatabases=1, @BringThePain=1;
+*/
+
+declare
+	  @myDatabaseName nvarchar(128) = N'$DatabaseName$'
+	, @mySchemaName   nvarchar(128) = N'$SchemaName$'
+	, @myTableName    nvarchar(128) = N'$TableName$'
+	, @myMode         tinyint       = null /*0=Diagnose (default), 1=Summarize, 2=Index Usage Detail, 3=Missing Index Detail, 4=Diagnose Details - Note:@Mode doesn't matter if you're specifying schema_name and @TableName.*/
+	, @myBringThePain bit           = 1;
+
+execute sp_BlitzIndex
+	  @DatabaseName=@myDatabaseName
+	, @SchemaName=@mySchemaName
+	, @TableName=@myTableName
+	, @Mode=@myMode
+	, @BringThePain=@myBringThePain;
+]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>

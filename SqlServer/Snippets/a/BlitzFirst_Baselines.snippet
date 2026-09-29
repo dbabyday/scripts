@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<_locDefinition xmlns="urn:locstudio">
+	    <_locDefault _loc="locNone" />
+	    <_locTag _loc="locData">Title</_locTag>
+	    <_locTag _loc="locData">Description</_locTag>
+	    <_locTag _loc="locData">Author</_locTag>
+	    <_locTag _loc="locData">ToolTip</_locTag>
+	</_locDefinition>
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>BlitzFirst Baselines</Title>
+                <Shortcut></Shortcut>
+			<Description>Code Snippet for querying the sp_BlitzFirst log tables/views.</Description>
+			<Author>James Lutsey</Author>
+			<SnippetTypes>
+                <SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Code Language="SQL"><![CDATA[
+
+USE CentralAdmin;
+
+select   * 
+from     dbo.BlitzFirst
+where    CheckDate>=dateadd(hour,-24,getdate())
+order by CheckDate desc, Priority;
+
+
+--declare
+--	  @CheckDateStart datetimeoffset = ''
+--	, @CheckDateEnd datetimeoffset = '';
+
+--select   *
+--from     dbo.BlitzCache
+--where    CheckDate>=@CheckDateStart and CheckDate<=@CheckDateEnd
+--order by CheckDate desc;
+
+--select   *
+--from     dbo.BlitzFirst_FileStats_Deltas
+--where    CheckDate>=@CheckDateStart and CheckDate<=@CheckDateEnd
+--         and SizeOnDiskMBgrowth>0
+--order by CheckDate desc;
+
+--select   *
+--from     dbo.BlitzFirst_PerfmonStats_Actuals
+--where    CheckDate>=@CheckDateStart and CheckDate<=@CheckDateEnd
+--order by CheckDate desc, object_name, counter_name;
+
+--select   *
+--from     dbo.BlitzFirst_PerfmonStats_Deltas
+--where    CheckDate>=@CheckDateStart and CheckDate<=@CheckDateEnd
+--order by CheckDate desc, object_name, counter_name;
+
+--select   *
+--from     dbo.BlitzFirst_WaitStats_Deltas
+--where    CheckDate>=@CheckDateStart and CheckDate<=@CheckDateEnd
+--         and wait_time_ms_delta>0
+--order by CheckDate desc, wait_time_ms_delta desc;
+
+--select   *
+--from     dbo.BlitzWho_Deltas
+--where    CheckDate>=@CheckDateStart and CheckDate<=@CheckDateEnd
+--order by CheckDate desc;
+
+
+]]>
+            </Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>

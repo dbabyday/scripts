@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+	<_locDefinition xmlns="urn:locstudio">
+		<_locDefault _loc="locNone" />
+		<_locTag _loc="locData">Title</_locTag>
+		<_locTag _loc="locData">Description</_locTag>
+		<_locTag _loc="locData">Author</_locTag>
+		<_locTag _loc="locData">ToolTip</_locTag>
+	</_locDefinition>
+	<CodeSnippet Format="1.0.0">
+		<Header>
+			<Title>Query Store Procs</Title>
+				<Shortcut></Shortcut>
+			<Description>Stored procedures to look at procedures and queries in Query Store</Description>
+			<Author>dbabyday</Author>
+			<SnippetTypes>
+				<SnippetType>Expansion</SnippetType>
+			</SnippetTypes>
+		</Header>
+		<Snippet>
+			<Declarations>
+				<Literal>
+					<ID>ProcedureName</ID>
+					<ToolTip>Name of the procedure => schema.procedure</ToolTip>
+					<Default>dbo.myProcedureName</Default>
+				</Literal>
+				<Literal>
+					<ID>QueryId</ID>
+					<ToolTip>query_id in Query Store</ToolTip>
+					<Default>9999999999</Default>
+				</Literal>
+				<Literal>
+					<ID>TimeZone</ID>
+					<ToolTip>Time zone to use for results</ToolTip>
+					<Default>CST</Default>
+				</Literal>
+			</Declarations>
+			<Code Language="SQL"><![CDATA[
+
+
+
+
+/*
+SELECT object_schema_name(object_id) + N'.' + name AS procedure_name
+FROM sys.procedures
+ORDER BY 1;
+*/
+
+
+
+
+DECLARE @ObjectId int = OBJECT_ID(N'$ProcedureName$',N'P');
+EXECUTE DbaOnly.cQueryPerformanceHist_ByObjectId
+	  @ObjectId = @ObjectId
+	, @ShowDetailsForQueryIds = 0
+	, @TimeZone = '$TimeZone$';  /* UTC, CDT, CST, CSTM, MYT, EET */
+
+
+
+
+EXECUTE DbaOnly.cQueryPerformanceHist_ByQueryId
+	  @QueryId = $QueryId$
+	, @OrderBy = 'duration'  /* time, duration, plan */
+	, @TimeZone = '$TimeZone$';  /* UTC, CDT, CST, CSTM, MYT, EET */
+
+
+
+
+
+]]>
+			</Code>
+		</Snippet>
+	</CodeSnippet>
+</CodeSnippets>
