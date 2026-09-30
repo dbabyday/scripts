@@ -4,7 +4,7 @@
 
 */
 
-DECLARE @dbname    nvarchar(256) = N'GSF2_AMER_PROD',
+DECLARE @dbname    nvarchar(256) = N'myDbName',
         @procname  nvarchar(256) = N'dbo.usp_RunningLicensePlatePostSMTByWorkOrderNumber_Select';
 
 ; WITH basedata AS   (  SELECT      qs.statement_start_offset/2 AS stmt_start

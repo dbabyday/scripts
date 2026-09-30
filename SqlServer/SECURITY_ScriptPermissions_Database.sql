@@ -2,7 +2,7 @@
 * 
 * SECURITY_DatabasePermissions_Script.sql
 * 
-* Author: James Lutsey
+* Author: dbabyday
 * Date:   2018-03-23
 * 
 * Purpose: Scripts out the database permissions. You can specify a particular principal (user or role), or leave it
@@ -10,7 +10,7 @@
 * 
 * Date        Name                  Description of change
 * ----------  --------------------  ---------------------------------------------------------------------------------
-* 2018-07-11  James Lutsey          Added create login if not exist commands for users
+* 2018-07-11  dbabyday              Added create login if not exist commands for users
 * 
 *********************************************************************************************************************/
 

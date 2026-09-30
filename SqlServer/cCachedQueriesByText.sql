@@ -1,4 +1,4 @@
-use GSF2_AMER_PROD;
+
 
 declare @likeString varchar(20)='EventEquipment';
 

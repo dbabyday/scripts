@@ -19,7 +19,7 @@ from
 cross apply
 	sys.dm_exec_sql_text(qs.plan_handle) as t
 where
-	t.dbid = db_id(N'GSF2_AMER_PROD')
+	t.dbid = db_id(N'myDbName')
 order by
 	--qs.execution_count desc
 	--qs.total_logical_reads desc

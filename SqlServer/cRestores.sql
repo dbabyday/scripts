@@ -20,7 +20,7 @@ FROM       dbo.restorehistory r
 INNER JOIN dbo.backupset AS s ON r.backup_set_id = s.backup_set_id
 INNER JOIN dbo.backupmediafamily AS m ON s.media_set_id = m.media_set_id
 --WHERE      r.restore_date > '2017-10-18T11:45:00'
---WHERE      r.destination_database_name = 'GSF2_AMER_PRODFIX'
+--WHERE      r.destination_database_name = 'myDbName'
 ORDER BY   --r.destination_database_name,
            r.restore_date DESC;
 

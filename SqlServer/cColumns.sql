@@ -1,5 +1,5 @@
 /*
-    TABLES_Columns.sql
+    cColumns.sql
     Get Table Columns & Primary Key Columns
 */
 

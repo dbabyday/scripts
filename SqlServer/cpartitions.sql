@@ -1,7 +1,7 @@
 /*
 
 
-use GSF2_AMER_PROD;
+use myDbName;
 
 -- Partitioned Tables
 select distinct
@@ -64,7 +64,7 @@ where
 
 
 
-use GSF2_AMER_QA;
+use myDbName;
 select object_schema_name(i.object_id) as [schema],
     object_name(i.object_id) as [object],
     i.name as [index],

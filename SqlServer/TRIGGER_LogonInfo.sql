@@ -2,7 +2,7 @@
 * 
 * TRIGGER_LoginInfo.sql
 * 
-* Author: James Lutsey
+* Author: dbabyday
 * Date: 01/08/2016
 * 
 * Purpose: Creates a logon trigger and a table in CentralAdmin to log the info.

@@ -1,4 +1,4 @@
-use Wms_Rve_PROD;
+use myDbName;
 
 select
 	  N'[' + db_name() + N'].[' + object_schema_name(object_id) + N'].[' + name + N']' synonym_name

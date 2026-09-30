@@ -1,5 +1,4 @@
-use GSF2_AMER_PROD;
---use Operational_Reporting_PROD;
+use myDbName;
 
 select
 	  top (100) db_name(p.database_id) AS DatabaseName
@@ -36,7 +35,7 @@ where
 	and o.name not like 'sp_MS%'
 	--
 	and p.last_execution_time>dateadd(minute,-60,getdate()) -- only procs executed in last hour
-	--and p.max_elapsed_time between 1000000*29 and 1000000*31 -- looking for sp that hits GSF's timeout of 30 seconds
+	--and p.max_elapsed_time between 1000000*29 and 1000000*31 -- looking for sp that hits timeout of 30 seconds
 	--
 	--and o.name in (N'usp_UnitListByUnitHeaderId_Select',N'usp_EventIdByUnitBackFlushEventTableType_Select',N'usp_WorkOrderQuantityLeft_Select',N'usp_RouteStepByRouteVersionId_Select')
 	--and o.name in (N'usp_VisualDataManagementCurrentModelPostSmt_Select',N'usp_ContainerSearch_Select',N'usp_VisualDataManagementNextModel_Select',N'usp_WorkOrderLoading_Insert')

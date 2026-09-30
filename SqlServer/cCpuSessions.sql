@@ -107,24 +107,7 @@ ORDER BY 2 DESC;
 
 
 /*
-Operational_Reporting_PROD.dbo.usp_ControlChartMonitorData_Select;1
 
-GSF2_AMER_PROD.dbo.usp_UnitStatusInquiry_Select;1
-GSF2_AMER_PROD.dbo.usp_SmtWorkOrderEfficiencyUnitsData_Select;1
-GSF2_AMER_PROD.dbo.usp_CustomDataCollectionDataCollectedByMultipleQuestionHeaderIdAndSourceId_Select;1
-GSF2_AMER_PROD.dbo.usp_CustomDataCollectionByWorkOrderRequiredAtPti_Select;1
-
-N'usp_SpiceBinomialPopulation_Select',
-N'usp_DefectFixMultiLevelByUnit_Select',
-N'usp_SmtWorkOrderEfficiencyUnitsData_Select'
-
-
-N'usp_MachineByID_Select',
-N'usp_LicensePlateInventory_Insert',
-N'usp_LicensePlateInventory_Insert',
-N'usp_SmtWorkOrderEfficiencyUnitsData_Select'
-
-GSF2_AMER_PROD.dbo.usp_DefectFixMultiLevelByUnit_Select;1
 
 
 */

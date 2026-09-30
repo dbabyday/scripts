@@ -8,7 +8,7 @@
 * 
 * Date        Name                  Change
 * ----------  --------------------  ------------------------------------------------
-* 2018-02-17  James Lutsey          Formatting, SQLCMD Mode, Examples for Max/Plaid
+* 2018-02-17  dbabyday              Formatting, SQLCMD Mode, Examples for Max/Plaid
 * 
 ***************************************************************************************/
 

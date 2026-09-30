@@ -2,7 +2,7 @@
 * 
 * TempDbConfiguration.sql
 * 
-* Author: James Lutsey
+* Author: dbabyday
 * Date:   2018-08-21
 * 
 * Purpose: Configure file sizes of TempDB.

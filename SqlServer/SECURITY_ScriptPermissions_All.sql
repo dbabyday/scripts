@@ -2,7 +2,7 @@
 * 
 * SECURITY_ScriptPermissions_All.sql
 * 
-* Author: James Lutsey
+* Author: dbabyday
 * Date:   2018-07-11
 * 
 * Purpose: Scripts out the server permissions. You can specify a particular principal (user or role), or leave it

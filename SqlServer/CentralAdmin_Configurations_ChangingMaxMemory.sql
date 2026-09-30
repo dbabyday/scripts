@@ -1,4 +1,4 @@
---IT.MSSQL.Admins@plexus.com
+
 USE msdb
 GO
 SET NOCOUNT ON

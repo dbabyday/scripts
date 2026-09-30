@@ -1,8 +1,8 @@
 /*********************************************************************************************************************
 * 
-* TROUBLESHOOT_ProcExecutionTime.sql
+* cProcTime.sql
 * 
-* Author: James Lutsey
+* Author: dbabyday
 * Date:   2018-05-31
 * 
 * Purpose: Get the average execution time (total_elapsed_time) that a stored procedure is CURRENTLY experiencing.
@@ -22,7 +22,7 @@
 
 --  SELECT * FROM sys.dm_exec_procedure_stats WHERE object_id = 1814870128;
 
-USE [GSF2_AMER_PROD];
+USE ;
 
 ----------------------------------------------
 --// USER INPUT                           //--

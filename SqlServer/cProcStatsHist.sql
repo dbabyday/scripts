@@ -55,7 +55,7 @@ from
 where
 	object_name=@object_name
 	--and schema_name=N'dbo'
-	--and database_name=N'GSF2_AMER_PROD'
+	--and database_name=N'myDbName'
 	--and execution_count_delta>0
 	--and avg_elapsed_time is not null
 	--and avg_elapsed_time>1000000*1

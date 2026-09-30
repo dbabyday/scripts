@@ -1,7 +1,7 @@
 /******************************************************************
 * 
 * SECURITY_UsersMappedToLogin.sql
-* Author: James Lutsey
+* Author: dbabyday
 * Date: 2017-07-10
 * 
 * Purpose: Get users mapped to login(s), orphaned users

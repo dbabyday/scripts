@@ -1,7 +1,7 @@
 /*
 
 
-USE TipQA_DEV;
+USE myDbName;
 SELECT name FROM sys.database_principals WHERE is_fixed_role = 0 AND principal_id > 4 order by name;
 
 

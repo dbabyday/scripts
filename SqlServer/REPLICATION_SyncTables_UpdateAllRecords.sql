@@ -1,6 +1,6 @@
 SET NOCOUNT ON;
 
-DECLARE @tblTables TABLE 
+CREATE TABLE #tblTables
 (
     [SchemaName] VARCHAR(100),
     [TableName] VARCHAR(100)
@@ -17,10 +17,10 @@ DECLARE @sql        NVARCHAR(MAX),
     
 DECLARE curTables CURSOR LOCAL FAST_FORWARD FOR
     SELECT [SchemaName],[TableName]
-    FROM   @tblTables;
+    FROM   #tblTables;
 
 -- populate 
-INSERT INTO @tblTables ( [SchemaName], [TableName] )
+INSERT INTO #tblTables ( [SchemaName], [TableName] )
 SELECT          [s].[name],
                 [t].[name]
 FROM            [gsf2_amer_prod].[sys].[tables]     AS [t]

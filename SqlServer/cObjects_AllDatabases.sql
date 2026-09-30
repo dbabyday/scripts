@@ -5,7 +5,7 @@
 /* user input */
 DECLARE
 	  @searchType TINYINT = 1  /* 1 = search by object name equality, 2 = search by object name like, 3 = search for a string in the object definition */
-	, @SearchString NVARCHAR(4000) = N'usp_WMS_GetInventoryShortageSummary_Select';
+	, @SearchString NVARCHAR(4000) = N'myStoredProcName';
 
 
 IF @searchType NOT IN (1,2,3)
