@@ -1,16 +1,16 @@
-/**********************************************************************************************************
-* 
-* cAgentLog.sql
-* 
-* Author: dbabyday
-* Date: 05/31/2016
-* 
-* Purpose: Get the messages from the SQLAGENT logs. This script will store the messages from all the SQLAGENT
-*          logs on file in a temp table, #AgentErrors. You can adjust the filtering criteria in the query 
-*          at the end of the script.
-* 
-**********************************************************************************************************/
---/*
+/*
+
+https://github.com/dbabyday
+Warranty: The software is provided "AS IS", without warranty of any kind
+
+Name: cAgentLog.sql
+Description: Get the messages from the SQLAGENT logs. This script will store the messages from all the SQLAGENT
+             logs on file in a temp table, #AgentErrors. You can adjust the filtering criteria in the query 
+             at the end of the script.
+
+*/
+
+
 SET NOCOUNT ON;
 
 DECLARE 

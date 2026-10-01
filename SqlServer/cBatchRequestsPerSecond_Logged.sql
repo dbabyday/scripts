@@ -1,3 +1,13 @@
+/*
+
+https://github.com/dbabyday
+Warranty: The software is provided "AS IS", without warranty of any kind
+
+Name: cBatchRequestsPerSecond_Logged.sql
+Description: See Batch Requests/sec that have been logged to ta table
+
+*/
+
 
 
 USE CentralAdmin;

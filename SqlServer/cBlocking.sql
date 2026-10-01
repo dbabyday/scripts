@@ -1,3 +1,14 @@
+/*
+
+https://github.com/dbabyday
+Warranty: The software is provided "AS IS", without warranty of any kind
+
+Name: cBlocking.sql
+Description: See blocking chain(s)
+
+*/
+
+
 use CentralAdmin;
 
 

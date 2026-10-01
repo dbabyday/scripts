@@ -1,6 +1,11 @@
 /*
-    cColumns.sql
-    Get Table Columns & Primary Key Columns
+
+https://github.com/dbabyday
+Warranty: The software is provided "AS IS", without warranty of any kind
+
+Name: cColumns.sql
+Description: Get Table Columns & Primary Key Columns
+
 */
 
 

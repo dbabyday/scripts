@@ -1,17 +1,16 @@
-/*********************************************************************************************************************
-* 
-* TROUBLESHOOT_BlockingByNegativeSpid.sql
-* 
-* Author: dbabyday
-* Date:   2017-12-07
-* 
-* Purpose: Troubleshoot orphaned distributed transactions and kill blocking spid -2
-* 
-* http://www.eraofdata.com/sql-server/troubleshooting-sql-server/orphaned-msdtc-transactions-2-spids/
-* https://www.mssqltips.com/sqlservertip/4142/how-to-kill-a-blocking-negative-spid-in-sql-server/
-* https://www.sqlskills.com/blogs/paul/disaster-recovery-101-dealing-with-negative-spids-2-and-3/
-* 
-*********************************************************************************************************************/
+/*
+
+https://github.com/dbabyday
+Warranty: The software is provided "AS IS", without warranty of any kind
+
+Name: cBlockingByNegativeSpid.sql
+Description: Troubleshoot orphaned distributed transactions and kill blocking spid -2
+
+http://www.eraofdata.com/sql-server/troubleshooting-sql-server/orphaned-msdtc-transactions-2-spids/
+https://www.mssqltips.com/sqlservertip/4142/how-to-kill-a-blocking-negative-spid-in-sql-server/
+https://www.sqlskills.com/blogs/paul/disaster-recovery-101-dealing-with-negative-spids-2-and-3/
+
+*/
 
 
 

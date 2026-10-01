@@ -1,12 +1,13 @@
-/**********************************************************************
-* 
-* BACKUPS_History.sql
-* Author: Aasim Abdullah
-* http://blog.sqlauthority.com/2010/11/04/sql-server-finding-last-backup-time-for-all-database/#comment-97777
-* 
-* Purpose: get backup history from msdb
-* 
-**********************************************************************/
+/*
+
+https://github.com/dbabyday
+Warranty: The software is provided "AS IS", without warranty of any kind
+
+Name: cBackups.sql
+Description: get backup history from msdb
+
+*/
+
 
 DECLARE @db NVARCHAR(128) = '';  -- select name FROM sys.databases ORDER BY name;
 

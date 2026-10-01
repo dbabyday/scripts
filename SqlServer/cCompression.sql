@@ -1,3 +1,14 @@
+/*
+
+https://github.com/dbabyday
+Warranty: The software is provided "AS IS", without warranty of any kind
+
+Name: cCompression.sql
+Description: Get table and index compression
+
+*/
+
+
 USE MaxDb;
 
 -- table compression

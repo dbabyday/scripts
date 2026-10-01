@@ -1,15 +1,13 @@
 /*
 
-cBatchRequestsPerSecond.sql
+https://github.com/dbabyday
+Warranty: The software is provided "AS IS", without warranty of any kind
 
+Name: cBatchRequestsPerSecond.sql
 Description: See Batch Requests/sec
 
-Date        Who          What
-==========  ===========  ===================================================
-2025-01-29  dbabyday     Initial script
-
-
 */
+
 
 USE master;
 

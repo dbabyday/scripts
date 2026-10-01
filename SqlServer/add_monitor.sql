@@ -1,10 +1,12 @@
 /*
 
-ssis servers
---------------
-co-db-079
-acc-sql-pd-002
-xia-sql-pd-005
+https://github.com/dbabyday
+Warranty: The software is provided "AS IS", without warranty of any kind
+
+Name: add_monitor.sql
+Description: monitor the Automatic Database Deployment (ADD) progress
+
+run on ssis servers
 
 */
 

@@ -1,3 +1,13 @@
+/*
+
+https://github.com/dbabyday
+Warranty: The software is provided "AS IS", without warranty of any kind
+
+Name: cCachedQueriesByText.sql
+Description: Find queries with matching text
+
+*/
+
 
 
 declare @likeString varchar(20)='EventEquipment';
