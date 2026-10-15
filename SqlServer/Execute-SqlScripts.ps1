@@ -1,42 +1,50 @@
 
 $Databases = @(
-	[PSCustomObject]@{SqlServer = 'wms-amer-qa-mssql.db.na.plexus.com'; Db = 'Wms_Boi_QA'; }
-	[PSCustomObject]@{SqlServer = 'wms-amer-qa-mssql.db.na.plexus.com'; Db = 'Wms_Chi_QA'; }
-	[PSCustomObject]@{SqlServer = 'wms-amer-qa-mssql.db.na.plexus.com'; Db = 'Wms_Gdl_QA'; }
-	[PSCustomObject]@{SqlServer = 'wms-amer-qa-mssql.db.na.plexus.com'; Db = 'Wms_Kel_QA'; }
-	[PSCustomObject]@{SqlServer = 'wms-amer-qa-mssql.db.na.plexus.com'; Db = 'Wms_Mya_QA'; }
-	[PSCustomObject]@{SqlServer = 'wms-amer-qa-mssql.db.na.plexus.com'; Db = 'Wms_Nee_QA'; }
-	[PSCustomObject]@{SqlServer = 'wms-amer-qa-mssql.db.na.plexus.com'; Db = 'Wms_Nee_TEST'; }
-	[PSCustomObject]@{SqlServer = 'wms-amer-qa-mssql.db.na.plexus.com'; Db = 'Wms_Ora_QA'; }
-	[PSCustomObject]@{SqlServer = 'wms-amer-qa-mssql.db.na.plexus.com'; Db = 'Wms_PBoi_QA'; }
-	[PSCustomObject]@{SqlServer = 'wms-amer-qa-mssql.db.na.plexus.com'; Db = 'Wms_SrvApp_QA'; }
-	[PSCustomObject]@{SqlServer = 'wms-amer-qa-mssql.db.na.plexus.com'; Db = 'Wms_SrvChi_QA'; }
-	[PSCustomObject]@{SqlServer = 'wms-amer-qa-mssql.db.na.plexus.com'; Db = 'Wms_SrvChi_TEST'; }
-	[PSCustomObject]@{SqlServer = 'wms-amer-qa-mssql.db.na.plexus.com'; Db = 'Wms_SrvGdl_QA'; }
-	[PSCustomObject]@{SqlServer = 'wms-amer-qa-mssql.db.na.plexus.com'; Db = 'Wms_SrvNee_QA'; }
-	[PSCustomObject]@{SqlServer = 'wms-amer-qa-mssql.db.na.plexus.com'; Db = 'Wms_SrvOra_QA'; }
-
-	[PSCustomObject]@{SqlServer = 'wms-apac-qa-mssql.db.ap.plexus.com'; Db = 'Wms_Bgk1_QA'; }
-	[PSCustomObject]@{SqlServer = 'wms-apac-qa-mssql.db.ap.plexus.com'; Db = 'Wms_Brg_QA'; }
-	[PSCustomObject]@{SqlServer = 'wms-apac-qa-mssql.db.ap.plexus.com'; Db = 'Wms_Hil_QA'; }
-	[PSCustomObject]@{SqlServer = 'wms-apac-qa-mssql.db.ap.plexus.com'; Db = 'WMS_Isl_QA'; }
-	[PSCustomObject]@{SqlServer = 'wms-apac-qa-mssql.db.ap.plexus.com'; Db = 'WMS_Riv_QA'; }
-	[PSCustomObject]@{SqlServer = 'wms-apac-qa-mssql.db.ap.plexus.com'; Db = 'Wms_RVE_QA'; }
-	[PSCustomObject]@{SqlServer = 'wms-apac-qa-mssql.db.ap.plexus.com'; Db = 'Wms_Sea_PRODFIX'; }
-	[PSCustomObject]@{SqlServer = 'wms-apac-qa-mssql.db.ap.plexus.com'; Db = 'Wms_Sea_QA'; }
-	[PSCustomObject]@{SqlServer = 'wms-apac-qa-mssql.db.ap.plexus.com'; Db = 'WMS_Sng_QA'; }
-
-	[PSCustomObject]@{SqlServer = 'wms-xiam-qa-mssql.db.ap.plexus.com'; Db = 'Wms_Hgz_QA'; }
-	[PSCustomObject]@{SqlServer = 'wms-xiam-qa-mssql.db.ap.plexus.com'; Db = 'Wms_Hng_QA'; }
-	[PSCustomObject]@{SqlServer = 'wms-xiam-qa-mssql.db.ap.plexus.com'; Db = 'Wms_SrvXia_QA'; }
-	[PSCustomObject]@{SqlServer = 'wms-xiam-qa-mssql.db.ap.plexus.com'; Db = 'Wms_Xia1_QA'; }
-	[PSCustomObject]@{SqlServer = 'wms-xiam-qa-mssql.db.ap.plexus.com'; Db = 'Wms_Xia2_QA'; }
+	[PSCustomObject]@{ SqlServer = 'gapps-prodfix-mssql.db.na.plexus.com'; Db = 'master'; }
+	[PSCustomObject]@{ SqlServer = 'gsf2-apac-prodfix-mssql.db.ap.plexus.com'; Db = 'master'; }
+	[PSCustomObject]@{ SqlServer = 'gsf2-pd.db.ap.plexus.com'; Db = 'master'; }
+	[PSCustomObject]@{ SqlServer = 'gsf2-pd.db.xiamen.ap.plexus.com'; Db = 'master'; }
+	[PSCustomObject]@{ SqlServer = 'gsf2-pd-mssql.db.na.plexus.com'; Db = 'master'; }
+	[PSCustomObject]@{ SqlServer = 'gsf2-rpt.db.xiamen.ap.plexus.com'; Db = 'master'; }
+	[PSCustomObject]@{ SqlServer = 'gsf2-rpt-amer.db.na.plexus.com'; Db = 'master'; }
+	[PSCustomObject]@{ SqlServer = 'gsf-amer-dev-mssql.db.na.plexus.com'; Db = 'master'; }
+	[PSCustomObject]@{ SqlServer = 'gsf-amer-qa-mssql.db.na.plexus.com'; Db = 'master'; }
+	[PSCustomObject]@{ SqlServer = 'gsf-amer-test-mssql.db.na.plexus.com'; Db = 'master'; }
+	[PSCustomObject]@{ SqlServer = 'gsf-apac-qa-mssql.db.ap.plexus.com'; Db = 'master'; }
+	[PSCustomObject]@{ SqlServer = 'gsf-apac-test-mssql.db.ap.plexus.com'; Db = 'master'; }
+	[PSCustomObject]@{ SqlServer = 'gsf-reporting-amer-qa-mssql.db.na.plexus.com'; Db = 'master'; }
+	[PSCustomObject]@{ SqlServer = 'gsf-reporting-apac-qa-mssql.db.ap.plexus.com'; Db = 'master'; }
+	[PSCustomObject]@{ SqlServer = 'gsf-reporting-xiam-qa-mssql.db.ap.plexus.com'; Db = 'master'; }
+	[PSCustomObject]@{ SqlServer = 'gsf-xiam-qa-mssql.db.ap.plexus.com'; Db = 'master'; }
+	[PSCustomObject]@{ SqlServer = 'sql01-pd.db.ap.plexus.com'; Db = 'master'; }
+	[PSCustomObject]@{ SqlServer = 'sql-dev.db.ap.plexus.com'; Db = 'master'; }
+	[PSCustomObject]@{ SqlServer = 'ssis-amer-prod-mssql.db.na.plexus.com'; Db = 'master'; }
+	[PSCustomObject]@{ SqlServer = 'ssis-amer-qa-mssql.db.na.plexus.com'; Db = 'master'; }
+	[PSCustomObject]@{ SqlServer = 'ssis-amer-tst-mssql.db.na.plexus.com'; Db = 'master'; }
+	[PSCustomObject]@{ SqlServer = 'ssis-apac-prod-mssql.db.ap.plexus.com'; Db = 'master'; }
+	[PSCustomObject]@{ SqlServer = 'ssis-apac-qa-mssql.db.ap.plexus.com'; Db = 'master'; }
+	[PSCustomObject]@{ SqlServer = 'ssis-apac-tst-mssql.db.ap.plexus.com'; Db = 'master'; }
+	[PSCustomObject]@{ SqlServer = 'ssis-xiam-prod-mssql.db.ap.plexus.com'; Db = 'master'; }
+	[PSCustomObject]@{ SqlServer = 'ssis-xiam-qa-mssql.db.ap.plexus.com'; Db = 'master'; }
+	[PSCustomObject]@{ SqlServer = 'wms-amer-prod-mssql.db.na.plexus.com'; Db = 'master'; }
+	[PSCustomObject]@{ SqlServer = 'wms-amer-qa-mssql.db.na.plexus.com'; Db = 'master'; }
+	[PSCustomObject]@{ SqlServer = 'wms-apac-prod-mssql.db.ap.plexus.com'; Db = 'master'; }
+	[PSCustomObject]@{ SqlServer = 'wms-apac-qa-mssql.db.ap.plexus.com'; Db = 'master'; }
+	[PSCustomObject]@{ SqlServer = 'wms-emea-prod-mssql.db.na.plexus.com'; Db = 'master'; }
+	[PSCustomObject]@{ SqlServer = 'wms-emea-qa-mssql.db.na.plexus.com'; Db = 'master'; }
+	[PSCustomObject]@{ SqlServer = 'wms-hgz-prod-mssql.db.ap.plexus.com'; Db = 'master'; }
+	[PSCustomObject]@{ SqlServer = 'wms-hgz-qa-mssql.db.ap.plexus.com'; Db = 'master'; }
+	[PSCustomObject]@{ SqlServer = 'wms-xiam-qa-mssql.db.ap.plexus.com'; Db = 'master'; }
+	[PSCustomObject]@{ SqlServer = 'wms-xia-prod-mssql.db.ap.plexus.com'; Db = 'master'; }
 )
 
 
 
-$Directory = "\\neen-dsk-011\it$\database\users\James\JamesScripts\SqlServer\"
 $SqlFiles = @()
+
+#$Directory = "\\neen-dsk-011\it$\database\users\James\JamesScripts\SqlServer\"
+$Directory = "\\neen-dsk-011\it$\database\users\James\"
+
 # $SqlFiles += $Directory + "sp_JamesLock.sql"
 # $SqlFiles += $Directory + "cQueryPerformanceHist_ByObjectId.sql"
 # $SqlFiles += $Directory + "cIndexColumns.sql"

@@ -1,4 +1,0 @@
-begin
-PRODDTA.UPDATE_SHIP_HOLD_FLAGS();
-end;
-/

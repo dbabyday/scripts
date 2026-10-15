@@ -1,3 +1,0 @@
-Database: windv02
-Username: WCUSER
-Password: Oj0892jk!
